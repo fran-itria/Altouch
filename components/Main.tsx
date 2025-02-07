@@ -8,14 +8,21 @@ import { divisions } from '../mock';
 export default function App() {
     return (
         <Screen>
-            <Text style={styles.text}>Bienvenidos a la liga Altouch</Text>
-            <Text style={styles.text}>Seleccione el torneo</Text>
+            <Text className='text-white font-bold underline' style={styles.text}>Bienvenidos a la liga Altouch</Text>
+            <Text className='text-white font-bold underline' style={styles.text}>Seleccione el torneo</Text>
             {divisions.map((division) => (
-                <Link key={division.id} href={`/${division.name}`} asChild>
-                    <Pressable>
-                        <Text style={styles.text}>{division.name}</Text>
-                    </Pressable>
-                </Link>
+                <View>
+                    <Link key={division.id} href={`/${division.name}`} asChild>
+                        <Pressable
+                            className='active:bg-red-100 active:border-transparent border-2 rounded-full border-red-300 mt-5 pl-5 pr-5 pb-2 pt-2'>
+                            <Text
+                                className='text-red-300 font-bold'
+                                style={styles.text}
+                            >{division.name}
+                            </Text>
+                        </Pressable>
+                    </Link>
+                </View>
             ))}
             <StatusBar style="auto" />
         </Screen>
@@ -24,10 +31,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
     text: {
-        color: 'white',
         fontSize: 20,
-        textDecorationLine: 'underline',
-        fontWeight: 'bold',
         fontVariant: ['small-caps']
     }
 });
