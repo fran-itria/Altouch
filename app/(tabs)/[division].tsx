@@ -24,7 +24,7 @@ export default function About() {
                         }}
                         key={team.id}
                     >
-                        <Text style={styles.text} key={team.id}>{team.name}</Text>
+                        <Text className='text-blue-200' key={team.id}>{team.name}</Text>
                     </Link>
                 )
             })}
