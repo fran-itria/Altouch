@@ -10,7 +10,8 @@ export default function App() {
         <Screen>
             <Stack.Screen
                 options={{
-                    headerShown: true
+                    headerShown: true,
+                    headerShadowVisible: false
                 }}
             />
             <View className='flex flex-col h-screen items-center justify-start p-10'>

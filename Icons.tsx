@@ -11,3 +11,7 @@ export const BallIcon = ({ color }: { color: string }) => {
 export const CalendarIcon = ({ color }: { color: string }) => {
     return <FontAwesome name="calendar" size={24} color={color} />
 }
+
+export const FairPlayIcon = ({ color }: { color: string }) => {
+    return <FontAwesome name="handshake-o" size={24} color={color} />
+}
