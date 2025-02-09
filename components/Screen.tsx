@@ -12,8 +12,7 @@ export function Screen({ children }: { children: ReactNode }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'black',
-        // padding: 4,
+        backgroundColor: '#041433',
         justifyContent: 'center',
         alignItems: 'center',
     }

@@ -9,9 +9,7 @@ export default function Team() {
         <Screen>
             <Stack.Screen
                 options={{
-                    headerStyle: { backgroundColor: 'red' },
-                    headerTintColor: 'white',
-                    headerTitle: 'Team',
+                    headerTitle: '',
                     headerLeft: undefined,
                     headerRight: undefined
                 }}

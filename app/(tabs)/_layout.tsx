@@ -1,22 +1,23 @@
 import React from "react";
 import { Stack, Tabs, useLocalSearchParams } from "expo-router";
 import { BallIcon, CalendarIcon, PositionsIcon } from "../../Icons";
+import { Image } from "react-native";
 
 export default function TabsLayout() {
-    const { division } = useLocalSearchParams();
+    const { division } = useLocalSearchParams() as { division: string };
     return (
         <>
             <Stack.Screen
                 options={{
-                    headerTintColor: "white",
                     headerTitle: `${division}`,
-                    headerLeft: undefined,
+                    headerLeft: () => undefined,
+                    headerTitleStyle: { fontWeight: "bold" }
                 }} />
             <Tabs
                 screenOptions={{
-                    headerShown: false,
                     tabBarActiveTintColor: "blue",
-                    tabBarInactiveTintColor: "black"
+                    tabBarInactiveTintColor: "black",
+                    headerShown: false,
                 }}>
                 <Tabs.Screen
                     name="[division]"

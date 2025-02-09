@@ -8,7 +8,7 @@ export default function Layout() {
             {/* <Text style={styles.text}>Hola Mundo</Text> */}
             <Stack
                 screenOptions={{
-                    headerStyle: { backgroundColor: 'black' },
+                    headerStyle: { backgroundColor: '#041433' },
                     headerTintColor: 'white',
                     headerTitle: ''
                 }}
