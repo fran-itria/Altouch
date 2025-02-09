@@ -1,35 +1,29 @@
 import { Link, Stack } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Screen } from '../../components/Screen';
-import { BallIcon } from '../../Icons';
 
-export default function Statics() {
+export default function FairPlay() {
     return (
         <View className='bg-[#041433] h-screen flex flex-column justify-start'>
             <Stack.Screen
                 options={{
                     headerShown: true,
                     headerStyle: { backgroundColor: '#041433' },
-                    headerTitle: 'Estadísticas',
+                    headerTitle: 'Fair Play',
                     headerTitleStyle: { fontWeight: 'bold', color: 'white' },
                     headerShadowVisible: false,
                 }}
             />
             <View className='bg-[#041433] flex flex-row justify-around mt-2'>
                 <Pressable className='border-b-2 border-white'>
-                    <Text className='text-white w-full' style={styles.text}>Goleadores</Text>
+                    <Text className='text-white w-full' style={styles.text}>Fair Play</Text>
                 </Pressable>
                 <Pressable>
-                    <Text className='text-white' style={styles.text}>V.M Vencida</Text>
+                    <Text className='text-white' style={styles.text}>Suspendidos</Text>
                 </Pressable>
                 <Pressable>
-                    <Text className='text-white' style={styles.text}>Figuras</Text>
+                    <Text className='text-white' style={styles.text}>Tarjetas</Text>
                 </Pressable>
             </View>
-            <Text className='text-black'>Estadisticas</Text>
-            <Link href={'/'} asChild>
-                <Text style={{ color: 'red' }}> Regresar </Text>
-            </Link>
         </View>
     )
 }
