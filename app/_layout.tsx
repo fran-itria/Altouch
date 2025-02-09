@@ -15,6 +15,7 @@ export default function Layout() {
             >
                 <Stack.Screen name="(tabs)" />
                 <Stack.Screen name="team/[id]" />
+                <Stack.Screen name="player/[id]" />
             </Stack>
         </View>
     )

@@ -9,16 +9,13 @@ export default function Team() {
         <Screen>
             <Stack.Screen
                 options={{
-                    headerTitle: 'Team',
+                    headerTitle: 'Franco Itria',
                     headerLeft: undefined,
                     headerRight: undefined,
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
                 }}
             />
-            <Link href={{ pathname: '/player/[id]', params: { id: 1 } }}>
-                <Text> Franco Itria </Text>
-            </Link>
         </Screen>
     )
 }

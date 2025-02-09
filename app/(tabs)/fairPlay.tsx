@@ -6,15 +6,11 @@ export default function FairPlay() {
         <View className='bg-[#041433] h-screen flex flex-column justify-start'>
             <Stack.Screen
                 options={{
-                    headerShown: true,
-                    headerStyle: { backgroundColor: '#041433' },
                     headerTitle: 'Fair Play',
-                    headerTitleStyle: { fontWeight: 'bold', color: 'white' },
-                    headerShadowVisible: false,
                 }}
             />
             <View className='bg-[#041433] flex flex-row justify-around mt-2'>
-                <Pressable className='border-b-2 border-white'>
+                <Pressable className='border-b-2 border-[#689BFF]'>
                     <Text className='text-white w-full' style={styles.text}>Fair Play</Text>
                 </Pressable>
                 <Pressable>

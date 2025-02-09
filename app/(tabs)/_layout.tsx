@@ -11,15 +11,20 @@ export default function TabsLayout() {
                 options={{
                     headerTitle: `${division}`,
                     headerLeft: () => undefined,
-                    headerTitleStyle: { fontWeight: "bold" }
+                    headerTitleStyle: { fontWeight: "bold", fontSize: 25, },
+                    headerTitleAlign: "center",
+                    // headerShown: false
                 }} />
             <Tabs
                 initialRouteName="[division]"
                 screenOptions={{
                     tabBarActiveTintColor: "",
                     tabBarInactiveTintColor: "white",
-                    headerShown: false,
                     tabBarStyle: { backgroundColor: "#1D7544" },
+                    headerTitleStyle: { fontWeight: 'bold', color: 'white' },
+                    headerStyle: { backgroundColor: '#041433' },
+                    headerShadowVisible: false,
+                    headerTitleAlign: 'center',
                 }}>
                 <Tabs.Screen
                     name="[division]"
@@ -29,7 +34,7 @@ export default function TabsLayout() {
                     }}
                 />
                 <Tabs.Screen
-                    name="matchs"
+                    name="fixture"
                     options={{
                         title: "",
                         tabBarIcon: ({ color }) => <CalendarIcon color={color} />
