@@ -1,9 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { ReactNode } from "react";
 
-export function Screen({ children }: { children: ReactNode }) {
+export function Screen({ children, background }: { children: ReactNode, background: string }) {
+
+    console.log('background', background)
     return (
-        <View style={styles.container}>
+        <View className={`bg-[${background}] h-screen flex flex-column justify-start`}>
             {children}
         </View>
     )

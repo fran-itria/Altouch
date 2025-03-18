@@ -7,6 +7,13 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
+    altouch: {
+      colors: {
+        primary: "#041433",
+        secondary: "#00311D",
+        tertiary: "#b91c1c"
+    }
+  },
     extend: {},
   },
   plugins: [],
