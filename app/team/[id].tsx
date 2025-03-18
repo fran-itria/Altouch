@@ -1,15 +1,15 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
-import { Pressable, Text } from "react-native";
+import { Text } from "react-native";
 import { Screen } from "../../components/Screen";
 
 export default function Team() {
-    const { id } = useLocalSearchParams();
+    const { team } = useLocalSearchParams();
 
     return (
         <Screen>
             <Stack.Screen
                 options={{
-                    headerTitle: 'Team',
+                    headerTitle: `${team}`,
                     headerLeft: undefined,
                     headerRight: undefined,
                     headerTitleAlign: 'center',
