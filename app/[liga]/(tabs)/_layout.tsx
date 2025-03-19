@@ -24,7 +24,7 @@ export default function TabsLayout() {
                     headerTitleAlign: 'center',
                 }}>
                 <Tabs.Screen
-                    name="[division]"
+                    name="[division]/index"
                     options={{
                         title: "",
                         tabBarIcon: ({ color }) => <PositionsIcon color={color} />,
