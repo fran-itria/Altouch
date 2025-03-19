@@ -4,7 +4,7 @@ import { Screen } from '../../../components/Screen';
 
 export default function Fixture() {
     return (
-        <Screen>
+        <Screen background='#041433'>
             <Stack.Screen
                 options={{
                     title: 'Fixture'

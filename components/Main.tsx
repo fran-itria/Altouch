@@ -1,11 +1,10 @@
-import { Stack, useNavigation, usePathname } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Screen } from './Screen';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
     return (
-        <Screen>
+        <View>
             <Stack.Screen
                 options={{
                     headerShown: true,
@@ -16,7 +15,7 @@ export default function App() {
                 <Text> Bienvenido a la aplicacion de Ligas</Text>
             </View>
             <StatusBar style="auto" />
-        </Screen>
+        </View>
     );
 }
 

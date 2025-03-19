@@ -1,4 +1,4 @@
-import { Link, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function FairPlay() {
