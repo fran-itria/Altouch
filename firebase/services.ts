@@ -1,4 +1,4 @@
-import { addDoc, collection, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, where } from "firebase/firestore";
+import { addDoc, collection, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
 const categoria = 'categoria'
@@ -17,6 +17,7 @@ export type team = {
 
 export type player = {
     id?: string
+    ref: DocumentReference
     birth: Timestamp
     blueCard: number
     yellowCard: number
@@ -71,9 +72,7 @@ async function getTeams(liga: string, division: string): Promise<team[]> {
     return teams
 }
 
-async function getOneTeam(liga: string, division: string, id: string, teamName: string) {
-    // ID EQUIPO: fukbAcnVmtE78V1wtlWg
-    console.log(liga, division, id)
+async function getOneTeam(liga: string, division: string, teamName: string) {
     const altouchRef = collection(db, liga);
     const q = query(altouchRef, where(categoria, "==", division));
     const querySnapshot = await getDocs(q);
@@ -88,7 +87,8 @@ async function getOneTeam(liga: string, division: string, id: string, teamName: 
             const playersSnapshot = await getDocs(playersRef);
             for (const player of playersSnapshot.docs) {
                 const id = player.id
-                players.push({ id, ...player.data() as player })
+                const playerData = player.data() as player;
+                players.push({ id, ...playerData, ref: player.ref })
             }
         }
     }
@@ -157,7 +157,6 @@ async function getMatchNotPlay(liga: string, division: string) {
             teamsMatch.push(teamRef.data())
         }
 
-        console.log(day)
         const newDate = new Date(day)
         const date = `${newDate.getDate()} / ${newDate.getMonth() + 1}`
         const hour = `${newDate.getHours()}:${newDate.getMinutes() == 0 ? `${newDate.getMinutes()}0` : newDate.getMinutes()}`
@@ -168,7 +167,6 @@ async function getMatchNotPlay(liga: string, division: string) {
             day: { date, hour }
         })
     }
-    console.log(matchs)
     return matchs
 }
 
@@ -178,7 +176,7 @@ async function createMatch(liga: string, division: string, team1: string, team2:
     const team1ref = await getDocs(query(collection(ligaRef.docs[0].ref, 'equipos'), where('name', '==', team1)))
     const team2ref = await getDocs(query(collection(ligaRef.docs[0].ref, 'equipos'), where('name', '==', team2)))
 
-    const matchRef = await addDoc(collection(ligaRef.docs[0].ref, 'matches'), {
+    await addDoc(collection(ligaRef.docs[0].ref, 'matches'), {
         play: false,
         match: 'Fecha 1',
         day: '2025-03-30 22:00',
@@ -189,11 +187,26 @@ async function createMatch(liga: string, division: string, team1: string, team2:
     })
 }
 
+async function updateMatch(liga: string, division: string, id: string, players: DocumentReference[]) {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    const matchRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', false)))
+    const match = matchRef.docs.find((doc) => doc.id === id)
+
+    if (match) {
+        await updateDoc(match.ref, {
+            play: true,
+            players
+        });
+        console.log('Match updated')
+    }
+}
+
 export {
     getDivisions,
     getTeams,
     getOneTeam,
     getMatchesPlay,
     getMatchNotPlay,
-    createMatch
+    createMatch,
+    updateMatch
 };
