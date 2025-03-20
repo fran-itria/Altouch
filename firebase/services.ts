@@ -1,5 +1,7 @@
-import { collection, getDocs, orderBy, query, Timestamp, where } from "firebase/firestore";
+import { addDoc, collection, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
+
+const categoria = 'categoria'
 
 export type team = {
     id?: string;
@@ -24,11 +26,25 @@ export type player = {
     star: number
     name: string
     surname: string
+    team: DocumentReference
+}
+
+export type match = {
+    id?: string
+    teamLoser: team
+    teamWinner: team
+    playerStar: player
+    playersMatch: player[]
+    teamsMatch: team[]
+    goalsMatch: { name: string, team: string }[]
+    result: string
+    match: string
+    day: string
 }
 
 async function getDivisions(liga: string) {
     const ligaRef = collection(db, liga);
-    const divisionsOrder = query(ligaRef, orderBy('categoria'));
+    const divisionsOrder = query(ligaRef, orderBy(categoria));
     const divisions = await getDocs(divisionsOrder);
     return divisions.docs.map((doc) => {
         return { id: doc.id, categoria: doc.data().categoria }
@@ -37,7 +53,7 @@ async function getDivisions(liga: string) {
 
 async function getTeams(liga: string, division: string): Promise<team[]> {
     const altouchRef = collection(db, liga);
-    const q = query(altouchRef, where("categoria", "==", division));
+    const q = query(altouchRef, where(categoria, "==", division));
     const querySnapshot = await getDocs(q);
 
     let teams: team[] = [];
@@ -59,7 +75,7 @@ async function getOneTeam(liga: string, division: string, id: string, teamName: 
     // ID EQUIPO: fukbAcnVmtE78V1wtlWg
     console.log(liga, division, id)
     const altouchRef = collection(db, liga);
-    const q = query(altouchRef, where("categoria", "==", division));
+    const q = query(altouchRef, where(categoria, "==", division));
     const querySnapshot = await getDocs(q);
 
     let players = []
@@ -79,4 +95,105 @@ async function getOneTeam(liga: string, division: string, id: string, teamName: 
     return players
 }
 
-export { getDivisions, getTeams, getOneTeam };
+async function getMatchesPlay(liga: string, division: string) {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    let matchs = []
+
+    const matchesRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', true)))
+    for (const match of matchesRef.docs) {
+        const { loser, win, star, players, teams, result, goles } = match.data()
+        const teamLoser = await getDoc(loser)
+        const teamWinner = await getDoc(win)
+        const playerStar = await getDoc(star)
+
+        let playersMatch = []
+        let teamsMatch = []
+        let goalsMatch = []
+        for (const player of players) {
+            const playerRef = await getDoc(player)
+            playersMatch.push(playerRef.data())
+        }
+        for (const team of teams) {
+            const teamRef = await getDoc(team)
+            teamsMatch.push(teamRef.data())
+        }
+        for (const gol of goles) {
+            const playerGol: DocumentSnapshot<any> = await getDoc(gol)
+            const teamRef: DocumentSnapshot<team> = await getDoc(playerGol.data().team)
+            goalsMatch.push({
+                name: `${playerGol.data()?.name} ${playerGol.data()?.surname}`,
+                team: teamRef.data()?.name
+            });
+
+        }
+
+        matchs.push({
+            id: match.id,
+            teamLoser: teamLoser.data(),
+            teamWinner: teamWinner.data(),
+            playerStar: playerStar.data(),
+            playersMatch,
+            teamsMatch,
+            goalsMatch,
+            result,
+            match: match.data().match
+        })
+    }
+    return matchs
+}
+
+async function getMatchNotPlay(liga: string, division: string) {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    let matchs = []
+
+    const matchRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', false)))
+    for (const match of matchRef.docs) {
+        const { teams, day } = match.data()
+
+        let teamsMatch = []
+
+        for (const team of teams) {
+            const teamRef = await getDoc(team)
+            teamsMatch.push(teamRef.data())
+        }
+
+        console.log(day)
+        const newDate = new Date(day)
+        const date = `${newDate.getDate()} / ${newDate.getMonth() + 1}`
+        const hour = `${newDate.getHours()}:${newDate.getMinutes() == 0 ? `${newDate.getMinutes()}0` : newDate.getMinutes()}`
+        matchs.push({
+            id: match.id,
+            teamsMatch,
+            match: match.data().match,
+            day: { date, hour }
+        })
+    }
+    console.log(matchs)
+    return matchs
+}
+
+async function createMatch(liga: string, division: string, team1: string, team2: string) {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+
+    const team1ref = await getDocs(query(collection(ligaRef.docs[0].ref, 'equipos'), where('name', '==', team1)))
+    const team2ref = await getDocs(query(collection(ligaRef.docs[0].ref, 'equipos'), where('name', '==', team2)))
+
+    const matchRef = await addDoc(collection(ligaRef.docs[0].ref, 'matches'), {
+        play: false,
+        match: 'Fecha 1',
+        day: '2025-03-30 22:00',
+        teams: [
+            team1ref.docs[0].ref,
+            team2ref.docs[0].ref
+        ]
+    })
+}
+
+export {
+    getDivisions,
+    getTeams,
+    getOneTeam,
+    getMatchesPlay,
+    getMatchNotPlay,
+    createMatch
+};
