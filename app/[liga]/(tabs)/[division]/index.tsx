@@ -15,11 +15,9 @@ export default function About() {
 
     useEffect(() => {
         (async () => {
-            console.log(liga, division)
             const teamsResponse = await getTeams(liga, division);
             const matchsResponse = await getMatchesPlay(liga, division) as match[];
             const matchsNotPlay = await getMatchNotPlay(liga, division) as matchNotPlay[];
-            // await createMatch(liga, division, 'Chamuyeros United', 'Emergencias');
             setTeams(teamsResponse);
             setMatchs(matchsResponse);
             setMatchsNotPlay(matchsNotPlay);
