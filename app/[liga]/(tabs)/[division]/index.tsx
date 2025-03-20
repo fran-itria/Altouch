@@ -65,7 +65,7 @@ export default function About() {
                     )}
                 />
             </View>
-            <MatchsNotPlay liga={liga} matchs={matchsNotPlay} />
+            <MatchsNotPlay liga={liga} division={division} matchs={matchsNotPlay} />
             <Matchs liga={liga} matchs={matchs} />
         </Screen>
     )

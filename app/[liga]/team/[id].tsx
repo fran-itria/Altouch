@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { getOneTeam, player } from "../../../firebase/services";
 
 export default function Team() {
-    const { liga, division, id, team }: { team: string, id: string, liga: string, division: string } = useLocalSearchParams();
+    const { liga, division, team }: { team: string, id: string, liga: string, division: string } = useLocalSearchParams();
     const [players, setPlayers] = useState<player[]>([]);
 
     useEffect(() => {
         (async () => {
-            const players = await getOneTeam(liga, division, id, team)
+            const players = await getOneTeam(liga, division, team)
             setPlayers(players)
         })()
     }, [])
