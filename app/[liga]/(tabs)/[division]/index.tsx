@@ -1,19 +1,28 @@
 import { Link, useLocalSearchParams } from 'expo-router';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View } from 'react-native';
 import { Screen } from '../../../../components/Screen';
 import { useEffect, useState } from 'react';
 import { theme } from "../../../../tailwind.config";
-import { getTeams, team } from '../../../../firebase/services';
+import { getMatchesPlay, getMatchNotPlay, getTeams, match, team } from '../../../../firebase/services';
+import Matchs from '../../../../components/Matchs/Matchs';
+import MatchsNotPlay, { matchNotPlay } from '../../../../components/Matchs/MatchsNotPlay';
 
 export default function About() {
     const { liga, division }: { liga: string, division: string } = useLocalSearchParams();
     const [teams, setTeams] = useState<team[]>([]);
+    const [matchs, setMatchs] = useState<match[]>([]);
+    const [matchsNotPlay, setMatchsNotPlay] = useState<matchNotPlay[]>([]);
 
     useEffect(() => {
         (async () => {
             console.log(liga, division)
-            const response = await getTeams(liga, division);
-            setTeams(response);
+            const teamsResponse = await getTeams(liga, division);
+            const matchsResponse = await getMatchesPlay(liga, division) as match[];
+            const matchsNotPlay = await getMatchNotPlay(liga, division) as matchNotPlay[];
+            // await createMatch(liga, division, 'Chamuyeros United', 'Emergencias');
+            setTeams(teamsResponse);
+            setMatchs(matchsResponse);
+            setMatchsNotPlay(matchsNotPlay);
         })()
     }, [])
 
@@ -56,6 +65,8 @@ export default function About() {
                     )}
                 />
             </View>
+            <MatchsNotPlay liga={liga} matchs={matchsNotPlay} />
+            <Matchs liga={liga} matchs={matchs} />
         </Screen>
     )
 }
