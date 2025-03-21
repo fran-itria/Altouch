@@ -11,8 +11,8 @@ interface Props {
 
 export default function Table({ division, liga, teams }: Props) {
     return (
-        <View>
-            <View className={`flex flex-row justify-around bg-[${theme?.[liga].colors.secondary}] p-2 border-b-2 border-b-black`}>
+        <View className="px-2">
+            <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga].colors.secondary}] p-2 border-b-2 border-b-black`}>
                 <Text className='w-36 text-center font-bold color-white'>Equipo</Text>
                 <Text className='w-36 text-center font-bold color-white'>J</Text>
                 <Text className='w-36 text-center font-bold color-white'>G</Text>
@@ -26,24 +26,25 @@ export default function Table({ division, liga, teams }: Props) {
             <FlatList
                 data={teams}
                 keyExtractor={(item) => item.id ? item.id : item.name}
+                style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 renderItem={({ item }) => (
                     <Link
-                        className={`flex flex-row justify-around bg-[${theme?.[liga].colors.tertiary}] p-2`}
+                        className={`border-b flex flex-row justify-around items-center bg-[${theme?.[liga].colors.tertiary}] p-2`}
                         href={{
                             pathname: '/[liga]/team/[id]',
                             params: { liga, division, id: item.id, team: item.name }
                         }}
                         key={item.id}
                     >
-                        <Text className='w-36 text-center'>{item.name}</Text>
-                        <Text className='w-36 text-center'>{item.matches}</Text>
-                        <Text className='w-36 text-center'>{item.wins}</Text>
-                        <Text className='w-36 text-center'>{item.lost}</Text>
-                        <Text className='w-36 text-center'>{item.draws}</Text>
-                        <Text className='w-36 text-center'>{item.goalsFor}</Text>
-                        <Text className='w-36 text-center'>{item.goalsAgainst}</Text>
-                        <Text className='w-36 text-center'>{item.goalsFor - item.goalsAgainst}</Text>
-                        <Text className='w-36 text-center'>{item.points}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.name}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.matches}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.wins}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.lost}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.draws}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.goalsFor}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.goalsAgainst}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.goalsFor - item.goalsAgainst}</Text>
+                        <Text className='w-36 text-center color-white font-bold'>{item.points}</Text>
                     </Link>
                 )}
             />
