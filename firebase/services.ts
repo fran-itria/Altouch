@@ -201,10 +201,10 @@ async function updateMatch(liga: string, division: string, id: string, players: 
     }
 }
 
-async function updateTeam(teamName: string, teamRef: DocumentReference, file: string) {
+async function updateTeam(teamName: string, teamRef: DocumentReference, file: string, liga: string) {
     const image = await fetch(file)
     const blob = await image.blob()
-    const storageRef = ref(storage, `Futbol/${teamName}`)
+    const storageRef = ref(storage, `Futbol/Escudos/${liga}/${teamName}`)
     await uploadBytes(storageRef, blob)
     const urlImage = await getDownloadURL(storageRef)
     await updateDoc(teamRef, {

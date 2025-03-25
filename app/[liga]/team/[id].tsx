@@ -93,7 +93,7 @@ export default function Team() {
                     <Button title="Seleccionar Imagen" onPress={pickImage} />
                     {image && <View>
                         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-                        <Button title="Subir" onPress={() => updateTeam(team, players[0].team, image)}></Button>
+                        <Button title="Subir" onPress={() => updateTeam(team, players[0].team, image, liga)}></Button>
                     </View>}
                 </View>
             </View>
