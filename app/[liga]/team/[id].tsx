@@ -1,49 +1,20 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
-import { Button, FlatList, Image, Platform, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { Screen } from "../../../components/Screen";
 import { theme } from "../../../tailwind.config";
 import { useEffect, useState } from "react";
-import { getOneTeam, player, updateTeam } from "../../../firebase/services";
-import * as ImagePicker from "expo-image-picker";
-require('../../../assets/Logo.png')
+import { getOneTeam, player } from "../../../firebase/services";
 
 export default function Team() {
     const { liga, division, team }: { team: string, liga: string, division: string } = useLocalSearchParams();
     const [players, setPlayers] = useState<player[]>([]);
-    const [image, setImage] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
             const players = await getOneTeam(liga, division, team)
-            // await updateTeam(team, players[0].team, require('../../../assets/Logo.png'))
             setPlayers(players)
         })()
     }, [])
-
-    const pickImage = async () => {
-        // Solicitar permisos para acceder a la galería
-        if (Platform.OS !== 'web') {
-            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== 'granted') {
-                alert('Se requieren permisos para acceder a la galería.');
-                return;
-            }
-        }
-
-        // Seleccionar una imagen
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
-    };
-
-    useEffect(() => console.log(image), [image])
 
     return (
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
@@ -75,7 +46,7 @@ export default function Team() {
                         <Link
                             className={`rounded-b-lg flex flex-row justify-around bg-[#1E1E1E] p-2`}
                             href={{
-                                pathname: '/[liga]/team/[id]',
+                                pathname: '/[liga]/player/[id]',
                                 params: { liga, division, id: item.id, team: item.name }
                             }}
                             key={item.id}
@@ -89,13 +60,6 @@ export default function Team() {
                         </Link>
                     )}
                 />
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Button title="Seleccionar Imagen" onPress={pickImage} />
-                    {image && <View>
-                        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-                        <Button title="Subir" onPress={() => updateTeam(team, players[0].team, image, liga)}></Button>
-                    </View>}
-                </View>
             </View>
         </Screen>
     )
