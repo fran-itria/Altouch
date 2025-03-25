@@ -7,12 +7,18 @@ import { useEffect, useState } from 'react';
 import { getDivisions } from '../../firebase/services';
 
 import { theme } from "../../tailwind.config";
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../../firebase/firebaseConfig';
 
 export default function App() {
     const { liga }: { liga: string } = useLocalSearchParams()
     const [divisions, setDivisions] = useState<{ id: string, categoria: string; }[]>([]);
+    const [logo, setLogo] = useState<string>();
     useEffect(() => {
         (async () => {
+            const imageRef = ref(storage, `Futbol/Logos/${liga}.png`)
+            const url = await getDownloadURL(imageRef);
+            if (url) setLogo(url);
             const response = await getDivisions(liga);
             setDivisions(response);
         })()
@@ -28,7 +34,7 @@ export default function App() {
                     }}
                 />
                 <View className='flex flex-col h-screen items-center justify-start p-10'>
-                    <Image source={require('../../assets/Logo.png')} style={{ width: 300, height: 300, borderRadius: '100%' }} />
+                    <Image source={{ uri: logo }} style={{ width: 300, height: 300, borderRadius: '100%' }} />
                     <Text className='text-white font-bold underline' style={styles.text}>Seleccione la categoría</Text>
                     {divisions.map((division, i) => (
                         <View key={division.id}>
