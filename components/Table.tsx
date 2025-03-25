@@ -36,14 +36,22 @@ export default function Table({ division, liga, teams }: Props) {
                         }}
                         key={item.id}
                     >
-                        <View className="w-32 bg-red-500 flex flex-row items-center justify-between">
+                        <View className="flex flex-row items-center justify-between">
                             {
                                 <Image
                                     source={{ uri: item.image }}
                                     style={{ width: 30, height: 30 }}
                                 />
                             }
-                            <Text className='text-center color-white font-bold'>{item.name}</Text>
+                            {!item.name.includes(' ') ?
+                                <Text className='ml-2 text-center color-white font-bold'>{item.name}</Text>
+                                :
+                                <View className="ml-2">
+                                    <Text className='text-center color-white font-bold'>{item.name.split(' ')[0]}</Text>
+                                    <Text className='text-center color-white font-bold'>{item.name.split(' ')[1]}</Text>
+                                </View>
+
+                            }
                         </View>
                         <Text className='text-center color-white font-bold'>{item.matches}</Text>
                         <Text className='text-center color-white font-bold'>{item.wins}</Text>
