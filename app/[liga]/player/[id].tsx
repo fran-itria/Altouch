@@ -1,5 +1,4 @@
-import { Link, Stack, useLocalSearchParams } from "expo-router";
-import { Pressable, Text } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { Screen } from "../../../components/Screen";
 import { theme } from "../../../tailwind.config";
 

@@ -1,4 +1,4 @@
-import { addDoc, collection, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db, storage } from "./firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -210,7 +210,6 @@ async function updateTeam(teamName: string, teamRef: DocumentReference, file: st
     await updateDoc(teamRef, {
         image: urlImage
     })
-    console.log('Imagen cargada')
 }
 
 export {
