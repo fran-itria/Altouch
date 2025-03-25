@@ -1,5 +1,6 @@
-import { addDoc, collection, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
-import { db } from "./firebaseConfig";
+import { addDoc, collection, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
+import { db, storage } from "./firebaseConfig";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const categoria = 'categoria'
 
@@ -14,6 +15,7 @@ export type team = {
     draws: number;
     lost: number;
     matches: number;
+    ref: DocumentReference
 }
 
 export type player = {
@@ -66,7 +68,7 @@ async function getTeams(liga: string, division: string): Promise<team[]> {
         const equiposSnapshot = await getDocs(teamsOredr);
 
         for (const team of equiposSnapshot.docs) {
-            teams.push({ id: team.id, ...team.data() as team })
+            teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
         }
     }
     return teams
@@ -76,7 +78,6 @@ async function getOneTeam(liga: string, division: string, teamName: string) {
     const altouchRef = collection(db, liga);
     const q = query(altouchRef, where(categoria, "==", division));
     const querySnapshot = await getDocs(q);
-
     let players = []
     for (const doc of querySnapshot.docs) {
         const equiposRef = collection(doc.ref, 'equipos');
@@ -200,6 +201,18 @@ async function updateMatch(liga: string, division: string, id: string, players: 
     }
 }
 
+async function updateTeam(teamName: string, teamRef: DocumentReference, file: string) {
+    const image = await fetch(file)
+    const blob = await image.blob()
+    const storageRef = ref(storage, `Futbol/${teamName}`)
+    await uploadBytes(storageRef, blob)
+    const urlImage = await getDownloadURL(storageRef)
+    await updateDoc(teamRef, {
+        image: urlImage
+    })
+    console.log('Imagen cargada')
+}
+
 export {
     getDivisions,
     getTeams,
@@ -207,5 +220,6 @@ export {
     getMatchesPlay,
     getMatchNotPlay,
     createMatch,
-    updateMatch
+    updateMatch,
+    updateTeam
 };
