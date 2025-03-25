@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -13,6 +13,9 @@ export default function App() {
             />
             <View className='flex flex-col h-screen items-center justify-start p-10'>
                 <Text> Bienvenido a la aplicacion de Ligas</Text>
+                <Link href='/altouch'>
+                    <Text>Ir a la Liga</Text>
+                </Link>
             </View>
             <StatusBar style="auto" />
         </View>

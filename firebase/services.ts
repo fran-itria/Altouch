@@ -1,10 +1,11 @@
-import { addDoc, collection, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, DocumentReference, DocumentSnapshot, getDoc, getDocs, orderBy, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
 const categoria = 'categoria'
 
 export type team = {
     id?: string;
+    image?: string;
     name: string;
     points: number;
     goalsFor: number;
@@ -65,8 +66,7 @@ async function getTeams(liga: string, division: string): Promise<team[]> {
         const equiposSnapshot = await getDocs(teamsOredr);
 
         for (const team of equiposSnapshot.docs) {
-            const { draws, goalsAgainst, goalsFor, lost, name, points, wins, matches } = team.data() as team;
-            teams.push({ id: team.id, draws, goalsAgainst, goalsFor, lost, name, points, wins, matches })
+            teams.push({ id: team.id, ...team.data() as team })
         }
     }
     return teams
@@ -197,7 +197,6 @@ async function updateMatch(liga: string, division: string, id: string, players: 
             play: true,
             players
         });
-        console.log('Match updated')
     }
 }
 

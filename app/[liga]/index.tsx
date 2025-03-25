@@ -19,7 +19,7 @@ export default function App() {
     }, [])
 
     return (
-        <ScrollView>
+        <View>
             <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
                 <Stack.Screen
                     options={{
@@ -28,7 +28,7 @@ export default function App() {
                     }}
                 />
                 <View className='flex flex-col h-screen items-center justify-start p-10'>
-                    <Image source={require('../../assets/Logo.png')} className='rounded-full w-72 h-72' />
+                    <Image source={require('../../assets/Logo.png')} style={{ width: 300, height: 300, borderRadius: '100%' }} />
                     <Text className='text-white font-bold underline' style={styles.text}>Seleccione la categoría</Text>
                     {divisions.map((division, i) => (
                         <View key={division.id}>
@@ -48,7 +48,7 @@ export default function App() {
                 </View>
                 <StatusBar style="auto" />
             </Screen>
-        </ScrollView>
+        </View>
     );
 }
 

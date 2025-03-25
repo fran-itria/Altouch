@@ -39,22 +39,14 @@ export default function MatchsNotPlay({ liga, division, matchs }: Props) {
                             <Text className='flex flex-col items-center color-white font-bold'>
                                 {item.teamsMatch[0].name}
                             </Text>
-                            <Pressable
-                                className="flex flex-col items-center"
-                                onPress={async () => {
-                                    const playersTeam1 = await getOneTeam(liga, division, item.teamsMatch[0].name)
-                                    const playersTeam2 = await getOneTeam(liga, division, item.teamsMatch[1].name)
-                                    setPlayersTeam1(playersTeam1)
-                                    setPlayersTeam2(playersTeam2)
-                                }}
-                            >
+                            <View className="flex flex-col items-center">
                                 <Text className='color-white font-bold'>
                                     {item.day.date}
                                 </Text>
                                 <Text className='color-white font-bold text-center'>
                                     {item.day.hour} Hs
                                 </Text>
-                            </Pressable>
+                            </View>
                             <Text className='flex flex-col items-center color-white font-bold'>
                                 {item.teamsMatch[1].name}
                             </Text>

@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Image, Text, View } from "react-native";
 import { team } from "../firebase/services";
 import { theme } from "../tailwind.config";
 
@@ -13,15 +13,15 @@ export default function Table({ division, liga, teams }: Props) {
     return (
         <View className="px-2">
             <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga].colors.secondary}] p-2 border-b-2 border-b-black`}>
-                <Text className='w-36 text-center font-bold color-white'>Equipo</Text>
-                <Text className='w-36 text-center font-bold color-white'>J</Text>
-                <Text className='w-36 text-center font-bold color-white'>G</Text>
-                <Text className='w-36 text-center font-bold color-white'>P</Text>
-                <Text className='w-36 text-center font-bold color-white'>E</Text>
-                <Text className='w-36 text-center font-bold color-white'>GF</Text>
-                <Text className='w-36 text-center font-bold color-white'>GE</Text>
-                <Text className='w-36 text-center font-bold color-white'>DG</Text>
-                <Text className='w-36 text-center font-bold color-white'>PTS</Text>
+                <Text className='w-32 text-start font-bold color-white'>Equipo</Text>
+                <Text className=' text-center font-bold color-white'>J</Text>
+                <Text className=' text-center font-bold color-white'>G</Text>
+                <Text className=' text-center font-bold color-white'>P</Text>
+                <Text className=' text-center font-bold color-white'>E</Text>
+                <Text className=' text-center font-bold color-white'>GF</Text>
+                <Text className=' text-center font-bold color-white'>GE</Text>
+                <Text className=' text-center font-bold color-white'>DG</Text>
+                <Text className=' text-center font-bold color-white'>PTS</Text>
             </View>
             <FlatList
                 data={teams}
@@ -36,15 +36,23 @@ export default function Table({ division, liga, teams }: Props) {
                         }}
                         key={item.id}
                     >
-                        <Text className='w-36 text-center color-white font-bold'>{item.name}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.matches}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.wins}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.lost}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.draws}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.goalsFor}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.goalsAgainst}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.goalsFor - item.goalsAgainst}</Text>
-                        <Text className='w-36 text-center color-white font-bold'>{item.points}</Text>
+                        <View className="w-32 bg-red-500 flex flex-row items-center justify-between">
+                            {
+                                <Image
+                                    source={{ uri: item.image }}
+                                    style={{ width: 30, height: 30 }}
+                                />
+                            }
+                            <Text className='text-center color-white font-bold'>{item.name}</Text>
+                        </View>
+                        <Text className='text-center color-white font-bold'>{item.matches}</Text>
+                        <Text className='text-center color-white font-bold'>{item.wins}</Text>
+                        <Text className='text-center color-white font-bold'>{item.lost}</Text>
+                        <Text className='text-center color-white font-bold'>{item.draws}</Text>
+                        <Text className='text-center color-white font-bold'>{item.goalsFor}</Text>
+                        <Text className='text-center color-white font-bold'>{item.goalsAgainst}</Text>
+                        <Text className='text-center color-white font-bold'>{item.goalsFor - item.goalsAgainst}</Text>
+                        <Text className='text-center color-white font-bold'>{item.points}</Text>
                     </Link>
                 )}
             />
