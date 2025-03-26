@@ -5,10 +5,11 @@ import { theme } from "../../../tailwind.config";
 import { useEffect, useState } from "react";
 import { getOneMatch, match } from "../../../firebase/services";
 import groupPlayers from "./groupPlayers";
-import Result from "../../../components/Matchs/Result";
-import Team1 from "../../../components/Matchs/Team1";
-import Team2 from "../../../components/Matchs/Team2";
-import StarPlayer from "../../../components/Matchs/StarPlayer";
+import Result from "../../../components/Matchs/DetailMatch/Result";
+import Team1 from "../../../components/Matchs/DetailMatch/Team1";
+import Team2 from "../../../components/Matchs/DetailMatch/Team2";
+import StarPlayer from "../../../components/Matchs/DetailMatch/StarPlayer";
+import DetailMatch from "../../../components/Matchs/DetailMatch/DetailMatch";
 
 
 export default function Matchs() {
@@ -34,23 +35,7 @@ export default function Matchs() {
                     headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
                 }}
             />
-            <View className="mt-20 px-2">
-                <View className="flex flex-row justify-center">
-                    <Text className={`p-1 text-base rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.tertiary}]`}>Detalle del partido</Text>
-                </View>
-                <FlatList
-                    data={match}
-                    style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
-                    keyExtractor={(item: match) => item.id ? item.id : item.result}
-                    renderItem={({ item }) => (
-                        <View className={`grid grid-col-2 bg-[${theme?.[liga].colors.table}]`}>
-                            <Result item={item} />
-                            <Team1 team1={team1} />
-                            <Team2 team2={team2} />
-                        </View>
-                    )}
-                />
-            </View>
+            <DetailMatch match={match} liga={liga} team1={team1} team2={team2} />
             <StarPlayer liga={liga} star={match && match[0].playerStar} />
         </Screen>
     )

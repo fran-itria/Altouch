@@ -1,5 +1,5 @@
 import { Image, Text, View } from "react-native";
-import { match } from "../../firebase/services";
+import { match } from "../../../firebase/services";
 
 export default function Result({ item }: { item: match }) {
     return (

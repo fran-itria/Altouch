@@ -37,7 +37,7 @@ export type match = {
     id?: string
     teamLoser: team
     teamWinner: team
-    playerStar: { name: string, team: string }[]
+    playerStar: { name: string, team: string, image: string }[]
     playersMatch: player[]
     teamsMatch: team[]
     goalsMatch: { name: string, team: string }[]
@@ -183,7 +183,7 @@ async function getOneMatch(liga: string, division: string, matchId: string): Pro
     let blueCard: { name: string, team: string }[] = []
     let redCard: { name: string, team: string }[] = []
     let teams = []
-    let star: { name: string, team: string }[] = []
+    let star: { name: string, team: string, image: string }[] = []
     let winner
     let loser
 
@@ -236,7 +236,7 @@ async function getOneMatch(liga: string, division: string, matchId: string): Pro
         const teamRef = playerStar.data()?.team;
         if (teamRef) {
             const team = await getDoc(teamRef);
-            star.push({ name, team: team.data()?.name })
+            star.push({ name, team: team.data()?.name, image: team.data()?.image })
         }
         winner = (await getDoc(matchRef.data().win)).data()
         loser = (await getDoc(matchRef.data().loser)).data()
