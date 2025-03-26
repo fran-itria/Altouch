@@ -43,10 +43,11 @@ export type match = {
     goalsMatch: { name: string, team: string }[]
     result: string
     match: string
-    day: string
+    day: { date: string, hour: string }
     yellowCard?: { name: string, team: string }[]
     blueCard?: { name: string, team: string }[]
     redCard?: { name: string, team: string }[]
+    play?: boolean
 }
 
 // GETS
@@ -106,10 +107,13 @@ async function getMatchesPlay(liga: string, division: string) {
 
     const matchesRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', true)))
     for (const match of matchesRef.docs) {
-        const { loser, win, star, players, teams, result, goles } = match.data()
+        const { loser, win, star, players, teams, result, goles, day } = match.data()
         const teamLoser = await getDoc(loser)
         const teamWinner = await getDoc(win)
         const playerStar = await getDoc(star)
+        const newDate = new Date(day)
+        const date = `${newDate.getDate()} / ${newDate.getMonth() + 1}`
+        const hour = `${newDate.getHours()}:${newDate.getMinutes() == 0 ? `${newDate.getMinutes()}0` : newDate.getMinutes()}`
 
         let playersMatch = []
         let teamsMatch = []
@@ -141,7 +145,9 @@ async function getMatchesPlay(liga: string, division: string) {
             teamsMatch,
             goalsMatch,
             result,
-            match: match.data().match
+            match: match.data().match,
+            day: { date, hour },
+            play: true
         })
     }
     return matchs
@@ -169,6 +175,7 @@ async function getMatchNotPlay(liga: string, division: string) {
             id: match.id,
             teamsMatch,
             match: match.data().match,
+            play: false,
             day: { date, hour }
         })
     }
@@ -307,6 +314,7 @@ export {
     getDivisions,
     getTeams,
     getOneTeam,
+    // getMatchs,
     getMatchesPlay,
     getMatchNotPlay,
     createMatch,

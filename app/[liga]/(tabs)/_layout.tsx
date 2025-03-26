@@ -3,7 +3,7 @@ import { Stack, Tabs, useLocalSearchParams } from "expo-router";
 import { BallIcon, CalendarIcon, FairPlayIcon, PositionsIcon, RegulationIcon } from "../../../Icons";
 
 export default function TabsLayout() {
-    const { division } = useLocalSearchParams() as { division: string };
+    const { liga, division } = useLocalSearchParams() as { liga: string, division: string };
     return (
         <>
             <Stack.Screen
@@ -36,6 +36,7 @@ export default function TabsLayout() {
                         title: "",
                         tabBarIcon: ({ color }) => <CalendarIcon color={color} />
                     }}
+                    initialParams={{ liga, division }}
                 />
                 <Tabs.Screen
                     name="statics"

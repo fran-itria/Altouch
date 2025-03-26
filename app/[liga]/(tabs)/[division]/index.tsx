@@ -16,7 +16,7 @@ export default function About() {
     useEffect(() => {
         (async () => {
             const teamsResponse = await getTeams(liga, division);
-            const matchsResponse = await getMatchesPlay(liga, division) as match[];
+            const matchsResponse = await getMatchesPlay(liga, division) as unknown as match[];
             const matchsNotPlay = await getMatchNotPlay(liga, division) as matchNotPlay[];
             setTeams(teamsResponse);
             setMatchs(matchsResponse);
