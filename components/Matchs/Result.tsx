@@ -6,7 +6,14 @@ export default function Result({ item }: { item: match }) {
         <View className="col-span-2 flex flex-row justify-around items-center h-28 border-b">
             <View className="flex flex-col items-center justify-around">
                 <Image source={{ uri: item.teamsMatch[0].image }} style={{ width: 50, height: 50 }} />
-                <Text className="text-white font-bold">{item.teamsMatch[0].name}</Text>
+                {item.teamsMatch[0].name.includes(' ') ?
+                    <View className="flex flex-col items-center">
+                        <Text className="text-white font-bold">{item.teamsMatch[0].name.split(' ')[0]}</Text>
+                        <Text className="text-white font-bold">{item.teamsMatch[0].name.split(' ')[1]}</Text>
+                    </View>
+                    :
+                    <Text className="text-white font-bold">{item.teamsMatch[0].name}</Text>
+                }
             </View>
             <View className="flex flex-col h-16 justify-around">
                 <Text className="bg-white rounded-lg px-2 text-base text-center font-bold">Finalizado</Text>
@@ -17,7 +24,14 @@ export default function Result({ item }: { item: match }) {
             </View>
             <View className="flex flex-col items-center justify-around">
                 <Image source={{ uri: item.teamsMatch[1].image }} style={{ width: 50, height: 50 }} />
-                <Text className="text-white font-bold">{item.teamsMatch[1].name}</Text>
+                {item.teamsMatch[1].name.includes(' ') ?
+                    <View className="flex flex-col items-center">
+                        <Text className="text-white font-bold">{item.teamsMatch[1].name.split(' ')[0]}</Text>
+                        <Text className="text-white font-bold">{item.teamsMatch[1].name.split(' ')[1]}</Text>
+                    </View>
+                    :
+                    <Text className="text-white font-bold">{item.teamsMatch[1].name}</Text>
+                }
             </View>
         </View>
     )
