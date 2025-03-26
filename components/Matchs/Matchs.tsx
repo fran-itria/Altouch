@@ -1,13 +1,15 @@
 import { FlatList, Image, Text, View } from "react-native";
 import { theme } from "../../tailwind.config";
 import { match } from "../../firebase/services";
+import { Link } from "expo-router";
 
 interface Props {
     liga: string
     matchs: match[]
+    division: string
 }
 
-export default function Matchs({ liga, matchs }: Props) {
+export default function Matchs({ liga, matchs, division }: Props) {
 
     return (
         <View className='mt-20 px-2'>
@@ -19,10 +21,14 @@ export default function Matchs({ liga, matchs }: Props) {
                 keyExtractor={(item) => item.id ? item.id : item.result}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 renderItem={({ item }) => (
-                    <View
+                    <Link
+                        href={{
+                            pathname: '/[liga]/match/[id]',
+                            params: { liga, division, id: item.id }
+                        }}
                         className={`p-2 w-full flex-column items-center bg-[${theme?.[liga].colors.table}]`}
                     >
-                        <View className="w-full flex flex-row justify-between n items-center">
+                        <View className="w-full flex flex-row justify-between items-center">
                             <View className="w-36 flex flex-row items-center justify-around">
                                 {!item.teamsMatch[0].name.includes(' ') ?
                                     <Text className='flex flex-col items-center color-white font-bold'>
@@ -71,7 +77,7 @@ export default function Matchs({ liga, matchs }: Props) {
                                 }
                             </View>
                         </View>
-                    </View>
+                    </Link>
                 )}
             />
         </View>

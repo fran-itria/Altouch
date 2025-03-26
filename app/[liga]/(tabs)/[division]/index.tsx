@@ -28,7 +28,7 @@ export default function About() {
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
             <Table division={division} liga={liga} teams={teams} />
             <MatchsNotPlay liga={liga} division={division} matchs={matchsNotPlay} />
-            <Matchs liga={liga} matchs={matchs} />
+            <Matchs liga={liga} division={division} matchs={matchs} />
         </Screen>
     )
 }
