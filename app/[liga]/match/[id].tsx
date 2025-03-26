@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router"
+import { Stack, useLocalSearchParams } from "expo-router"
 import { FlatList, Text, View } from "react-native"
 import { Screen } from "../../../components/Screen"
 import { theme } from "../../../tailwind.config";
@@ -27,6 +27,13 @@ export default function Matchs() {
 
     return (
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
+            <Stack.Screen
+                options={{
+                    headerTitle: match ? match[0].match : 'Fecha',
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
+                }}
+            />
             <View className="mt-20 px-2">
                 <View className="flex flex-row justify-center">
                     <Text className={`p-1 text-base rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.tertiary}]`}>Detalle del partido</Text>
