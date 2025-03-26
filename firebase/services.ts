@@ -37,15 +37,19 @@ export type match = {
     id?: string
     teamLoser: team
     teamWinner: team
-    playerStar: player
+    playerStar: { name: string, team: string }[]
     playersMatch: player[]
     teamsMatch: team[]
     goalsMatch: { name: string, team: string }[]
     result: string
     match: string
     day: string
+    yellowCard?: { name: string, team: string }[]
+    blueCard?: { name: string, team: string }[]
+    redCard?: { name: string, team: string }[]
 }
 
+// GETS
 async function getDivisions(liga: string) {
     const ligaRef = collection(db, liga);
     const divisionsOrder = query(ligaRef, orderBy(categoria));
@@ -171,6 +175,92 @@ async function getMatchNotPlay(liga: string, division: string) {
     return matchs
 }
 
+async function getOneMatch(liga: string, division: string, matchId: string): Promise<match[]> {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    const matchRef = (await getDocs(collection(ligaRef.docs[0].ref, 'matches'))).docs.find((doc) => doc.id === matchId)
+    let goals: { name: string, team: string }[] = []
+    let yellowCard: { name: string, team: string }[] = []
+    let blueCard: { name: string, team: string }[] = []
+    let redCard: { name: string, team: string }[] = []
+    let teams = []
+    let star: { name: string, team: string }[] = []
+    let winner
+    let loser
+
+    if (matchRef) {
+        if (matchRef.data().teams)
+            for (const team of matchRef.data().teams) {
+                const teamRef = await getDoc(team)
+                teams.push(teamRef.data())
+            }
+
+        if (matchRef.data().goles)
+            for (const gol of matchRef.data().goles) {
+                const playerGol: DocumentSnapshot<player> = await getDoc(gol)
+                const teamRef = playerGol.data()?.team;
+                if (teamRef) {
+                    const team = await getDoc(teamRef);
+                    goals.push({
+                        name: `${playerGol.data()?.name} ${playerGol.data()?.surname}`,
+                        team: team.data()?.name
+                    });
+                }
+            }
+
+        if (matchRef.data().yellowCard)
+            for (const card of matchRef.data().yellowCard) {
+                const playerCard: DocumentSnapshot<player> = await getDoc(card)
+                const { name, surname, team } = playerCard.data() as player
+                const teamRef = await getDoc(team);
+                yellowCard.push({ name: `${name} ${surname}`, team: teamRef.data()?.name })
+            }
+
+        if (matchRef.data().blueCard)
+            for (const card of matchRef.data().blueCard) {
+                const playerCard: DocumentSnapshot<player> = await getDoc(card)
+                const { name, surname, team } = playerCard.data() as player
+                const teamRef = await getDoc(team);
+                blueCard.push({ name: `${name} ${surname}`, team: teamRef.data()?.name })
+            }
+
+        if (matchRef.data().redCard)
+            for (const card of matchRef.data().redCard) {
+                const playerCard: DocumentSnapshot<player> = await getDoc(card)
+                const { name, surname, team } = playerCard.data() as player
+                const teamRef = await getDoc(team);
+                redCard.push({ name: `${name} ${surname}`, team: teamRef.data()?.name })
+            }
+
+        const playerStar: DocumentSnapshot<player> = await getDoc(matchRef.data().star)
+        const name = `${playerStar.data()?.name} ${playerStar.data()?.surname}`
+        const teamRef = playerStar.data()?.team;
+        if (teamRef) {
+            const team = await getDoc(teamRef);
+            star.push({ name, team: team.data()?.name })
+        }
+        winner = (await getDoc(matchRef.data().win)).data()
+        loser = (await getDoc(matchRef.data().loser)).data()
+    }
+
+    const { day, result, id, match } = matchRef?.data() as match
+    return [{
+        id,
+        day,
+        result,
+        match,
+        teamsMatch: teams,
+        goalsMatch: goals,
+        playerStar: star,
+        teamLoser: loser,
+        teamWinner: winner,
+        playersMatch: [],
+        yellowCard,
+        blueCard,
+        redCard
+    } as match];
+}
+
+// POSTS
 async function createMatch(liga: string, division: string, team1: string, team2: string) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
 
@@ -188,6 +278,7 @@ async function createMatch(liga: string, division: string, team1: string, team2:
     })
 }
 
+// PUTS
 async function updateMatch(liga: string, division: string, id: string, players: DocumentReference[]) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
     const matchRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', false)))
@@ -220,5 +311,6 @@ export {
     getMatchNotPlay,
     createMatch,
     updateMatch,
-    updateTeam
+    updateTeam,
+    getOneMatch
 };
