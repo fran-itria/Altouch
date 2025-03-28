@@ -16,7 +16,7 @@ export default function Fixture() {
             const matchsPlay: any = await getMatchesPlay(liga, division) as unknown as match[]
             const matchsNotPlay: any = await getMatchNotPlay(liga, division) as matchNotPlay[]
             const matchs: [] = matchsPlay.concat(matchsNotPlay)
-            const group = Object.groupBy(matchs, ({ match }) => match)
+            const group = Object.groupBy(matchs.reverse(), ({ match }) => match)
             setMatchs(Object.entries(group))
         })()
     }, [])
