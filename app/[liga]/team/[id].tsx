@@ -47,7 +47,7 @@ export default function Team() {
                             className={`rounded-b-lg flex flex-row justify-around bg-[#1E1E1E] p-2`}
                             href={{
                                 pathname: '/[liga]/player/[id]',
-                                params: { liga, division, id: item.id, team: item.name }
+                                params: { liga, division, id: item.id, team }
                             }}
                             key={item.id}
                         >
