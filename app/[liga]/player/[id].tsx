@@ -1,21 +1,41 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Screen } from "../../../components/Screen";
+import { useEffect, useState } from "react";
+import { detailPlayer, getOnePlayer, player } from "../../../firebase/services";
 import { theme } from "../../../tailwind.config";
+import Statics from "../../../components/Player/Statics";
+import Birth from "../../../components/Player/Birth";
+import HistoryMatchs, { matchs } from "../../../components/Player/HistoryMatchs";
 
 export default function Team() {
-    const { id, liga }: { id: string, liga: string } = useLocalSearchParams();
+    const { id, liga, division, team }: { id: string, liga: string, division: string, team: string } = useLocalSearchParams();
+    const [player, setPlayer] = useState<detailPlayer>()
+
+    useEffect(() => {
+        (async () => {
+            const player = await getOnePlayer(liga, division, team, id)
+            setPlayer(player)
+        }
+        )()
+    }, [])
+
+    useEffect(() => console.log(player), [player])
 
     return (
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
             <Stack.Screen
                 options={{
-                    headerTitle: 'Franco Itria',
+                    headerTitle: `${player?.player.name}`,
                     headerLeft: undefined,
                     headerRight: undefined,
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
+                    headerShadowVisible: false,
                 }}
             />
+            <Statics player={player?.player as player} />
+            <Birth liga={liga} player={player?.player as player} />
+            <HistoryMatchs matchs={player?.matchs as matchs} liga={liga} />
         </Screen>
     )
 }

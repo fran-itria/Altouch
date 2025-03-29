@@ -24,3 +24,7 @@ export const RegulationIcon = ({ color }: { color: string }) => {
 export const Card = ({ color }: { color: string }) => {
     return <FontAwesome name="square" size={18} color={color} />
 }
+
+export const StarIcon = () => {
+    return <FontAwesome name="star" size={18} color={'#d97706'} />
+}

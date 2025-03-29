@@ -21,7 +21,7 @@ export type team = {
 export type player = {
     id?: string
     ref: DocumentReference
-    birth: Timestamp
+    birth: string
     blueCard: number
     yellowCard: number
     redCard: number
@@ -31,6 +31,7 @@ export type player = {
     name: string
     surname: string
     team: DocumentReference
+    matchs: DocumentReference[]
 }
 
 export type match = {
@@ -48,6 +49,28 @@ export type match = {
     blueCard?: { name: string, team: string }[]
     redCard?: { name: string, team: string }[]
     play?: boolean
+}
+
+export type detailPlayer = {
+    player: {
+        name: string
+        birth: string
+        goals: number
+        yellowCard: number
+        blueCard: number
+        redCard: number
+        star: number
+    }
+    matchs: {
+        match: string
+        rival: string
+        goals: number,
+        yellowCard: number,
+        blueCard: number,
+        redCard: number,
+        star: number
+    }[]
+    teamImage: string
 }
 
 // GETS
@@ -267,6 +290,56 @@ async function getOneMatch(liga: string, division: string, matchId: string): Pro
     } as match];
 }
 
+async function getOnePlayer(liga: string, division: string, team: string, id: string): Promise<detailPlayer> {
+    const ligaDoc = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    const teamDoc = await getDocs(query(collection(ligaDoc.docs[0].ref, 'equipos'), where('name', '==', team)))
+    const playerDocs = await getDocs(query(collection(teamDoc.docs[0].ref, 'players')))
+    const player = playerDocs.docs.find((doc) => doc.id === id)?.data() as player
+    const playerName = `${player.name} ${player.surname}`
+    const matchs: {
+        match: string
+        goals: number,
+        yellowCard: number,
+        blueCard: number,
+        redCard: number,
+        rival: string
+        star: number
+    }[] = []
+    for (const match of player.matchs) {
+        const matchDoc = await getOneMatch(liga, division, match.id)
+        const goals = matchDoc[0].goalsMatch.filter((goal) => goal.name == playerName)
+        const yellowCard = matchDoc[0].yellowCard?.filter((card) => card.name == playerName)
+        const blueCard = matchDoc[0].blueCard?.filter((card) => card.name == playerName)
+        const redCard = matchDoc[0].redCard?.filter((card) => card.name == playerName)
+        const rival = matchDoc[0].teamsMatch.find((teamMatch) => teamMatch.name != team)?.name
+        const star = matchDoc[0].playerStar[0].name == playerName
+        matchs.push({
+            match: matchDoc[0].match,
+            goals: goals.length,
+            yellowCard: yellowCard ? yellowCard.length : 0,
+            blueCard: blueCard ? blueCard.length : 0,
+            redCard: redCard ? redCard.length : 0,
+            rival: rival ? rival : 'No se jugo',
+            star: star ? 1 : 0
+        })
+    }
+
+    return {
+        player: {
+            name: playerName,
+            birth: player.birth,
+            goals: player.goals,
+            yellowCard: player.yellowCard,
+            blueCard: player.blueCard,
+            redCard: player.redCard,
+            star: player.star
+        },
+        matchs,
+        teamImage: teamDoc.docs[0].data().image
+    }
+
+}
+
 // POSTS
 async function createMatch(liga: string, division: string, team1: string, team2: string) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
@@ -314,11 +387,11 @@ export {
     getDivisions,
     getTeams,
     getOneTeam,
-    // getMatchs,
     getMatchesPlay,
     getMatchNotPlay,
     createMatch,
     updateMatch,
     updateTeam,
-    getOneMatch
+    getOneMatch,
+    getOnePlayer
 };
