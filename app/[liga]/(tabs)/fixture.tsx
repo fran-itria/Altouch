@@ -28,26 +28,26 @@ export default function Fixture() {
                     title: 'Fixture'
                 }}
             />
-            <ScrollView>
-                {matchs.map(([match, matchs]: [string, match[]]) => {
+            <View>
+                {matchs.map(([match, matchs]: [string, match[]], index) => {
                     return (
-                        <View key={match} className='px-2 mt-10'>
-                            <Text className={`font-bold text-white text-center bg-${[theme?.[liga].colors.tertiary]}`}>{match}</Text>
+                        <View key={match} className={`px-2 ${index == 0 ? 'mt-0' : 'mt-8'}`}>
+                            <Text className={`rounded-t-lg h-8 flex justify-center items-center font-bold text-white text-center bg-[${[theme?.[liga]?.colors?.tertiary]}]`}>{match}</Text>
                             <FlatList
                                 data={matchs}
                                 keyExtractor={(item) => item.id || ''}
                                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
-                                renderItem={({ item }) => (
+                                renderItem={({ item, index }) => (
                                     !item.play ?
-                                        <FlatlistNotPlay liga={liga} item={item as matchNotPlay} />
+                                        <FlatlistNotPlay liga={liga} item={item as matchNotPlay} index={index} length={matchs.length - 1} />
                                         :
-                                        <FlatlistPlay liga={liga} division={division} item={item} />
+                                        <FlatlistPlay liga={liga} division={division} item={item} index={index} length={matchs.length - 1} />
                                 )}
                             />
                         </View>
                     )
                 })}
-            </ScrollView>
+            </View>
         </Screen>
     )
 }
