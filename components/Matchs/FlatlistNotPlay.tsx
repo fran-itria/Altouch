@@ -5,15 +5,17 @@ import { theme } from "../../tailwind.config";
 interface Props {
     liga: string
     item: matchNotPlay
+    length: number
+    index: number
 }
 
-export default function FlatlistNotPlay({ liga, item }: Props) {
+export default function FlatlistNotPlay({ liga, item, index, length }: Props) {
 
     return (
         <View
-            className={`p-2 w-full flex-column items-center bg-[${theme?.[liga].colors.table}]`}
+            className={`${index < length ? 'border-b border-gray-700' : 'border-0'} w-full flex-column items-center bg-[${theme?.[liga].colors.table}]`}
         >
-            <View className="w-full flex flex-row justify-between items-center">
+            <View className="h-16 w-full flex flex-row justify-between items-center">
                 <View className="w-36 flex flex-row items-center justify-around">
                     {!item.teamsMatch[0].name.includes(' ') ?
                         <Text className='flex flex-col items-center color-white font-bold'>

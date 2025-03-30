@@ -19,15 +19,15 @@ export default function MatchsNotPlay({ liga, division, matchs }: Props) {
 
     return (
         <View className='mt-20 px-2'>
-            <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga].colors.secondary}] p-2 border-b-2 border-b-black`}>
+            <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga].colors.tertiary}] p-2`}>
                 <Text className='w-36 text-center font-bold color-white'>Proximos partidos</Text>
             </View>
             <FlatList
                 data={matchs}
                 keyExtractor={(item) => item.id}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
-                renderItem={({ item }) => (
-                    <FlatlistNotPlay liga={liga} item={item} />
+                renderItem={({ item, index }) => (
+                    <FlatlistNotPlay liga={liga} item={item} length={matchs.length - 1} index={index} />
                 )}
             />
         </View>

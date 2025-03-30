@@ -7,9 +7,11 @@ interface Props {
     liga: string
     division: string
     item: match
+    length: number
+    index: number
 }
 
-export default function FlatlistPlay({ liga, division, item }: Props) {
+export default function FlatlistPlay({ liga, division, item, index, length }: Props) {
 
     return (
         <Link
@@ -17,7 +19,7 @@ export default function FlatlistPlay({ liga, division, item }: Props) {
                 pathname: '/[liga]/match/[id]',
                 params: { liga, division, id: item.id }
             }}
-            className={`p-2 w-full flex-column items-center bg-[${theme?.[liga].colors.table}]`}
+            className={`${index < length ? 'border-b border-gray-900' : 'border-0'} p-2 w-full flex-column items-center bg-[${theme?.[liga].colors.table}]`}
         >
             <View className="w-full flex flex-row justify-between items-center">
                 <View className="w-36 flex flex-row items-center justify-around">
