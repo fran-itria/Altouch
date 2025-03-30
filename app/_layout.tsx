@@ -1,11 +1,10 @@
 import { Stack } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import "../global.css"
 
 export default function Layout() {
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.text}>Hola Mundo</Text> */}
             <Stack
                 screenOptions={{
                     headerStyle: { backgroundColor: '#041433' },

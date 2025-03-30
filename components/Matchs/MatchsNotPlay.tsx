@@ -1,4 +1,4 @@
-import { FlatList, Image, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { theme } from "../../tailwind.config";
 import { team } from "../../firebase/services";
 import FlatlistNotPlay from "./FlatlistNotPlay";
@@ -15,7 +15,7 @@ interface Props {
     matchs: matchNotPlay[]
 }
 
-export default function MatchsNotPlay({ liga, division, matchs }: Props) {
+export default function MatchsNotPlay({ liga, matchs }: Props) {
 
     return (
         <View className='mt-10 px-2'>

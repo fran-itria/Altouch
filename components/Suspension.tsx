@@ -27,7 +27,6 @@ export default function PlayersSuspension({ division, liga }: Props) {
         })()
     }, [])
 
-    useEffect(() => console.log(playersSuspension), [playersSuspension])
     return (
         <View className={`w-full px-2 mt-10 mb-10`}>
             <Text className={`text-base bg-[${theme?.[liga]?.colors.tertiary}] h-8 flex justify-center items-center text-center text-white font-bold rounded-t-lg`}>Suspendidos</Text>
