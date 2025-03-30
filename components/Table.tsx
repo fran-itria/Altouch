@@ -34,7 +34,7 @@ export default function Table({ division, liga, teams }: Props) {
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 renderItem={({ item, index }) => (
                     <Link
-                        className={`${teams.length - 1 > index ? 'border-b border-gray-900' : 'border-0'} flex flex-row justify-between px-2 items-center h-12 bg-[${theme?.[liga].colors.secondary}]`}
+                        className={`${teams.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-between px-2 items-center h-12 bg-[${theme?.[liga].colors.secondary}]`}
                         href={{
                             pathname: '/[liga]/team/[id]',
                             params: { liga, division, id: item.id, team: item.name }
