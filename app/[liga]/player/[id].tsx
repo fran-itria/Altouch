@@ -6,9 +6,11 @@ import { theme } from "../../../tailwind.config";
 import Statics from "../../../components/Player/Statics";
 import Birth from "../../../components/Player/Birth";
 import HistoryMatchs, { matchs } from "../../../components/Player/HistoryMatchs";
+import useLigaName from "../../../hooks/useLigaName";
 
 export default function Team() {
-    const { id, liga, division, team }: { id: string, liga: string, division: string, team: string } = useLocalSearchParams();
+    const { liga } = useLigaName()
+    const { id, division, team }: { id: string, division: string, team: string } = useLocalSearchParams();
     const [player, setPlayer] = useState<detailPlayer>()
 
     useEffect(() => {

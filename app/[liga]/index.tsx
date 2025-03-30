@@ -9,9 +9,10 @@ import { getDivisions } from '../../firebase/services';
 import { theme } from "../../tailwind.config";
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../firebase/firebaseConfig';
+import useLigaName from '../../hooks/useLigaName';
 
 export default function App() {
-    const { liga }: { liga: string } = useLocalSearchParams()
+    const { liga } = useLigaName();
     const [divisions, setDivisions] = useState<{ id: string, categoria: string; }[]>([]);
     const [logo, setLogo] = useState<string>();
     useEffect(() => {

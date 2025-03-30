@@ -7,9 +7,11 @@ import Matchs from '../../../../components/Matchs/Matchs';
 import MatchsNotPlay, { matchNotPlay } from '../../../../components/Matchs/MatchsNotPlay';
 import Table from '../../../../components/Table';
 import PlayersSuspension from '../../../../components/Suspension';
+import useLigaName from '../../../../hooks/useLigaName';
 
 export default function About() {
-    const { liga, division }: { liga: string, division: string } = useLocalSearchParams();
+    const { liga } = useLigaName();
+    const { division }: { liga: string, division: string } = useLocalSearchParams();
     const [teams, setTeams] = useState<team[]>([]);
     const [matchs, setMatchs] = useState<match[]>([]);
     const [matchsNotPlay, setMatchsNotPlay] = useState<matchNotPlay[]>([]);

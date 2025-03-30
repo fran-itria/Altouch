@@ -4,9 +4,11 @@ import { Screen } from "../../../components/Screen";
 import { theme } from "../../../tailwind.config";
 import { useEffect, useState } from "react";
 import { getOneTeam, player } from "../../../firebase/services";
+import useLigaName from "../../../hooks/useLigaName";
 
 export default function Team() {
-    const { liga, division, team }: { team: string, liga: string, division: string } = useLocalSearchParams();
+    const { liga } = useLigaName()
+    const { division, team }: { team: string, division: string } = useLocalSearchParams();
     const [players, setPlayers] = useState<player[]>([]);
 
     useEffect(() => {
@@ -21,7 +23,6 @@ export default function Team() {
             <Stack.Screen
                 options={{
                     headerTitle: `${team}`,
-                    // headerLeft: undefined,
                     headerRight: undefined,
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },

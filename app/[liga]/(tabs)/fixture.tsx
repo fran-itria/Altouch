@@ -7,10 +7,12 @@ import { matchNotPlay } from '../../../components/Matchs/MatchsNotPlay';
 import FlatlistNotPlay from '../../../components/Matchs/FlatlistNotPlay';
 import FlatlistPlay from '../../../components/Matchs/FlatlistPlay';
 import { theme } from "../../../tailwind.config";
+import useLigaName from '../../../hooks/useLigaName';
 
 export default function Fixture() {
+    const { liga } = useLigaName()
+    const { division } = useLocalSearchParams() as { division: string }
     const [matchs, setMatchs] = useState<[string, match[]][]>([])
-    const { liga, division } = useLocalSearchParams() as { liga: string, division: string }
     useEffect(() => {
         (async () => {
             const matchsPlay: any = await getMatchesPlay(liga, division) as unknown as match[]
