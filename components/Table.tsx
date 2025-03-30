@@ -11,7 +11,7 @@ interface Props {
 
 export default function Table({ division, liga, teams }: Props) {
     return (
-        <View className="px-2">
+        <View className="px-2 mt-10">
             <View className={`h-8 rounded-t-lg flex flex-row justify-between items-center bg-[${theme?.[liga].colors.tertiary}] px-2`}>
                 <View>
                     <Text className='text-start font-bold color-white'>Equipo</Text>

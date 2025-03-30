@@ -1,11 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { ReactNode } from "react";
 
 export function Screen({ children, background }: { children: ReactNode, background: string }) {
     return (
-        <View className={`bg-[${background}] h-screen flex flex-column justify-start`}>
+        <ScrollView className={`bg-[${background}] h-screen flex flex-column justify-start`}>
             {children}
-        </View>
+        </ScrollView>
     )
 }
 
