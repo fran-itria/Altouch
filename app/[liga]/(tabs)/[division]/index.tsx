@@ -6,6 +6,7 @@ import { getMatchesPlay, getMatchNotPlay, getTeams, match, team } from '../../..
 import Matchs from '../../../../components/Matchs/Matchs';
 import MatchsNotPlay, { matchNotPlay } from '../../../../components/Matchs/MatchsNotPlay';
 import Table from '../../../../components/Table';
+import PlayersSuspension from '../../../../components/Suspension';
 
 export default function About() {
     const { liga, division }: { liga: string, division: string } = useLocalSearchParams();
@@ -29,6 +30,7 @@ export default function About() {
             <Table division={division} liga={liga} teams={teams} />
             <MatchsNotPlay liga={liga} division={division} matchs={matchsNotPlay} />
             <Matchs liga={liga} division={division} matchs={matchs} />
+            <PlayersSuspension division={division} liga={liga} />
         </Screen>
     )
 }
