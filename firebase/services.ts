@@ -340,6 +340,27 @@ async function getOnePlayer(liga: string, division: string, team: string, id: st
 
 }
 
+async function getPlayersSuspension(liga: string, division: string) {
+    const ligaDoc = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    const teamsDoc = await getDocs(query(collection(ligaDoc.docs[0].ref, 'equipos')))
+    let players: { id: string, name: string, team: string, suspension: number, totalSuspension: number }[] = []
+    for (const team of teamsDoc.docs) {
+        const playersTeam = await getDocs(query(collection(team.ref, 'players'), where('totalSuspension', '>', 0)))
+        for (const player of playersTeam.docs) {
+            const { name, surname, team, suspension, totalSuspension } = player.data()
+            const teamDoc: DocumentSnapshot<team> = await getDoc(team)
+            players.push({
+                id: player.id,
+                name: `${name} ${surname}`,
+                team: teamDoc?.data()?.name as string,
+                suspension,
+                totalSuspension
+            })
+        }
+    }
+    return players
+}
+
 // POSTS
 async function createMatch(liga: string, division: string, team1: string, team2: string) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
@@ -393,5 +414,6 @@ export {
     updateMatch,
     updateTeam,
     getOneMatch,
-    getOnePlayer
+    getOnePlayer,
+    getPlayersSuspension
 };
