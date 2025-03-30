@@ -26,6 +26,7 @@ export default function TabsLayout() {
                 <Tabs.Screen
                     name="[division]/index"
                     options={{
+                        headerShown: false,
                         title: "",
                         tabBarIcon: ({ color }) => <PositionsIcon color={color} />,
                     }}
