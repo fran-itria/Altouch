@@ -18,9 +18,9 @@ interface Props {
 export default function MatchsNotPlay({ liga, division, matchs }: Props) {
 
     return (
-        <View className='mt-20 px-2'>
+        <View className='mt-10 px-2'>
             <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga].colors.tertiary}] p-2`}>
-                <Text className='w-36 text-center font-bold color-white'>Proximos partidos</Text>
+                <Text className='text-base text-center font-bold color-white'>Proximos partidos</Text>
             </View>
             <FlatList
                 data={matchs}
