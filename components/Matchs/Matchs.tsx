@@ -12,7 +12,9 @@ interface Props {
 export default function Matchs({ liga, matchs, division }: Props) {
     return (
         <View className='mt-10 px-2'>
-            <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga].colors.tertiary}] p-2`}>
+            <View
+                style={{ backgroundColor: theme?.[liga].colors.secondary }}
+                className={`rounded-t-lg flex flex-row justify-around p-2`}>
                 <Text className='text-base text-center font-bold color-white'>Resultados anteriores</Text>
             </View>
             <FlatList

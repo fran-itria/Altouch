@@ -14,10 +14,14 @@ export type matchs = {
 export default function HistoryMatchs({ matchs, liga }: { matchs: matchs, liga: string }) {
     return (
         <View className="mt-5 px-2">
-            <View className={`h-8 rounded-t-lg flex justify-center items-center bg-[${theme?.[liga].colors.tertiary}]`}>
+            <View
+                style={{ backgroundColor: theme?.[liga].colors.secondary }}
+                className={`h-8 rounded-t-lg flex justify-center items-center`}>
                 <Text className={`text-white font-bold text-base`}>Historial</Text>
             </View>
-            <View className={`h-9 flex flex-row justify-between items-center bg-[${theme?.[liga].colors.secondary}]`}>
+            <View
+                style={{ backgroundColor: theme?.[liga].colors.tertiary }}
+                className={`h-9 flex flex-row justify-between items-center`}>
                 <View>
                     <Text className={`ml-3 text-center text-white font-bold text-base`}>Fecha</Text>
                 </View>
@@ -34,7 +38,9 @@ export default function HistoryMatchs({ matchs, liga }: { matchs: matchs, liga: 
                 keyExtractor={(item) => item.rival}
                 style={{ borderEndEndRadius: 10, borderEndStartRadius: 10 }}
                 renderItem={({ item }) => (
-                    <View className={`h-14 flex flex-row justify-between items-center bg-[${theme?.[liga].colors.table}]`}>
+                    <View
+                        style={{ backgroundColor: theme?.[liga].colors.table }}
+                        className={`h-14 flex flex-row justify-between items-center`}>
                         <View className="ml-3 flex flex-col items-start">
                             <Text className="text-white font-bold text-base">{item.match}</Text>
                             <Text className="text-white ">Vs {item.rival}</Text>

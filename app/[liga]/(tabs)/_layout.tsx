@@ -1,6 +1,7 @@
 import React from "react";
 import { Stack, Tabs, useLocalSearchParams } from "expo-router";
 import { BallIcon, CalendarIcon, FairPlayIcon, PositionsIcon, RegulationIcon } from "../../../Icons";
+import { theme } from "../../../tailwind.config";
 
 export default function TabsLayout() {
     const { liga, division } = useLocalSearchParams() as { liga: string, division: string };
@@ -17,9 +18,9 @@ export default function TabsLayout() {
                 screenOptions={{
                     tabBarActiveTintColor: "",
                     tabBarInactiveTintColor: "white",
-                    tabBarStyle: { backgroundColor: "#1D7544" },
+                    tabBarStyle: { backgroundColor: theme?.[liga]?.colors?.secondary },
                     headerTitleStyle: { fontWeight: 'bold', color: 'white' },
-                    headerStyle: { backgroundColor: '#041433' },
+                    headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
                     headerShadowVisible: false,
                     headerTitleAlign: 'center',
                 }}>

@@ -29,10 +29,14 @@ export default function Team() {
                 }}
             />
             <View className="p-4">
-                <View className={`rounded-t-lg flex flex-row justify-around bg-[${theme?.[liga]?.colors?.tertiary}] p-2`}>
+                <View
+                    style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                    className={`rounded-t-lg flex flex-row justify-around p-2`}>
                     <Text className='w-36 text-center font-bold color-white'>Jugadores</Text>
                 </View>
-                <View className={`flex flex-row justify-around bg-[${theme?.[liga].colors.secondary}] p-2`}>
+                <View
+                    style={{ backgroundColor: theme?.[liga]?.colors?.tertiary }}
+                    className={`flex flex-row justify-around p-2`}>
                     <Text className='w-36 text-center font-bold color-white w-60'>Nombre</Text>
                     <Text className='w-36 text-center font-bold color-[#FFF600]'>TA</Text>
                     <Text className='w-36 text-center font-bold color-[#0900FF]'>TA</Text>
@@ -46,7 +50,8 @@ export default function Team() {
                     style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                     renderItem={({ item, index }) => (
                         <Link
-                            className={`${players.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-around bg-[${theme?.[liga]?.colors.table}] p-2`}
+                            style={{ backgroundColor: theme?.[liga]?.colors?.table }}
+                            className={`${players.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-around p-2`}
                             href={{
                                 pathname: '/[liga]/player/[id]',
                                 params: { liga, division, id: item.id, team }

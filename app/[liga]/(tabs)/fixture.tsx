@@ -34,7 +34,9 @@ export default function Fixture() {
                 {matchs.map(([match, matchs]: [string, match[]], index) => {
                     return (
                         <View key={match} className={`px-2 ${index == 0 ? 'mt-0' : 'mt-8'}`}>
-                            <Text className={`rounded-t-lg h-8 flex justify-center items-center font-bold text-white text-center bg-[${[theme?.[liga]?.colors?.tertiary]}]`}>{match}</Text>
+                            <Text
+                                style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                                className={`rounded-t-lg h-8 flex justify-center items-center font-bold text-white text-center`}>{match}</Text>
                             <FlatList
                                 data={matchs}
                                 keyExtractor={(item) => item.id || ''}

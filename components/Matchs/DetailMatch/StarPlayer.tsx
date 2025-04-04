@@ -10,7 +10,7 @@ export default function StarPlayer({ liga, star }: Props) {
 
     return (
         <View className="mt-10 px-2">
-            <Text className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.tertiary}]`}>Figura del partido</Text>
+            <Text className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.secondary}]`}>Figura del partido</Text>
             <FlatList
                 data={star}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}

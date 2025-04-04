@@ -21,7 +21,7 @@ interface Props {
 export default function DetailMatch({ match, liga, team1, team2 }: Props) {
     return (
         <View className="mt-20 px-2">
-            <Text className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.tertiary}]`}>Detalle del partido</Text>
+            <Text className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.secondary}]`}>Detalle del partido</Text>
             <FlatList
                 data={match}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}

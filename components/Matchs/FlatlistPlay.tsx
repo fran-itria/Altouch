@@ -19,7 +19,8 @@ export default function FlatlistPlay({ liga, division, item, index, length }: Pr
                 pathname: '/[liga]/match/[id]',
                 params: { liga, division, id: item.id }
             }}
-            className={`${index < length ? 'border-b border-gray-900' : 'border-0'} p-2 w-full flex-column items-center bg-[${theme?.[liga].colors.table}]`}
+            style={{ backgroundColor: theme?.[liga].colors.table }}
+            className={`${index < length ? 'border-b border-gray-900' : 'border-0'} p-2 w-full flex-column items-center`}
         >
             <View className="w-full flex flex-row justify-between items-center">
                 <View className="w-36 flex flex-row items-center justify-around">

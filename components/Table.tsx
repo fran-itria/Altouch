@@ -12,7 +12,9 @@ interface Props {
 export default function Table({ division, liga, teams }: Props) {
     return (
         <View className="px-2 mt-10">
-            <View className={`h-8 rounded-t-lg flex flex-row justify-between items-center bg-[${theme?.[liga].colors.tertiary}] px-2`}>
+            <View
+                style={{ backgroundColor: theme?.[liga].colors.secondary }}
+                className={`h-8 rounded-t-lg flex flex-row justify-between items-center px-2`}>
                 <View>
                     <Text className='text-start font-bold color-white'>Equipo</Text>
                 </View>
@@ -34,7 +36,8 @@ export default function Table({ division, liga, teams }: Props) {
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 renderItem={({ item, index }) => (
                     <Link
-                        className={`${teams.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-between px-2 items-center h-12 bg-[${theme?.[liga].colors.secondary}]`}
+                        style={{ backgroundColor: theme?.[liga].colors.tertiary }}
+                        className={`${teams.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-between px-2 items-center h-12`}
                         href={{
                             pathname: '/[liga]/team/[id]',
                             params: { liga, division, id: item.id, team: item.name }
