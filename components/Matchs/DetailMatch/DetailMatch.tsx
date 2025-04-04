@@ -21,13 +21,17 @@ interface Props {
 export default function DetailMatch({ match, liga, team1, team2 }: Props) {
     return (
         <View className="mt-20 px-2">
-            <Text className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold bg-[${theme?.[liga].colors.secondary}]`}>Detalle del partido</Text>
+            <Text
+                style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold`}>Detalle del partido</Text>
             <FlatList
                 data={match}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 keyExtractor={(item: match) => item.id ? item.id : item.result}
                 renderItem={({ item }) => (
-                    <View className={`grid grid-col-2 bg-[${theme?.[liga].colors.table}]`}>
+                    <View
+                        style={{ backgroundColor: theme?.[liga].colors.table }}
+                        className={`grid grid-col-2`}>
                         <Result item={item} />
                         <Team1 team1={team1} />
                         <Team2 team2={team2} />

@@ -9,7 +9,7 @@ export default function Team1({ team1 }: {
 }) {
     return (
         <View className="col-span-1 border-r border-white">
-            {/* GOLES */}
+            {/* GOALS */}
             {team1 && team1[0]?.map((player, index) => (
                 <View className="mt-2 mb-2 flex flex-row items-center justify-center" key={index}>
                     <BallIcon color="white" size={18} />
@@ -17,7 +17,7 @@ export default function Team1({ team1 }: {
                 </View>
             )
             )}
-            {/* AMARILLAS */}
+            {/* YELLOW CARDS */}
             {team1 && team1[1]?.map((player, index) => (
                 <View className="mt-2 mb-2 flex flex-row items-center justify-center" key={index}>
                     <Card color="#facc15" />
@@ -25,7 +25,7 @@ export default function Team1({ team1 }: {
                 </View>
             )
             )}
-            {/* AZULES */}
+            {/* BLUE CARDS */}
             {team1 && team1[2]?.map((player, index) => (
                 <View className="mt-2 mb-2 flex flex-row items-center justify-center" key={index}>
                     <Card color="blue" />
@@ -33,7 +33,7 @@ export default function Team1({ team1 }: {
                 </View>
             )
             )}
-            {/* ROJAS */}
+            {/* RED CARDS */}
             {team1 && team1[3]?.map((player, index) => (
                 <View className="mt-2 mb-2 flex flex-row items-center justify-center" key={index}>
                     <Card color="red" />

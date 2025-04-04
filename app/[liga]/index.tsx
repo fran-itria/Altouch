@@ -1,6 +1,6 @@
-import { Link, Stack, useLocalSearchParams } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Screen } from '../../components/Screen';
 
 import { useEffect, useState } from 'react';
@@ -41,7 +41,10 @@ export default function App() {
                         <View key={division.id}>
                             <Link href={`/${liga}/${division.categoria}`} asChild>
                                 <Pressable
-                                    className='active:bg-[#009558] active:border-transparent rounded-full border-red-300 mt-5 pl-5 pr-5 pb-2 pt-2 bg-[#00311D]'>
+                                    style={{
+                                        backgroundColor: theme?.[liga]?.colors?.secondary,
+                                    }}
+                                    className={`rounded-full mt-5 pl-5 pr-5 pb-2 pt-2`}>
                                     <Text
                                         className='text-white font-bold'
                                         style={styles.text}
