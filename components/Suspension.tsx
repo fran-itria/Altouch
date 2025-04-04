@@ -29,24 +29,34 @@ export default function PlayersSuspension({ division, liga }: Props) {
 
     return (
         <View className={`w-full px-2 mt-10 mb-10`}>
-            <Text className={`text-base bg-[${theme?.[liga]?.colors.tertiary}] h-8 flex justify-center items-center text-center text-white font-bold rounded-t-lg`}>Suspendidos</Text>
-            <View className={`px-2 h-8 w-full flex flex-row justify-between items-center bg-[${theme?.[liga]?.colors?.secondary}]`}>
-                <Text className='text-white font-bold'>Jugador</Text>
-                <Text className='text-white font-bold'>Equipo</Text>
-                <Text className='text-white font-bold'>Total</Text>
+            <Text
+                style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                className={`text-base h-8 flex justify-center items-center text-center text-white font-bold rounded-t-lg`}
+            >
+                Suspendidos
+            </Text>
+            <View
+                style={{ backgroundColor: theme?.[liga]?.colors?.tertiary }}
+                className={`px-2 h-8 w-full flex flex-row justify-between items-center `}
+            >
+                <Text className='w-32 text-start text-white font-bold'>Jugador</Text>
+                <Text className='w-36 text-start text-white font-bold'>Equipo</Text>
+                <Text className='w-10 text-end text-white font-bold'>Total</Text>
             </View>
             <FlatList
                 data={playersSuspension}
                 keyExtractor={(item) => item.id}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 renderItem={({ item, index }) => (
-                    <View className={`px-2 ${index < playersSuspension.length - 1 ? 'border-b border-gray-700' : 'border-0'} h-10 flex flex-row justify-between items-center bg-[${theme?.[liga]?.colors?.table}]`}>
-                        <View className={`flex flex-row`}>
+                    <View
+                        style={{ backgroundColor: theme?.[liga]?.colors?.table }}
+                        className={`px-2 ${index < playersSuspension.length - 1 ? 'border-b border-gray-700' : 'border-0'} h-12 flex flex-row justify-between items-center`}>
+                        <View className={`flex flex-row w-32`}>
                             <Card color="red" />
                             <Text className={`text-sm ml-2 text-sm text-white font-bold`}>{item.name}</Text>
                         </View>
-                        <Text className={`text-sm text-white font-bold`}>{item.team}</Text>
-                        <Text className={`text-sm text-white font-bold`}>{item.suspension}/{item.totalSuspension}</Text>
+                        <Text className={`w-36 text-start text-sm text-white font-bold`}>{item.team}</Text>
+                        <Text className={`w-10 text-center text-sm text-white font-bold`}>{item.suspension}/{item.totalSuspension}</Text>
                     </View>
                 )}
             />
