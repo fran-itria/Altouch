@@ -39,7 +39,7 @@ export default function Table({ division, liga, teams }: Props) {
                         style={{ backgroundColor: theme?.[liga].colors.tertiary }}
                         className={`${teams.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-between px-2 items-center h-12`}
                         href={{
-                            pathname: '/[liga]/team/[id]',
+                            pathname: '../team/[id]',
                             params: { liga, division, id: item.id, team: item.name }
                         }}
                         key={item.id}

@@ -16,7 +16,7 @@ export default function FlatlistPlay({ liga, division, item, index, length }: Pr
     return (
         <Link
             href={{
-                pathname: '/[liga]/match/[id]',
+                pathname: '../match/[id]',
                 params: { liga, division, id: item.id }
             }}
             style={{ backgroundColor: theme?.[liga].colors.table }}

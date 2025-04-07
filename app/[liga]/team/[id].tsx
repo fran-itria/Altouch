@@ -53,7 +53,7 @@ export default function Team() {
                             style={{ backgroundColor: theme?.[liga]?.colors?.table }}
                             className={`${players.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-around p-2`}
                             href={{
-                                pathname: '/[liga]/player/[id]',
+                                pathname: '../player/[id]',
                                 params: { liga, division, id: item.id, team }
                             }}
                             key={item.id}
