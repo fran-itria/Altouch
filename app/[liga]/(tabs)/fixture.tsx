@@ -8,11 +8,14 @@ import FlatlistNotPlay from '../../../components/Matchs/FlatlistNotPlay';
 import FlatlistPlay from '../../../components/Matchs/FlatlistPlay';
 import { theme } from "../../../tailwind.config";
 import useLigaName from '../../../hooks/useLigaName';
+import Loading from '../../../components/Loading';
 
 export default function Fixture() {
     const { liga } = useLigaName()
     const { division } = useLocalSearchParams() as { division: string }
     const [matchs, setMatchs] = useState<[string, match[]][]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+
     useEffect(() => {
         (async () => {
             const matchsPlay: any = await getMatchesPlay(liga, division) as unknown as match[]
@@ -20,6 +23,7 @@ export default function Fixture() {
             const matchs: [] = matchsPlay.concat(matchsNotPlay)
             const group = Object.groupBy(matchs.reverse(), ({ match }) => match)
             setMatchs(Object.entries(group))
+            setLoading(false)
         })()
     }, [])
 
@@ -33,7 +37,7 @@ export default function Fixture() {
             <View>
                 {matchs.map(([match, matchs]: [string, match[]], index) => {
                     return (
-                        <View key={match} className={`px-2 ${index == 0 ? 'mt-0' : 'mt-8'}`}>
+                        <View key={match} className={`px-2 ${index == 0 ? 'mt-0' : 'mt-8'} ${loading ? 'blur-md' : 'blur-none'}`}>
                             <Text
                                 style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
                                 className={`rounded-t-lg h-8 flex justify-center items-center font-bold text-white text-center`}>{match}</Text>
@@ -51,6 +55,7 @@ export default function Fixture() {
                         </View>
                     )
                 })}
+                {loading && <Loading />}
             </View>
         </Screen>
     )

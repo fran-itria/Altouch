@@ -8,6 +8,8 @@ import MatchsNotPlay, { matchNotPlay } from '../../../../components/Matchs/Match
 import Table from '../../../../components/Table';
 import PlayersSuspension from '../../../../components/Suspension';
 import useLigaName from '../../../../hooks/useLigaName';
+import { View } from 'react-native';
+import Loading from '../../../../components/Loading';
 
 export default function About() {
     const { liga } = useLigaName();
@@ -15,6 +17,7 @@ export default function About() {
     const [teams, setTeams] = useState<team[]>([]);
     const [matchs, setMatchs] = useState<match[]>([]);
     const [matchsNotPlay, setMatchsNotPlay] = useState<matchNotPlay[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         (async () => {
@@ -24,15 +27,22 @@ export default function About() {
             setTeams(teamsResponse);
             setMatchs(matchsResponse);
             setMatchsNotPlay(matchsNotPlay);
+            setLoading(false);
         })()
     }, [])
 
     return (
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
-            <Table division={division} liga={liga} teams={teams} />
-            <MatchsNotPlay liga={liga} division={division} matchs={matchsNotPlay} />
-            <Matchs liga={liga} division={division} matchs={matchs} />
-            <PlayersSuspension division={division} liga={liga} />
+            <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
+                <Table division={division} liga={liga} teams={teams} />
+                <MatchsNotPlay liga={liga} division={division} matchs={matchsNotPlay} />
+                <Matchs liga={liga} division={division} matchs={matchs} />
+                <PlayersSuspension division={division} liga={liga} />
+            </View>
+            {
+                loading &&
+                <Loading />
+            }
         </Screen>
     )
 }

@@ -7,6 +7,8 @@ import groupPlayers from "./groupPlayers";
 import StarPlayer from "../../../components/Matchs/DetailMatch/StarPlayer";
 import DetailMatch from "../../../components/Matchs/DetailMatch/DetailMatch";
 import useLigaName from "../../../hooks/useLigaName";
+import { View } from "react-native";
+import Loading from "../../../components/Loading";
 
 
 export default function Matchs() {
@@ -15,12 +17,14 @@ export default function Matchs() {
     const [match, setMatch] = useState<match[]>()
     const [team1, setTeam1] = useState<{ name: string, team: string }[][]>()
     const [team2, setTeam2] = useState<{ name: string, team: string }[][]>()
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         (async () => {
             const match = await getOneMatch(liga, division, id)
             groupPlayers({ match, setTeam1, setTeam2 })
             setMatch(match)
+            setLoading(false)
         })()
     }, [])
 
@@ -33,8 +37,11 @@ export default function Matchs() {
                     headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
                 }}
             />
-            <DetailMatch match={match} liga={liga} team1={team1} team2={team2} />
-            <StarPlayer liga={liga} star={match && match[0].playerStar} />
+            <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
+                <DetailMatch match={match} liga={liga} team1={team1} team2={team2} />
+                <StarPlayer liga={liga} star={match && match[0].playerStar} />
+            </View>
+            {loading && <Loading />}
         </Screen>
     )
 
