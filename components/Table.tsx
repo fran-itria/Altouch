@@ -14,17 +14,15 @@ export default function Table({ division, liga, teams }: Props) {
         <View className="px-2 mt-10">
             <View
                 style={{ backgroundColor: theme?.[liga].colors.secondary }}
-                className={`h-8 rounded-t-lg flex flex-row justify-between items-center px-2`}>
+                className={`h-8 rounded-t-lg flex flex-row justify-between items-center`}>
                 <View>
-                    <Text className='text-start font-bold color-white'>Equipo</Text>
+                    <Text className='text-start font-bold color-white ml-2'>Equipo</Text>
                 </View>
                 <View className="flex flex-row w-64 justify-between">
                     <Text className='w-10 text-center font-bold color-white'>J</Text>
                     <Text className='w-10 text-center font-bold color-white'>G</Text>
                     <Text className='w-10 text-center font-bold color-white'>P</Text>
                     <Text className='w-10 text-center font-bold color-white'>E</Text>
-                    {/* <Text className='w-10 text-center font-bold color-white'>GF</Text> */}
-                    {/* <Text className='w-10 text-center font-bold color-white'>GE</Text> */}
                     <Text className='w-10 text-center font-bold color-white'>G+/-</Text>
                     <Text className='w-10 text-center font-bold color-white'>DG</Text>
                     <Text className='w-10 text-center font-bold color-white'>PTS</Text>
@@ -66,8 +64,6 @@ export default function Table({ division, liga, teams }: Props) {
                             <Text className='w-10 text-center color-white font-bold'>{item.wins}</Text>
                             <Text className='w-10 text-center color-white font-bold'>{item.lost}</Text>
                             <Text className='w-10 text-center color-white font-bold'>{item.draws}</Text>
-                            {/* <Text className='w-10 text-center color-white font-bold'>{item.goalsFor}</Text> */}
-                            {/* <Text className='w-10 text-center color-white font-bold'>{item.goalsAgainst}</Text> */}
                             <Text className='w-10 text-center color-white font-bold'>{item.goalsFor}:{item.goalsAgainst}</Text>
                             <Text className='w-10 text-center color-white font-bold'>{item.goalsFor - item.goalsAgainst}</Text>
                             <Text className='w-10 text-center color-white font-bold'>{item.points}</Text>

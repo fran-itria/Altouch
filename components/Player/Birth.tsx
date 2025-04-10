@@ -17,7 +17,7 @@ export default function Birth({ liga, player }: { liga: string, player: player }
             <View className="flex justify-center items-center mt-5">
                 <Text
                     style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                    className={`w-full rounded-t-lg text-center text-white font-bold text-base`} >Fecha de nacimineto</Text>
+                    className={`h-8 w-full rounded-t-lg flex justify-center items-center text-white font-bold text-base`} >Fecha de nacimineto</Text>
             </View>
             <FlatList
                 data={Array(player)}
