@@ -83,7 +83,7 @@ async function getDivisions(liga: string) {
     });
 }
 
-async function getTeams(liga: string, division: string): Promise<team[]> {
+async function getTeams(liga: string, division: string, vmv = false): Promise<team[]> {
     const altouchRef = collection(db, liga);
     const q = query(altouchRef, where(categoria, "==", division));
     const querySnapshot = await getDocs(q);
@@ -92,11 +92,21 @@ async function getTeams(liga: string, division: string): Promise<team[]> {
 
     for (const doc of querySnapshot.docs) {
         const equiposRef = collection(doc.ref, 'equipos');
-        const teamsOredr = query(equiposRef, orderBy('points', 'desc'));
-        const equiposSnapshot = await getDocs(teamsOredr);
+        if (!vmv) {
+            const teamsOredr = query(equiposRef, orderBy('points', 'desc'));
+            const equiposSnapshot = await getDocs(teamsOredr);
 
-        for (const team of equiposSnapshot.docs) {
-            teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
+            for (const team of equiposSnapshot.docs) {
+                teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
+            }
+        }
+        else {
+            const teamsOredr = query(equiposRef, orderBy('goalsAgainst', 'asc'));
+            const equiposSnapshot = await getDocs(teamsOredr);
+
+            for (const team of equiposSnapshot.docs) {
+                teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
+            }
         }
     }
     return teams
@@ -361,6 +371,27 @@ async function getPlayersSuspension(liga: string, division: string) {
     return players
 }
 
+async function getGoalsPlayers(liga: string, division: string) {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    const teamsRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'equipos')))
+    let players: { id: string, name: string, team: string, goals: number }[] = []
+    for (const team of teamsRef.docs) {
+        const playersTeam = await getDocs(query(collection(team.ref, 'players'), where('goals', '>', 0)))
+        for (const player of playersTeam.docs) {
+            const { name, surname, team, goals } = player.data()
+            const teamDoc: DocumentSnapshot<team> = await getDoc(team)
+            players.push({
+                id: player.id,
+                name: `${name} ${surname}`,
+                team: teamDoc?.data()?.name as string,
+                goals
+            })
+        }
+    }
+    players.sort((a, b) => b.goals - a.goals)
+    return players
+}
+
 // POSTS
 async function createMatch(liga: string, division: string, team1: string, team2: string) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
@@ -415,5 +446,6 @@ export {
     updateTeam,
     getOneMatch,
     getOnePlayer,
-    getPlayersSuspension
+    getPlayersSuspension,
+    getGoalsPlayers
 };
