@@ -1,0 +1,37 @@
+import { FlatList, Text, View } from "react-native";
+import { theme } from "../../tailwind.config";
+
+export default function Goals({ liga, goalsPlayers }: {
+    liga: string
+    goalsPlayers: {
+        id: string;
+        name: string;
+        team: string;
+        goals: number;
+    }[]
+}) {
+
+    return (
+        <View className="px-2 mt-10">
+            <View
+                style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                className='flex flex-row justify-between rounded-t-lg h-8 items-center'>
+                <Text className="w-28 text-start pl-2 text-sm font-bold text-white">Jugador</Text>
+                <Text className="w-36 text-center text-sm font-bold text-white">Equipo</Text>
+                <Text className="w-24 text-center text-sm font-bold text-white">Goles</Text>
+            </View>
+            <FlatList
+                data={goalsPlayers}
+                keyExtractor={(item) => item.id}
+                style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8, backgroundColor: theme?.[liga]?.colors?.table }}
+                renderItem={({ item, index }) => (
+                    <View className={`${goalsPlayers.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row items-center justify-between h-10`}>
+                        <Text className="w-28 px-2 text-white text-sm font-bold text-start">{item.name}</Text>
+                        <Text className="w-36 text-white text-sm font-bold text-center">{item.team}</Text>
+                        <Text className="w-24 text-white text-sm font-bold text-center">{item.goals}</Text>
+                    </View>
+                )}
+            />
+        </View>
+    )
+}
