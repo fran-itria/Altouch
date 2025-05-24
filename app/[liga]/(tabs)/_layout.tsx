@@ -46,6 +46,7 @@ export default function TabsLayout() {
                         title: "",
                         tabBarIcon: ({ color }) => <BallIcon color={color} />
                     }}
+                    initialParams={{ liga, division }}
                 />
                 <Tabs.Screen
                     name="fairPlay"
