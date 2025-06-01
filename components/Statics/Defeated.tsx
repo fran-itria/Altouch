@@ -1,7 +1,7 @@
 import { FlatList, Image, Text, View } from "react-native";
 import { theme } from "../../tailwind.config";
 
-export default function Vmv({ liga, teams }: {
+export default function Defeated({ liga, teams }: {
     liga: string, teams: {
         id: string;
         name: string;
@@ -10,7 +10,6 @@ export default function Vmv({ liga, teams }: {
         image?: string;
     }[]
 }) {
-    console.log(teams)
     return (
         <View className="px-2 mt-10">
             <View
