@@ -7,18 +7,19 @@ import { useEffect, useState } from 'react';
 import { getPlayersStats, getTeams } from '../../../firebase/services';
 import Loading from '../../../components/Loading';
 import Goals from '../../../components/Statics/Goals';
-import Vmv from '../../../components/Statics/Vmv';
+import Defeated from '../../../components/Statics/Defeated';
 import { View } from 'react-native';
+import Stars from '../../../components/Statics/Stars';
 
 export enum StaticsEnum {
-    GOLEADORES = 'Goleadores',
-    VENCIDA = 'V.M Vencida',
-    FIGURAS = 'Figuras'
+    GOALS = 'Goleadores',
+    DEFEATED = 'V.M Vencida',
+    STARS = 'Figuras'
 }
 
 export default function Statics() {
     const { liga } = useLigaName()
-    const [activeStats, setActiveStats] = useState<StaticsEnum>(StaticsEnum.GOLEADORES)
+    const [activeStats, setActiveStats] = useState<StaticsEnum>(StaticsEnum.GOALS)
     const { division } = useLocalSearchParams() as { division: string, liga: string }
     const [players, setPlayers] = useState<{
         playersGoals: { id: string, name: string, team: string, goals: number, star: number }[],
@@ -46,11 +47,14 @@ export default function Statics() {
             {loading && <Loading />}
             <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
                 <StaticsNav liga={liga} activeStats={activeStats} setActiveStats={setActiveStats} />
-                {activeStats == StaticsEnum.GOLEADORES &&
+                {activeStats == StaticsEnum.GOALS &&
                     <Goals liga={liga} goalsPlayers={players?.playersGoals} />
                 }
-                {activeStats == StaticsEnum.VENCIDA &&
-                    <Vmv liga={liga} teams={teams} />
+                {activeStats == StaticsEnum.DEFEATED &&
+                    <Defeated liga={liga} teams={teams} />
+                }
+                {activeStats == StaticsEnum.STARS &&
+                    <Stars liga={liga} playersStars={players?.playersStar} />
                 }
             </View>
         </Screen>
