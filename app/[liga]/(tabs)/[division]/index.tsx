@@ -33,16 +33,16 @@ export default function About() {
 
     return (
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
+            {
+                loading &&
+                <Loading />
+            }
             <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
                 <Table division={division} liga={liga} teams={teams} />
                 <MatchsNotPlay liga={liga} division={division} matchs={matchsNotPlay} />
                 <Matchs liga={liga} division={division} matchs={matchs} />
                 <PlayersSuspension division={division} liga={liga} />
             </View>
-            {
-                loading &&
-                <Loading />
-            }
         </Screen>
     )
 }
