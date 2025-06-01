@@ -29,12 +29,13 @@ export default function Fixture() {
 
     return (
         <Screen background='#041433'>
+            {loading && <Loading />}
             <Stack.Screen
                 options={{
-                    title: 'Fixture'
+                    headerTitle: 'Fixture',
                 }}
             />
-            <View>
+            <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
                 {matchs.map(([match, matchs]: [string, match[]], index) => {
                     return (
                         <View key={match} className={`px-2 ${index == 0 ? 'mt-0' : 'mt-8'} ${loading ? 'blur-md' : 'blur-none'}`}>
@@ -55,7 +56,6 @@ export default function Fixture() {
                         </View>
                     )
                 })}
-                {loading && <Loading />}
             </View>
         </Screen>
     )
