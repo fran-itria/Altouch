@@ -3,14 +3,14 @@ import { theme } from "../../tailwind.config";
 
 export default function Goals({ liga, goalsPlayers }: {
     liga: string
-    goalsPlayers: {
+    goalsPlayers?: {
         id: string;
         name: string;
         team: string;
         goals: number;
+        star: number
     }[]
 }) {
-
     return (
         <View className="px-2 mt-10">
             <View
@@ -25,8 +25,11 @@ export default function Goals({ liga, goalsPlayers }: {
                 keyExtractor={(item) => item.id}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8, backgroundColor: theme?.[liga]?.colors?.table }}
                 renderItem={({ item, index }) => (
-                    <View className={`${goalsPlayers.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row items-center justify-between h-10`}>
-                        <Text className="w-28 px-2 text-white text-sm font-bold text-start">{item.name}</Text>
+                    <View className={`${goalsPlayers && goalsPlayers.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row items-center justify-between h-14 pl-2`}>
+                        <View className="flex flex-row items-center">
+                            <Text className='text-center color-white font-bold mr-4'> {index + 1} </Text>
+                            <Text className="text-white text-sm font-bold text-start">{item.name}</Text>
+                        </View>
                         <Text className="w-36 text-white text-sm font-bold text-center">{item.team}</Text>
                         <Text className="w-24 text-white text-sm font-bold text-center">{item.goals}</Text>
                     </View>
