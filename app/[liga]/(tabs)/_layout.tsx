@@ -12,13 +12,14 @@ export default function TabsLayout() {
                     headerTitle: `${division}`,
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25, },
                     headerTitleAlign: "center",
-                    // headerShown: false
                 }} />
             <Tabs
                 screenOptions={{
                     tabBarActiveTintColor: "",
                     tabBarInactiveTintColor: "white",
-                    tabBarStyle: { backgroundColor: theme?.[liga]?.colors?.secondary },
+                    tabBarStyle: { backgroundColor: theme?.[liga]?.colors?.secondary, borderTopWidth: 3, borderColor: theme?.[liga]?.colors?.borderTab },
+                    tabBarIconStyle: { marginTop: 5, marginBottom: 5 },
+                    tabBarLabelStyle: { fontSize: 12, fontWeight: 'bold' },
                     headerTitleStyle: { fontWeight: 'bold', color: 'white' },
                     headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
                     headerShadowVisible: false,
@@ -30,13 +31,15 @@ export default function TabsLayout() {
                         headerShown: false,
                         title: "",
                         tabBarIcon: ({ color }) => <PositionsIcon color={color} />,
+                        animation: "shift",
                     }}
                 />
                 <Tabs.Screen
                     name="fixture"
                     options={{
                         title: "",
-                        tabBarIcon: ({ color }) => <CalendarIcon color={color} />
+                        tabBarIcon: ({ color }) => <CalendarIcon color={color} />,
+                        animation: "shift",
                     }}
                     initialParams={{ liga, division }}
                 />
@@ -44,7 +47,8 @@ export default function TabsLayout() {
                     name="statics"
                     options={{
                         title: "",
-                        tabBarIcon: ({ color }) => <BallIcon color={color} />
+                        tabBarIcon: ({ color }) => <BallIcon color={color} />,
+                        animation: "shift",
                     }}
                     initialParams={{ liga, division }}
                 />
@@ -52,14 +56,16 @@ export default function TabsLayout() {
                     name="fairPlay"
                     options={{
                         title: "",
-                        tabBarIcon: ({ color }) => <FairPlayIcon color={color} />
+                        tabBarIcon: ({ color }) => <FairPlayIcon color={color} />,
+                        animation: "shift",
                     }}
                 />
                 <Tabs.Screen
                     name="regulation"
                     options={{
                         title: "",
-                        tabBarIcon: ({ color }) => <RegulationIcon color={color} />
+                        tabBarIcon: ({ color }) => <RegulationIcon color={color} />,
+                        animation: "shift",
                     }}
                 />
             </Tabs>
