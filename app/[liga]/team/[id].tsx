@@ -25,7 +25,7 @@ export default function Team() {
         <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
             <Stack.Screen
                 options={{
-                    headerTitle: `${team}`,
+                    headerTitle: `${team ? team : 'Equipo'}`,
                     headerRight: undefined,
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontWeight: 'bold', color: theme?.[liga]?.colors?.text, fontSize: 25 },
