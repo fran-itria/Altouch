@@ -315,24 +315,25 @@ async function getOnePlayer(liga: string, division: string, team: string, id: st
         rival: string
         star: number
     }[] = []
-    for (const match of player.matchs) {
-        const matchDoc = await getOneMatch(liga, division, match.id)
-        const goals = matchDoc[0].goalsMatch.filter((goal) => goal.name == playerName)
-        const yellowCard = matchDoc[0].yellowCard?.filter((card) => card.name == playerName)
-        const blueCard = matchDoc[0].blueCard?.filter((card) => card.name == playerName)
-        const redCard = matchDoc[0].redCard?.filter((card) => card.name == playerName)
-        const rival = matchDoc[0].teamsMatch.find((teamMatch) => teamMatch.name != team)?.name
-        const star = matchDoc[0].playerStar[0].name == playerName
-        matchs.push({
-            match: matchDoc[0].match,
-            goals: goals.length,
-            yellowCard: yellowCard ? yellowCard.length : 0,
-            blueCard: blueCard ? blueCard.length : 0,
-            redCard: redCard ? redCard.length : 0,
-            rival: rival ? rival : 'No se jugo',
-            star: star ? 1 : 0
-        })
-    }
+    if (player.matchs)
+        for (const match of player.matchs) {
+            const matchDoc = await getOneMatch(liga, division, match.id)
+            const goals = matchDoc[0].goalsMatch.filter((goal) => goal.name == playerName)
+            const yellowCard = matchDoc[0].yellowCard?.filter((card) => card.name == playerName)
+            const blueCard = matchDoc[0].blueCard?.filter((card) => card.name == playerName)
+            const redCard = matchDoc[0].redCard?.filter((card) => card.name == playerName)
+            const rival = matchDoc[0].teamsMatch.find((teamMatch) => teamMatch.name != team)?.name
+            const star = matchDoc[0].playerStar[0].name == playerName
+            matchs.push({
+                match: matchDoc[0].match,
+                goals: goals.length,
+                yellowCard: yellowCard ? yellowCard.length : 0,
+                blueCard: blueCard ? blueCard.length : 0,
+                redCard: redCard ? redCard.length : 0,
+                rival: rival ? rival : 'No se jugo',
+                star: star ? 1 : 0
+            })
+        }
 
     return {
         player: {

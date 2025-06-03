@@ -27,10 +27,10 @@ export default function Team() {
     }, [])
 
     return (
-        <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
+        <Screen background={theme?.[liga]?.colors?.primary}>
             <Stack.Screen
                 options={{
-                    headerTitle: `${player?.player.name}`,
+                    headerTitle: `${player ? player?.player.name : 'Jugador'}`,
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontWeight: 'bold', color: theme?.[liga]?.colors?.text, fontSize: 25 },
                     headerShadowVisible: true,
@@ -40,7 +40,7 @@ export default function Team() {
             />
             <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
                 <Statics player={player?.player as player} />
-                <Birth liga={liga} player={player?.player as player} />
+                <Birth liga={liga} birth={player?.player.birth as string} />
                 <HistoryMatchs matchs={player?.matchs as matchs} liga={liga} />
             </View>
             {loading && <Loading />}
