@@ -1,13 +1,10 @@
-import { View } from 'react-native';
-import { useLinkBuilder } from '@react-navigation/native';
-import { PlatformPressable } from '@react-navigation/elements';
+import { Pressable, View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BallIcon, CalendarIcon, FairPlayIcon, PositionsIcon, RegulationIcon } from "../Icons";
 import { theme } from "../tailwind.config";
 import { StyleSheet } from 'nativewind';
 
 export default function MyTabBar({ state, descriptors, navigation, liga }: BottomTabBarProps & { liga: string }) {
-    const { buildHref } = useLinkBuilder();
 
     const styles = StyleSheet.create({
         container: {
@@ -74,8 +71,7 @@ export default function MyTabBar({ state, descriptors, navigation, liga }: Botto
                 };
 
                 return (
-                    <PlatformPressable
-                        href={buildHref(route.name, route.params)}
+                    <Pressable
                         accessibilityState={isFocused ? { selected: true } : {}}
                         accessibilityLabel={options.tabBarAccessibilityLabel}
                         testID={options.tabBarButtonTestID}
@@ -85,7 +81,7 @@ export default function MyTabBar({ state, descriptors, navigation, liga }: Botto
                     >
                         <View style={isFocused && styles.borderFocusItem}></View>
                         {getIcon(route.name, isFocused ? theme?.[liga]?.colors.tabBarActiveColor : theme?.[liga]?.colors.tabBarInactiveColor)}
-                    </PlatformPressable>
+                    </Pressable>
                 );
             })}
         </View>
