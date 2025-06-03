@@ -12,7 +12,10 @@ module.exports = {
         primary: "#041433",
         secondary: "#1D7544",
         tertiary: "#00311D",
-        table: "#1E1E1E"
+        table: "#1E1E1E",
+        text: 'white',
+        tabBarActiveColor: "white",
+        tabBarInactiveColor: "black",
     }
   },
     extend: {},
