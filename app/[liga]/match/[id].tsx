@@ -34,7 +34,9 @@ export default function Matchs() {
                 options={{
                     headerTitle: match ? match[0].match : 'Fecha',
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
+                    headerTitleStyle: { fontWeight: 'bold', color: theme?.[liga]?.colors?.text, fontSize: 25 },
+                    headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
+                    headerTintColor: theme?.[liga]?.colors?.text,
                 }}
             />
             <View className={`${loading ? 'blur-md' : 'blur-none'}`}>

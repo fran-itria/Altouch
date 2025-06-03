@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { Screen } from '../../../components/Screen';
 import { useEffect, useState } from 'react';
 import { getMatchesPlay, getMatchNotPlay, match } from '../../../firebase/services';
@@ -28,7 +28,7 @@ export default function Fixture() {
     }, [])
 
     return (
-        <Screen background='#041433'>
+        <Screen background={theme?.[liga]?.colors?.primary}>
             {loading && <Loading />}
             <Stack.Screen
                 options={{

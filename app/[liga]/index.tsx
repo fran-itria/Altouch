@@ -1,6 +1,6 @@
 import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import { Screen } from '../../components/Screen';
 
 import { useEffect, useState } from 'react';
@@ -27,16 +27,18 @@ export default function App() {
 
     return (
         <View>
-            <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
+            <Screen background={theme?.[liga]?.colors?.primary}>
                 <Stack.Screen
                     options={{
                         headerShown: true,
-                        headerShadowVisible: false
+                        headerShadowVisible: false,
+                        headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary || 'black' },
+                        headerTintColor: theme?.[liga]?.colors?.text || 'white',
                     }}
                 />
                 <View className='flex flex-col h-screen items-center justify-start p-10'>
                     <Image source={{ uri: logo }} style={{ width: 300, height: 300, borderRadius: '100%' }} />
-                    <Text className='text-white font-bold underline' style={styles.text}>Seleccione la categoría</Text>
+                    <Text className='text-2xl font-bold underline underline-offset-8' style={{ color: theme?.[liga]?.colors?.text }}>Seleccione la categoría</Text>
                     {divisions.map((division, i) => (
                         <View key={division.id}>
                             <Link href={`/${liga}/${division.categoria}`} asChild>
@@ -46,8 +48,8 @@ export default function App() {
                                     }}
                                     className={`rounded-full mt-5 pl-5 pr-5 pb-2 pt-2`}>
                                     <Text
-                                        className='text-white font-bold'
-                                        style={styles.text}
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className='font-bold text-xl'
                                     >
                                         {division.categoria}
                                     </Text>
@@ -61,10 +63,3 @@ export default function App() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    text: {
-        fontSize: 20,
-        fontVariant: ['small-caps']
-    }
-});

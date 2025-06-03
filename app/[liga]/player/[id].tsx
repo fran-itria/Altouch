@@ -31,11 +31,11 @@ export default function Team() {
             <Stack.Screen
                 options={{
                     headerTitle: `${player?.player.name}`,
-                    headerLeft: undefined,
-                    headerRight: undefined,
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
-                    headerShadowVisible: false,
+                    headerTitleStyle: { fontWeight: 'bold', color: theme?.[liga]?.colors?.text, fontSize: 25 },
+                    headerShadowVisible: true,
+                    headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
+                    headerTintColor: theme?.[liga]?.colors?.text,
                 }}
             />
             <View className={`${loading ? 'blur-md' : 'blur-none'}`}>

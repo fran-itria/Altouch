@@ -1,14 +1,12 @@
 import { Stack } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import "../global.css"
 
 export default function Layout() {
     return (
-        <View style={styles.container}>
+        <View className="flex-1 bg-black">
             <Stack
                 screenOptions={{
-                    headerStyle: { backgroundColor: '#041433' },
-                    headerTintColor: 'white',
                     headerTitle: ''
                 }}
             >
@@ -19,13 +17,3 @@ export default function Layout() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'black',
-    },
-    text: {
-        color: 'red',
-    }
-})

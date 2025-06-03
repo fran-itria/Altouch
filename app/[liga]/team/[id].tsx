@@ -28,7 +28,9 @@ export default function Team() {
                     headerTitle: `${team}`,
                     headerRight: undefined,
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontWeight: 'bold', color: 'white', fontSize: 25 },
+                    headerTitleStyle: { fontWeight: 'bold', color: theme?.[liga]?.colors?.text, fontSize: 25 },
+                    headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
+                    headerTintColor: theme?.[liga]?.colors?.text,
                 }}
             />
             <View className={`p-4 ${loading ? 'blur-md' : 'blur-none'}`}>

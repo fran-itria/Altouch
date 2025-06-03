@@ -12,6 +12,8 @@ export default function TabsLayout() {
                     headerTitle: `${division}`,
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25, color: theme?.[liga]?.colors?.text },
                     headerTitleAlign: "center",
+                    headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
+                    headerTintColor: theme?.[liga]?.colors?.text,
                 }} />
             <Tabs
                 tabBar={(props) => <MyTabBar {...props} liga={liga} />}
