@@ -41,22 +41,23 @@ export default function Statics() {
         <Screen background={theme?.[liga]?.colors?.primary}>
             <Stack.Screen
                 options={{
-                    headerTitle: 'Estadísticas',
+                    headerTitle: loading ? '' : 'Estadísticas',
                 }}
             />
-            {loading && <Loading />}
-            <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
-                <StaticsNav liga={liga} activeStats={activeStats} setActiveStats={setActiveStats} />
-                {activeStats == StaticsEnum.GOALS &&
-                    <Goals liga={liga} goalsPlayers={players?.playersGoals} />
-                }
-                {activeStats == StaticsEnum.DEFEATED &&
-                    <Defeated liga={liga} teams={teams} />
-                }
-                {activeStats == StaticsEnum.STARS &&
-                    <Stars liga={liga} playersStars={players?.playersStar} />
-                }
-            </View>
+            {loading ? <Loading /> :
+                <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
+                    <StaticsNav liga={liga} activeStats={activeStats} setActiveStats={setActiveStats} />
+                    {activeStats == StaticsEnum.GOALS &&
+                        <Goals liga={liga} goalsPlayers={players?.playersGoals} />
+                    }
+                    {activeStats == StaticsEnum.DEFEATED &&
+                        <Defeated liga={liga} teams={teams} />
+                    }
+                    {activeStats == StaticsEnum.STARS &&
+                        <Stars liga={liga} playersStars={players?.playersStar} />
+                    }
+                </View>
+            }
         </Screen>
     )
 }
