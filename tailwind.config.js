@@ -14,6 +14,7 @@ module.exports = {
         tertiary: "#00311D",
         table: "#1E1E1E",
         text: 'white',
+        textFinish: 'black',
         tabBarActiveColor: "white",
         tabBarInactiveColor: "black",
     }

@@ -32,7 +32,7 @@ export default function Fixture() {
             {loading && <Loading />}
             <Stack.Screen
                 options={{
-                    headerTitle: 'Fixture',
+                    headerTitle: loading ? '' : 'Fixture',
                 }}
             />
             <View className={`${loading ? 'blur-md' : 'blur-none'}`}>

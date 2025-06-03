@@ -16,16 +16,44 @@ export default function Table({ division, liga, teams }: Props) {
                 style={{ backgroundColor: theme?.[liga].colors.secondary }}
                 className={`h-8 rounded-t-lg flex flex-row justify-between items-center`}>
                 <View>
-                    <Text className='text-start font-bold color-white ml-2'>Equipo</Text>
+                    <Text style={{ color: theme?.[liga].colors.text }} className='text-start font-bold ml-2'>Equipo</Text>
                 </View>
                 <View className="flex flex-row w-64 justify-between">
-                    <Text className='w-10 text-center font-bold color-white'>J</Text>
-                    <Text className='w-10 text-center font-bold color-white'>G</Text>
-                    <Text className='w-10 text-center font-bold color-white'>P</Text>
-                    <Text className='w-10 text-center font-bold color-white'>E</Text>
-                    <Text className='w-10 text-center font-bold color-white'>G+/-</Text>
-                    <Text className='w-10 text-center font-bold color-white'>DG</Text>
-                    <Text className='w-10 text-center font-bold color-white'>PTS</Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        J
+                    </Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        G
+                    </Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        P
+                    </Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        E
+                    </Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        G
+                        +/-</Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        D
+                        G</Text>
+                    <Text
+                        style={{ color: theme?.[liga].colors.text }}
+                        className='w-10 text-center font-bold'>
+                        P
+                        TS</Text>
                 </View>
             </View>
             <FlatList
@@ -50,23 +78,63 @@ export default function Table({ division, liga, teams }: Props) {
                                 />
                             }
                             {!item.name.includes(' ') ?
-                                <Text className='ml-2 text-center color-white font-bold'>{item.name}</Text>
+                                <Text
+                                    style={{ color: theme?.[liga].colors.text }}
+                                    className='ml-2 text-center font-bold'>
+                                    {item.name}
+                                </Text>
                                 :
                                 <View className="ml-2">
-                                    <Text className='text-center color-white font-bold'>{item.name.split(' ')[0]}</Text>
-                                    <Text className='text-center color-white font-bold'>{item.name.split(' ')[1]}</Text>
+                                    <Text
+                                        style={{ color: theme?.[liga].colors.text }}
+                                        className='text-center font-bold'>
+                                        {item.name.split(' ')[0]}
+                                    </Text>
+                                    <Text
+                                        style={{ color: theme?.[liga].colors.text }}
+                                        className='text-center font-bold'>
+                                        {item.name.split(' ')[1]}
+                                    </Text>
                                 </View>
 
                             }
                         </View>
                         <View className="flex flex-row w-64 justify-between">
-                            <Text className='w-10 text-center color-white font-bold'>{item.matches}</Text>
-                            <Text className='w-10 text-center color-white font-bold'>{item.wins}</Text>
-                            <Text className='w-10 text-center color-white font-bold'>{item.lost}</Text>
-                            <Text className='w-10 text-center color-white font-bold'>{item.draws}</Text>
-                            <Text className='w-10 text-center color-white font-bold'>{item.goalsFor}:{item.goalsAgainst}</Text>
-                            <Text className='w-10 text-center color-white font-bold'>{item.goalsFor - item.goalsAgainst}</Text>
-                            <Text className='w-10 text-center color-white font-bold'>{item.points}</Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.matches}
+                            </Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.wins}
+                            </Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.lost}
+                            </Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.draws}
+                            </Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.goalsFor}
+                                :{item.goalsAgainst}</Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.goalsFor -
+                                    item.goalsAgainst}</Text>
+                            <Text
+                                style={{ color: theme?.[liga].colors.text }}
+                                className='w-10 text-center font-bold'>
+                                {item.points}
+                            </Text>
                         </View>
                     </Link>
                 )}

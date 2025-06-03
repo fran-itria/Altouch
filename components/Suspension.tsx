@@ -30,8 +30,8 @@ export default function PlayersSuspension({ division, liga }: Props) {
     return (
         <View className={`w-full px-2 mt-10 mb-10`}>
             <Text
-                style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                className={`text-base h-8 flex justify-center items-center text-center text-white font-bold rounded-t-lg`}
+                style={{ backgroundColor: theme?.[liga]?.colors?.secondary, color: theme?.[liga]?.colors?.text }}
+                className={`text-base h-8 flex justify-center items-center text-center font-bold rounded-t-lg`}
             >
                 Suspendidos
             </Text>
@@ -39,9 +39,9 @@ export default function PlayersSuspension({ division, liga }: Props) {
                 style={{ backgroundColor: theme?.[liga]?.colors?.tertiary }}
                 className={`px-2 h-8 w-full flex flex-row justify-between items-center `}
             >
-                <Text className='w-32 text-start text-white font-bold'>Jugador</Text>
-                <Text className='w-36 text-start text-white font-bold'>Equipo</Text>
-                <Text className='w-10 text-end text-white font-bold'>Total</Text>
+                <Text style={{ color: theme?.[liga].colors.text }} className='w-32 text-start font-bold'>Jugador</Text>
+                <Text style={{ color: theme?.[liga].colors.text }} className='w-36 text-start font-bold'>Equipo</Text>
+                <Text style={{ color: theme?.[liga].colors.text }} className='w-10 text-end font-bold'>Total</Text>
             </View>
             <FlatList
                 data={playersSuspension}
@@ -53,10 +53,10 @@ export default function PlayersSuspension({ division, liga }: Props) {
                         className={`px-2 ${index < playersSuspension.length - 1 ? 'border-b border-gray-700' : 'border-0'} h-12 flex flex-row justify-between items-center`}>
                         <View className={`flex flex-row w-32`}>
                             <Card color="red" />
-                            <Text className={`text-sm ml-2 text-sm text-white font-bold`}>{item.name}</Text>
+                            <Text style={{ color: theme?.[liga].colors.text }} className={`text-sm ml-2 text-sm font-bold`}>{item.name}</Text>
                         </View>
-                        <Text className={`w-36 text-start text-sm text-white font-bold`}>{item.team}</Text>
-                        <Text className={`w-10 text-center text-sm text-white font-bold`}>{item.suspension}/{item.totalSuspension}</Text>
+                        <Text style={{ color: theme?.[liga].colors.text }} className={`w-36 text-start text-sm font-bold`}>{item.team}</Text>
+                        <Text style={{ color: theme?.[liga].colors.text }} className={`w-10 text-center text-sm font-bold`}>{item.suspension}/{item.totalSuspension}</Text>
                     </View>
                 )}
             />

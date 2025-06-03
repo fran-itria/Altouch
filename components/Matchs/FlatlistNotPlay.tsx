@@ -19,15 +19,15 @@ export default function FlatlistNotPlay({ liga, item, index, length }: Props) {
             <View className="h-16 w-full flex flex-row justify-between items-center">
                 <View className="w-36 flex flex-row items-center justify-around">
                     {!item.teamsMatch[0].name.includes(' ') ?
-                        <Text className='flex flex-col items-center color-white font-bold'>
+                        <Text style={{ color: theme?.[liga].colors.text }} className='flex flex-col items-center font-bold'>
                             {item.teamsMatch[0].name}
                         </Text>
                         :
                         <View className="flex flex-col items-center">
-                            <Text className='color-white font-bold'>
+                            <Text style={{ color: theme?.[liga].colors.text }} className='font-bold'>
                                 {item.teamsMatch[0].name.split(' ')[0]}
                             </Text>
-                            <Text className='color-white font-bold'>
+                            <Text style={{ color: theme?.[liga].colors.text }} className='font-bold'>
                                 {item.teamsMatch[0].name.split(' ')[1]}
                             </Text>
                         </View>
@@ -35,25 +35,25 @@ export default function FlatlistNotPlay({ liga, item, index, length }: Props) {
                     <Image source={{ uri: item.teamsMatch[0].image }} style={{ width: 30, height: 30 }} />
                 </View>
                 <View className="flex flex-col items-center">
-                    <Text className='color-white font-bold'>
+                    <Text style={{ color: theme?.[liga].colors.text }} className='font-bold'>
                         {item.day.date}
                     </Text>
-                    <Text className='color-white font-bold text-center'>
+                    <Text style={{ color: theme?.[liga].colors.text }} className='font-bold text-center'>
                         {item.day.hour} Hs
                     </Text>
                 </View>
                 <View className="flex flex-row items-center w-36 justify-around">
                     <Image source={{ uri: item.teamsMatch[1].image }} style={{ width: 30, height: 30 }} />
                     {!item.teamsMatch[1].name.includes(' ') ?
-                        <Text className='flex flex-col items-center color-white font-bold'>
+                        <Text style={{ color: theme?.[liga].colors.text }} className='flex flex-col items-center font-bold'>
                             {item.teamsMatch[1].name}
                         </Text>
                         :
                         <View className="flex flex-col items-center">
-                            <Text className='color-white font-bold'>
+                            <Text style={{ color: theme?.[liga].colors.text }} className='font-bold'>
                                 {item.teamsMatch[1].name.split(' ')[0]}
                             </Text>
-                            <Text className='color-white font-bold'>
+                            <Text style={{ color: theme?.[liga].colors.text }} className='font-bold'>
                                 {item.teamsMatch[1].name.split(' ')[1]}
                             </Text>
                         </View>

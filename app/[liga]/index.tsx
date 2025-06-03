@@ -32,8 +32,8 @@ export default function App() {
                     options={{
                         headerShown: true,
                         headerShadowVisible: false,
-                        headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary || 'black' },
-                        headerTintColor: theme?.[liga]?.colors?.text || 'white',
+                        headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
+                        headerTintColor: theme?.[liga]?.colors?.text,
                     }}
                 />
                 <View className='flex flex-col h-screen items-center justify-start p-10'>

@@ -22,7 +22,11 @@ export default function MatchsNotPlay({ liga, matchs }: Props) {
             <View
                 style={{ backgroundColor: theme?.[liga].colors.secondary }}
                 className={`rounded-t-lg flex flex-row justify-around p-2`}>
-                <Text className='text-base text-center font-bold color-white'>Proximos partidos</Text>
+                <Text
+                    style={{ color: theme?.[liga].colors.text }}
+                    className='text-base text-center font-bold'>
+                    Proximos partidos
+                </Text>
             </View>
             <FlatList
                 data={matchs}
