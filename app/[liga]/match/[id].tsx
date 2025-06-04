@@ -39,11 +39,22 @@ export default function Matchs() {
                     headerTintColor: theme?.[liga]?.colors?.text,
                 }}
             />
-            <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
-                <DetailMatch match={match} liga={liga} team1={team1} team2={team2} />
-                <StarPlayer liga={liga} star={match && match[0].playerStar} />
-            </View>
-            {loading && <Loading />}
+            {loading ?
+                <Loading />
+                :
+                <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
+                    <DetailMatch
+                        match={match}
+                        team1={team1}
+                        team2={team2}
+                        colorText={theme?.[liga]?.colors?.text}
+                        textFinishColor={theme?.[liga]?.colors?.textFinish}
+                        backgroundTable={theme?.[liga]?.colors?.table}
+                        backgroundHeader={theme?.[liga]?.colors?.secondary}
+                    />
+                    <StarPlayer liga={liga} star={match && match[0].playerStar} />
+                </View>
+            }
         </Screen>
     )
 

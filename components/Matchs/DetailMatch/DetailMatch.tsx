@@ -2,12 +2,10 @@ import { FlatList, Text, View } from "react-native";
 import Result from "./Result";
 import Team1 from "./Team1";
 import Team2 from "./Team2";
-import { theme } from "../../../tailwind.config";
 import { match } from "../../../firebase/services";
 
 interface Props {
     match: match[] | undefined
-    liga: string
     team1: {
         name: string;
         team: string;
@@ -16,25 +14,29 @@ interface Props {
         name: string;
         team: string;
     }[][] | undefined
+    colorText: string
+    backgroundTable: string
+    backgroundHeader: string
+    textFinishColor: string
 }
 
-export default function DetailMatch({ match, liga, team1, team2 }: Props) {
+export default function DetailMatch({ match, team1, team2, colorText, textFinishColor, backgroundTable, backgroundHeader }: Props) {
     return (
         <View className="mt-20 px-2">
             <Text
-                style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold`}>Detalle del partido</Text>
+                style={{ backgroundColor: backgroundHeader, color: colorText }}
+                className={`text-base h-8 flex flex-row justify-center items-center rounded-t-lg w-full text-center font-bold`}>Detalle del partido</Text>
             <FlatList
                 data={match}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 keyExtractor={(item: match) => item.id ? item.id : item.result}
                 renderItem={({ item }) => (
                     <View
-                        style={{ backgroundColor: theme?.[liga].colors.table }}
+                        style={{ backgroundColor: backgroundTable }}
                         className={`grid grid-col-2`}>
-                        <Result item={item} />
-                        <Team1 team1={team1} />
-                        <Team2 team2={team2} />
+                        <Result item={item} textColor={colorText} textFinishColor={textFinishColor} />
+                        <Team1 team1={team1} textColor={colorText} />
+                        <Team2 team2={team2} textColor={colorText} />
                     </View>
                 )}
             />

@@ -11,8 +11,8 @@ export default function StarPlayer({ liga, star }: Props) {
     return (
         <View className="mt-10 px-2">
             <Text
-                style={{ backgroundColor: theme?.[liga].colors.secondary }}
-                className={`h-8 flex flex-row justify-center items-center text-white rounded-t-lg w-full text-center font-bold`}>Figura del partido</Text>
+                style={{ backgroundColor: theme?.[liga].colors.secondary, color: theme?.[liga].colors.text }}
+                className={`text-base h-8 flex flex-row justify-center items-center rounded-t-lg w-full text-center font-bold`}>Figura del partido</Text>
             <FlatList
                 data={star}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
@@ -23,8 +23,8 @@ export default function StarPlayer({ liga, star }: Props) {
                         className={`p-2 flex flex-row justify-around items-center`}>
                         <Image source={{ uri: item.image }} style={{ width: 50, height: 50 }} />
                         <View className="flex flex-col items-center">
-                            <Text className="text-center text-white font-bold text-lg" >{item.name}</Text>
-                            <Text className="text-center text-white font-bold" >{item.team}</Text>
+                            <Text style={{ color: theme?.[liga]?.colors?.text }} className="text-center font-bold text-lg" >{item.name}</Text>
+                            <Text style={{ color: theme?.[liga]?.colors?.text }} className="text-center font-bold" >{item.team}</Text>
                         </View>
                         <Image source={{ uri: item.image }} style={{ width: 50, height: 50 }} />
                     </View>
