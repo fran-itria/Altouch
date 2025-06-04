@@ -22,7 +22,7 @@ export default function Team() {
     }, [])
 
     return (
-        <Screen background={theme?.[liga]?.colors?.primary || '#b91c1c'}>
+        <Screen background={theme?.[liga]?.colors?.primary}>
             <Stack.Screen
                 options={{
                     headerTitle: `${team ? team : 'Equipo'}`,
@@ -33,47 +33,96 @@ export default function Team() {
                     headerTintColor: theme?.[liga]?.colors?.text,
                 }}
             />
-            <View className={`p-4 ${loading ? 'blur-md' : 'blur-none'}`}>
-                <View
-                    style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                    className={`rounded-t-lg flex flex-row justify-around p-2`}>
-                    <Text className='w-36 text-center font-bold color-white'>Jugadores</Text>
+            {loading ?
+                <Loading />
+                :
+                <View className={`p-4 ${loading ? 'blur-md' : 'blur-none'}`}>
+                    <View
+                        style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                        className={`rounded-t-lg flex flex-row justify-around p-2`}>
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className='w-36 text-center font-bold text-base'>
+                            Jugadores/as
+                        </Text>
+                    </View>
+                    <View
+                        style={{ backgroundColor: theme?.[liga].colors.tertiary }}
+                        className={`h-8 flex flex-row justify-between items-center px-4`}>
+                        <View>
+                            <Text
+                                style={{ color: theme?.[liga]?.colors?.text }}
+                                className={`text-center text-white font-bold`}>
+                                Nombre
+                            </Text>
+                        </View>
+                        <View className="flex-row justify-around">
+                            <Text className={`w-10 text-center color-[#FFF600] font-bold`}>TA</Text>
+                            <Text className={`w-10 text-center color-[#0900FF] font-bold`}>TA</Text>
+                            <Text className={`w-10 text-center color-[#FF0000] font-bold`}>TR</Text>
+                            <Text
+                                style={{ color: theme?.[liga]?.colors?.text }}
+                                className={`w-10 text-center font-bold`}>
+                                FIG
+                            </Text>
+                            <Text
+                                style={{ color: theme?.[liga]?.colors?.text }}
+                                className={`w-10 text-center font-bold`}>
+                                GOL
+                            </Text>
+                        </View>
+                    </View>
+                    <FlatList
+                        data={players}
+                        keyExtractor={(item) => item.id ? item.id : item.name}
+                        style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
+                        renderItem={({ item, index }) => (
+                            <Link
+                                style={{ backgroundColor: theme?.[liga]?.colors?.table }}
+                                className={`${players.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} px-4 flex flex-row justify-between items-center h-12`}
+                                href={{
+                                    pathname: '../player/[id]',
+                                    params: { liga, division, id: item.id, team }
+                                }}
+                                key={item.id}
+                            >
+                                <Text
+                                    style={{ color: theme?.[liga]?.colors?.text }}
+                                    className='text-center font-bold'>
+                                    {item.name} {item.surname}
+                                </Text>
+                                <View className="flex-row justify-around">
+                                    <Text
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className="w-10 text-center font-bold text-base">
+                                        {item.yellowCard}
+                                    </Text>
+                                    <Text
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className="w-10 text-center font-bold text-base">
+                                        {item.blueCard}
+                                    </Text>
+                                    <Text
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className="w-10 text-center font-bold text-base">
+                                        {item.redCard}
+                                    </Text>
+                                    <Text
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className="w-10 text-center font-bold text-base">
+                                        {item.star}
+                                    </Text>
+                                    <Text
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className="w-10 text-center font-bold text-base">
+                                        {item.goals}
+                                    </Text>
+                                </View>
+                            </Link>
+                        )}
+                    />
                 </View>
-                <View
-                    style={{ backgroundColor: theme?.[liga]?.colors?.tertiary }}
-                    className={`flex flex-row justify-around p-2`}>
-                    <Text className='w-72 text-center font-bold color-white'>Nombre</Text>
-                    <Text className='w-36 text-center font-bold color-[#FFF600]'>TA</Text>
-                    <Text className='w-36 text-center font-bold color-[#0900FF]'>TA</Text>
-                    <Text className='w-36 text-center font-bold color-[#FF0000]'>TR</Text>
-                    <Text className='w-36 text-center font-bold color-white'>FIG</Text>
-                    <Text className='w-36 text-center font-bold color-white'>GOL</Text>
-                </View>
-                <FlatList
-                    data={players}
-                    keyExtractor={(item) => item.id ? item.id : item.name}
-                    style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
-                    renderItem={({ item, index }) => (
-                        <Link
-                            style={{ backgroundColor: theme?.[liga]?.colors?.table }}
-                            className={`${players.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-around p-2`}
-                            href={{
-                                pathname: '../player/[id]',
-                                params: { liga, division, id: item.id, team }
-                            }}
-                            key={item.id}
-                        >
-                            <Text className='w-72 text-center color-white font-bold text-sm'>{item.name} {item.surname}</Text>
-                            <Text className='w-36 text-center color-white font-bold text-sm'>{item.yellowCard}</Text>
-                            <Text className='w-36 text-center color-white font-bold text-sm'>{item.blueCard}</Text>
-                            <Text className='w-36 text-center color-white font-bold text-sm'>{item.redCard}</Text>
-                            <Text className='w-36 text-center color-white font-bold text-sm'>{item.star}</Text>
-                            <Text className='w-36 text-center color-white font-bold text-sm'>{item.goals}</Text>
-                        </Link>
-                    )}
-                />
-            </View>
-            {loading && <Loading />}
+            }
         </Screen>
     )
 }
