@@ -41,7 +41,7 @@ export default function Fixture() {
                         <View key={match} className={`px-2 ${index == 0 ? 'mt-0' : 'mt-8'} ${loading ? 'blur-md' : 'blur-none'}`}>
                             <Text
                                 style={{ backgroundColor: theme?.[liga]?.colors?.secondary, color: theme?.[liga]?.colors?.text }}
-                                className={`rounded-t-lg h-8 flex justify-center items-center font-bold text-center`}>{match}</Text>
+                                className={`rounded-t-lg h-8 flex justify-center items-center text-base font-bold text-center`}>{match}</Text>
                             <FlatList
                                 data={matchs}
                                 keyExtractor={(item) => item.id || ''}

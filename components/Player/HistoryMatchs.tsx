@@ -29,7 +29,11 @@ export default function HistoryMatchs({ matchs, liga }: { matchs: matchs, liga: 
                         style={{ backgroundColor: theme?.[liga].colors.tertiary }}
                         className={`h-9 flex flex-row justify-between items-center`}>
                         <View>
-                            <Text className={`ml-3 text-center text-white font-bold text-base`}>Fecha</Text>
+                            <Text
+                                style={{ color: theme?.[liga]?.colors?.text }}
+                                className={`ml-3 text-center font-bold text-base`}>
+                                Fecha
+                            </Text>
                         </View>
                         <View className="flex-row justify-around mr-3">
                             <Text className={`w-10 text-center color-[#FFF600] font-bold text-base`}>TA</Text>

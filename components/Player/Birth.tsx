@@ -6,8 +6,8 @@ export default function Birth({ liga, birth }: { liga: string, birth: string }) 
         <View className="px-2">
             <View className="flex justify-center items-center mt-5">
                 <Text
-                    style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                    className={`h-8 w-full rounded-t-lg flex justify-center items-center text-white font-bold text-base`} >Fecha de nacimineto</Text>
+                    style={{ backgroundColor: theme?.[liga]?.colors?.secondary, color: theme?.[liga]?.colors?.text }}
+                    className={`h-8 w-full rounded-t-lg flex justify-center items-center font-bold text-base`} >Fecha de nacimineto</Text>
             </View>
             <FlatList
                 data={Array(birth)}
