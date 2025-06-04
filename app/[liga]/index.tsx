@@ -34,6 +34,7 @@ export default function App() {
                         headerShadowVisible: false,
                         headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
                         headerTintColor: theme?.[liga]?.colors?.text,
+                        headerLeft: () => null,
                     }}
                 />
                 <View className='flex flex-col h-screen items-center justify-start p-10'>
