@@ -14,7 +14,7 @@ export default function Table({ division, liga, teams }: Props) {
         <View className="px-2 mt-10">
             <View
                 style={{ backgroundColor: theme?.[liga].colors.secondary }}
-                className={`h-8 rounded-t-lg flex flex-row justify-between items-center`}>
+                className={`h-8 rounded-t-lg flex flex-row justify-between items-center px-2`}>
                 <View>
                     <Text style={{ color: theme?.[liga].colors.text }} className='text-start font-bold ml-2'>Equipo</Text>
                 </View>
@@ -42,18 +42,18 @@ export default function Table({ division, liga, teams }: Props) {
                     <Text
                         style={{ color: theme?.[liga].colors.text }}
                         className='w-10 text-center font-bold'>
-                        G
-                        +/-</Text>
+                        G+/-
+                    </Text>
                     <Text
                         style={{ color: theme?.[liga].colors.text }}
                         className='w-10 text-center font-bold'>
-                        D
-                        G</Text>
+                        DG
+                    </Text>
                     <Text
                         style={{ color: theme?.[liga].colors.text }}
                         className='w-10 text-center font-bold'>
-                        P
-                        TS</Text>
+                        PTS
+                    </Text>
                 </View>
             </View>
             <FlatList
@@ -63,7 +63,7 @@ export default function Table({ division, liga, teams }: Props) {
                 renderItem={({ item, index }) => (
                     <Link
                         style={{ backgroundColor: theme?.[liga].colors.tertiary }}
-                        className={`${teams.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-between px-2 items-center h-12`}
+                        className={`px-2 ${teams.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row justify-between items-center h-12`}
                         href={{
                             pathname: '../team/[id]',
                             params: { liga, division, id: item.id, team: item.name }
