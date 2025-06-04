@@ -16,9 +16,18 @@ export default function Stars({ liga, playersStars }: {
             <View
                 style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
                 className='flex flex-row justify-between rounded-t-lg h-8 items-center'>
-                <Text className="w-28 text-start pl-2 text-sm font-bold text-white">Jugador</Text>
-                <Text className="w-36 text-center text-sm font-bold text-white">Equipo</Text>
-                <Text className="w-24 text-center text-sm font-bold text-white">Cant</Text>
+                <Text style={{ color: theme?.[liga]?.colors?.text }}
+                    className="text-base w-28 text-start pl-2 font-bold">
+                    Jugador
+                </Text>
+                <Text style={{ color: theme?.[liga]?.colors?.text }}
+                    className="text-base w-36 text-center font-bold">
+                    Equipo
+                </Text>
+                <Text style={{ color: theme?.[liga]?.colors?.text }}
+                    className="text-base w-24 text-center font-bold">
+                    Cant
+                </Text>
             </View>
             <FlatList
                 data={playersStars}
@@ -27,11 +36,27 @@ export default function Stars({ liga, playersStars }: {
                 renderItem={({ item, index }) => (
                     <View className={`${playersStars && playersStars.length - 1 > index ? 'border-b border-gray-700' : 'border-0'} flex flex-row items-center justify-between h-14 pl-2`}>
                         <View className="flex flex-row items-center">
-                            <Text className='text-center color-white font-bold mr-4'> {index + 1} </Text>
-                            <Text className="text-white text-sm font-bold text-start">{item.name}</Text>
+                            <Text
+                                style={{ color: theme?.[liga]?.colors?.text }}
+                                className='text-center font-bold mr-4'>
+                                {index + 1}
+                            </Text>
+                            <Text
+                                style={{ color: theme?.[liga]?.colors?.text }}
+                                className="text-sm font-bold text-start">
+                                {item.name}
+                            </Text>
                         </View>
-                        <Text className="w-36 text-white text-sm font-bold text-center">{item.team}</Text>
-                        <Text className="w-24 text-white text-sm font-bold text-center">{item.goals}</Text>
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className="w-36 text-sm font-bold text-center">
+                            {item.team}
+                        </Text>
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className="w-24 text-sm font-bold text-center">
+                            {item.goals}
+                        </Text>
                     </View>
                 )}
             />

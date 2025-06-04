@@ -19,7 +19,7 @@ export default function Result({ item, textColor, textFinishColor }: { item: mat
             </View>
             {/* RESULT */}
             <View className="flex flex-col h-16 justify-around">
-                <Text className="bg-white rounded-lg px-2 text-base text-center font-bold">Finalizado</Text>
+                <Text style={{ color: textFinishColor }} className="bg-white rounded-lg px-2 text-base text-center font-bold">Finalizado</Text>
                 <View className="w-full flex flex-row justify-between items-center">
                     <Text style={{ color: textColor }} className="text-lg text-center font-bold ">{item.result.split('-')[0]}</Text>
                     <Text style={{ color: textColor }} className="text-lg text-center font-bold ">{item.result.split('-')[1]}</Text>
