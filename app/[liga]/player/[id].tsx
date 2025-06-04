@@ -38,12 +38,15 @@ export default function Team() {
                     headerTintColor: theme?.[liga]?.colors?.text,
                 }}
             />
-            <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
-                <Statics player={player?.player as player} />
-                <Birth liga={liga} birth={player?.player.birth as string} />
-                <HistoryMatchs matchs={player?.matchs as matchs} liga={liga} />
-            </View>
-            {loading && <Loading />}
+            {loading ?
+                <Loading />
+                :
+                <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
+                    <Statics player={player?.player as player} colorText={theme?.[liga]?.colors?.text} />
+                    <Birth liga={liga} birth={player?.player.birth as string} />
+                    <HistoryMatchs matchs={player?.matchs as matchs} liga={liga} />
+                </View>
+            }
         </Screen>
     )
 }
