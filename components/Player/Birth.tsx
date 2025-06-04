@@ -12,7 +12,7 @@ export default function Birth({ liga, birth }: { liga: string, birth: string }) 
             <FlatList
                 data={Array(birth)}
                 keyExtractor={(_item) => birth || ''}
-                renderItem={(item) => <>
+                renderItem={(_item) => <>
                     <View className="flex justify-center items-center">
                         <Text
                             style={{ backgroundColor: theme?.[liga]?.colors?.table, color: theme?.[liga]?.colors?.text }}
