@@ -16,21 +16,33 @@ export default function StaticsNav({ liga, activeStats, setActiveStats }: Props)
                 className={`${activeStats == StaticsEnum.GOALS ? 'border-b-4 transition-all' : 'border-none'}`}
                 onPress={() => setActiveStats(StaticsEnum.GOALS)}
             >
-                <Text className='text-white text-xl font-bold'>Goleadores</Text>
+                <Text
+                    style={{ color: theme?.[liga]?.colors?.text }}
+                    className='text-xl font-bold'>
+                    Goleadores
+                </Text>
             </Pressable>
             <Pressable
                 style={{ borderColor: theme?.[liga]?.colors?.secondary }}
                 className={`${activeStats == StaticsEnum.DEFEATED ? 'border-b-4 transition-all' : 'border-none'}`}
                 onPress={() => setActiveStats(StaticsEnum.DEFEATED)}
             >
-                <Text className='text-white text-xl font-bold'>V.M Vencida</Text>
+                <Text
+                    style={{ color: theme?.[liga]?.colors?.text }}
+                    className='text-xl font-bold'>
+                    V.M Vencida
+                </Text>
             </Pressable>
             <Pressable
                 style={{ borderColor: theme?.[liga]?.colors?.secondary }}
                 className={`${activeStats == StaticsEnum.STARS ? 'border-b-4 transition-all' : 'border-none'}`}
                 onPress={() => setActiveStats(StaticsEnum.STARS)}
             >
-                <Text className='text-white text-xl font-bold'>Figuras</Text>
+                <Text
+                    style={{ color: theme?.[liga]?.colors?.text }}
+                    className='text-xl font-bold'>
+                    Figuras
+                </Text>
             </Pressable>
         </View>
     )
