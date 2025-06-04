@@ -7,7 +7,8 @@ export default function Layout() {
         <View className="flex-1 bg-black">
             <Stack
                 screenOptions={{
-                    headerTitle: ''
+                    headerTitle: '',
+                    headerLeft: () => null,
                 }}
             >
                 <Stack.Screen name="(tabs)" />
