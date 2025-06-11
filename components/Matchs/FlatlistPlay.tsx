@@ -2,16 +2,18 @@ import { Link } from "expo-router";
 import { View, Text, Image } from "react-native";
 import { theme } from "../../tailwind.config";
 import { match } from "../../firebase/services";
+import { Match } from "../../app/[liga]/(tabs)/[division]";
 
 interface Props {
     liga: string
     division: string
-    item: match
+    item: Match
     length: number
     index: number
+    team?: string
 }
 
-export default function FlatlistPlay({ liga, division, item, index, length }: Props) {
+export default function FlatlistPlay({ liga, division, item, index, length, team }: Props) {
 
     return (
         <Link
@@ -41,9 +43,25 @@ export default function FlatlistPlay({ liga, division, item, index, length }: Pr
                     <Image source={{ uri: item.teamsMatch[0].image }} style={{ width: 30, height: 30 }} />
                 </View>
                 <View className="flex flex-col items-center">
-                    <Text style={{ color: theme?.[liga].colors.textFinish, backgroundColor: theme?.[liga].colors.text }} className='font-bold text-xs rounded-full px-2'>
-                        Finalizado
-                    </Text>
+                    {!team ?
+                        <Text style={{ color: theme?.[liga].colors.textFinish, backgroundColor: theme?.[liga].colors.text }} className='font-bold text-xs rounded-full px-2'>
+                            Finalizado
+                        </Text>
+                        :
+                        team && team == item.win ?
+                            <Text style={{ color: theme?.[liga].colors.text }} className='bg-green-900 font-bold rounded-full px-3 h-6 flex items-center justify-center'>
+                                Ganado
+                            </Text>
+                            :
+                            team && team !== item.win ?
+                                <Text style={{ color: theme?.[liga].colors.text }} className='bg-red-900 font-bold rounded-full px-3 h-6 flex items-center justify-center'>
+                                    Perdido
+                                </Text>
+                                :
+                                <Text style={{ color: theme?.[liga].colors.text }} className='bg-yellow-600 font-bold rounded-full px-3 h-6 flex items-center justify-center'>
+                                    Empate
+                                </Text>
+                    }
                     <View className="w-full flex flex-row justify-between items-center mt-1">
                         <Text style={{ color: theme?.[liga].colors.text }} className='font-bold'>
                             {item.result.split('-')[0]}

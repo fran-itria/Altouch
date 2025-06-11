@@ -1,15 +1,16 @@
 import { FlatList, Image, Text, View } from "react-native";
 import { theme } from "../../tailwind.config";
-import { match } from "../../firebase/services";
 import FlatlistPlay from "./FlatlistPlay";
+import { Match } from "../../app/[liga]/(tabs)/[division]";
 
 interface Props {
     liga: string
-    matchs: match[]
+    matchs: Match[]
     division: string
+    team?: string
 }
 
-export default function Matchs({ liga, matchs, division }: Props) {
+export default function Matchs({ liga, matchs, division, team }: Props) {
     return (
         <View className='mt-10 px-2'>
             <View
@@ -22,7 +23,14 @@ export default function Matchs({ liga, matchs, division }: Props) {
                 keyExtractor={(item) => item.id ? item.id : item.result}
                 style={{ borderBottomEndRadius: 8, borderBottomStartRadius: 8 }}
                 renderItem={({ item, index }) => (
-                    <FlatlistPlay liga={liga} division={division} item={item} index={index} length={matchs.length - 1} />
+                    <FlatlistPlay
+                        liga={liga}
+                        division={division}
+                        item={item}
+                        index={index}
+                        length={matchs.length - 1}
+                        team={team}
+                    />
                 )}
             />
         </View>

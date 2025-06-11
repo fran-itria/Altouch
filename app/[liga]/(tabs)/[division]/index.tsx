@@ -2,7 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { Screen } from '../../../../components/Screen';
 import { useEffect, useState } from 'react';
 import { theme } from "../../../../tailwind.config";
-import { getMatchesPlay, getMatchNotPlay, getTeams, match, team } from '../../../../firebase/services';
+import { getMatchesPlay, getMatchNotPlay, getTeams, team } from '../../../../firebase/services';
 import Matchs from '../../../../components/Matchs/Matchs';
 import MatchsNotPlay, { matchNotPlay } from '../../../../components/Matchs/MatchsNotPlay';
 import Table from '../../../../components/Table';
@@ -11,18 +11,28 @@ import useLigaName from '../../../../hooks/useLigaName';
 import { View } from 'react-native';
 import Loading from '../../../../components/Loading';
 
+export interface Match {
+    id?: string
+    teamsMatch: team[]
+    result: string
+    match: string
+    win: string
+    day: { date: string, hour: string }
+    play: boolean
+}
+
 export default function About() {
     const { liga } = useLigaName();
     const { division }: { liga: string, division: string } = useLocalSearchParams();
     const [teams, setTeams] = useState<team[]>([]);
-    const [matchs, setMatchs] = useState<match[]>([]);
+    const [matchs, setMatchs] = useState<Match[]>([]);
     const [matchsNotPlay, setMatchsNotPlay] = useState<matchNotPlay[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         (async () => {
             const teamsResponse = await getTeams(liga, division);
-            const matchsResponse = await getMatchesPlay(liga, division) as unknown as match[];
+            const matchsResponse = await getMatchesPlay(liga, division) as unknown as Match[];
             const matchsNotPlay = await getMatchNotPlay(liga, division) as matchNotPlay[];
             setTeams(teamsResponse);
             setMatchs(matchsResponse);

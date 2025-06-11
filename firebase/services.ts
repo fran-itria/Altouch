@@ -1,4 +1,4 @@
-import { addDoc, collection, DocumentReference, DocumentSnapshot, getDoc, getDocs, or, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, or, orderBy, query, QuerySnapshot, updateDoc, where } from "firebase/firestore";
 import { db, storage } from "./firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -73,6 +73,46 @@ export type detailPlayer = {
     teamImage: string
 }
 
+export interface getOneTeamResponse {
+    players: {
+        id?: string;
+        ref: DocumentReference;
+        birth: string;
+        blueCard: number;
+        yellowCard: number;
+        redCard: number;
+        dni: number;
+        goals: number;
+        star: number;
+        name: string;
+        surname: string;
+        team: DocumentReference;
+        matchs: DocumentReference[];
+    }[]
+    matchsHistory: ({
+        id: string;
+        teamsMatch: unknown[];
+        win: string;
+        result: string;
+        match: string;
+        day: {
+            date: string;
+            hour: string;
+        };
+        play: boolean;
+    })[]
+    matchsPending: ({
+        id: string;
+        teamsMatch: unknown[];
+        match: string;
+        day: {
+            date: string;
+            hour: string;
+        };
+        play: boolean;
+    })[]
+}
+
 // GETS
 async function getDivisions(liga: string) {
     const ligaRef = collection(db, liga);
@@ -92,31 +132,26 @@ async function getTeams(liga: string, division: string, stats = false): Promise<
 
     for (const doc of querySnapshot.docs) {
         const equiposRef = collection(doc.ref, 'equipos');
-        if (!stats) {
-            const teamsOredr = query(equiposRef, orderBy('points', 'desc'));
-            const equiposSnapshot = await getDocs(teamsOredr);
+        const teamsOredr = query(equiposRef, orderBy(
+            !stats ? 'points' : 'goalsAgainst',
+            !stats ? 'desc' : 'asc')
+        );
+        const equiposSnapshot = await getDocs(teamsOredr);
 
-            for (const team of equiposSnapshot.docs) {
-                teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
-            }
-        }
-        else {
-            const teamsOredr = query(equiposRef, orderBy('goalsAgainst', 'asc'));
-            const equiposSnapshot = await getDocs(teamsOredr);
-
-            for (const team of equiposSnapshot.docs) {
-                teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
-            }
+        for (const team of equiposSnapshot.docs) {
+            teams.push({ id: team.id, ...team.data() as team, ref: team.ref })
         }
     }
     return teams
 }
 
-async function getOneTeam(liga: string, division: string, teamName: string) {
+async function getOneTeam(liga: string, division: string, teamName: string): Promise<getOneTeamResponse> {
     const altouchRef = collection(db, liga);
     const q = query(altouchRef, where(categoria, "==", division));
     const querySnapshot = await getDocs(q);
     let players = []
+    let matchsHistory: getOneTeamResponse["matchsHistory"] = []
+    let matchsPending: getOneTeamResponse["matchsPending"] = []
     for (const doc of querySnapshot.docs) {
         const equiposRef = collection(doc.ref, 'equipos');
         const team = query(equiposRef, where('name', '==', teamName));
@@ -129,69 +164,70 @@ async function getOneTeam(liga: string, division: string, teamName: string) {
                 const playerData = player.data() as player;
                 players.push({ id, ...playerData, ref: player.ref })
             }
+            matchsHistory = await getMatchesPlay(liga, division, team.ref);
+            matchsPending = await getMatchNotPlay(liga, division, team.ref);
         }
     }
-    return players
+    return {
+        players,
+        matchsHistory,
+        matchsPending
+    }
 }
 
-async function getMatchesPlay(liga: string, division: string) {
+async function getMatchesPlay(liga: string, division: string, team?: DocumentReference<DocumentData, DocumentData>) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
     let matchs = []
-
-    const matchesRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', true)))
+    let matchesRef: QuerySnapshot<DocumentData, DocumentData>
+    if (!team) {
+        matchesRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', true)))
+    }
+    else {
+        matchesRef = await getDocs(query(
+            collection(ligaRef.docs[0].ref, 'matches'),
+            where('play', '==', true),
+            where('teams', 'array-contains', team)
+        ))
+    }
     for (const match of matchesRef.docs) {
-        const { loser, win, star, players, teams, result, goles, day } = match.data()
-        const teamLoser = await getDoc(loser)
-        const teamWinner = await getDoc(win)
-        const playerStar = await getDoc(star)
+        const { teams, result, day, win } = match.data()
         const newDate = new Date(day)
         const date = `${newDate.getDate()} / ${newDate.getMonth() + 1}`
         const hour = `${newDate.getHours()}:${newDate.getMinutes() == 0 ? `${newDate.getMinutes()}0` : newDate.getMinutes()}`
-
-        let playersMatch = []
+        const teamWin = (await getDoc(win)).data() as team
         let teamsMatch = []
-        let goalsMatch = []
-        for (const player of players) {
-            const playerRef = await getDoc(player)
-            playersMatch.push(playerRef.data())
-        }
         for (const team of teams) {
             const teamRef = await getDoc(team)
             teamsMatch.push(teamRef.data())
         }
-        for (const gol of goles) {
-            const playerGol: DocumentSnapshot<any> = await getDoc(gol)
-            const teamRef: DocumentSnapshot<team> = await getDoc(playerGol.data().team)
-            goalsMatch.push({
-                name: `${playerGol.data()?.name} ${playerGol.data()?.surname}`,
-                team: teamRef.data()?.name
-            });
-
-        }
-
         matchs.push({
             id: match.id,
-            teamLoser: teamLoser.data(),
-            teamWinner: teamWinner.data(),
-            playerStar: playerStar.data(),
-            playersMatch,
             teamsMatch,
-            goalsMatch,
             result,
+            win: teamWin.name,
             match: match.data().match,
             day: { date, hour },
-            play: true
+            play: match.data().play
         })
     }
     return matchs
 }
 
-async function getMatchNotPlay(liga: string, division: string) {
+async function getMatchNotPlay(liga: string, division: string, team?: DocumentReference<DocumentData, DocumentData>) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
     let matchs = []
-
-    const matchRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', false)))
-    for (const match of matchRef.docs) {
+    let matchesRef: QuerySnapshot<DocumentData, DocumentData>
+    if (!team) {
+        matchesRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'matches'), where('play', '==', false)))
+    }
+    else {
+        matchesRef = await getDocs(query(
+            collection(ligaRef.docs[0].ref, 'matches'),
+            where('play', '==', false),
+            where('teams', 'array-contains', team)
+        ))
+    }
+    for (const match of matchesRef.docs) {
         const { teams, day } = match.data()
 
         let teamsMatch = []
@@ -208,7 +244,7 @@ async function getMatchNotPlay(liga: string, division: string) {
             id: match.id,
             teamsMatch,
             match: match.data().match,
-            play: false,
+            play: match.data().play,
             day: { date, hour }
         })
     }

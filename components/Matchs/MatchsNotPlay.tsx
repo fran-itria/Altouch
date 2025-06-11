@@ -13,9 +13,10 @@ interface Props {
     liga: string
     division: string
     matchs: matchNotPlay[]
+    pending?: boolean
 }
 
-export default function MatchsNotPlay({ liga, matchs }: Props) {
+export default function MatchsNotPlay({ liga, matchs, pending }: Props) {
 
     return (
         <View className='mt-10 px-2'>
@@ -25,7 +26,7 @@ export default function MatchsNotPlay({ liga, matchs }: Props) {
                 <Text
                     style={{ color: theme?.[liga].colors.text }}
                     className='text-base text-center font-bold'>
-                    Proximos partidos
+                    {!pending ? 'Proximos partidos' : 'Partidos pendientes'}
                 </Text>
             </View>
             <FlatList
