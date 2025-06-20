@@ -55,7 +55,7 @@ export default function Stars({ liga, playersStars }: {
                         <Text
                             style={{ color: theme?.[liga]?.colors?.text }}
                             className="w-24 text-sm font-bold text-center">
-                            {item.goals}
+                            {item.star}
                         </Text>
                     </View>
                 )}
