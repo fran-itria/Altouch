@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { theme } from "../../../tailwind.config";
 import useLigaName from '../../../hooks/useLigaName';
 import { Screen } from '../../../components/Screen';
-import StaticsNav from '../../../components/Statics/Nav';
+import SubNav from '../../../components/SubNav';
 import { useEffect, useState } from 'react';
 import { getPlayersStats, getTeams } from '../../../firebase/services';
 import Loading from '../../../components/Loading';
@@ -19,7 +19,7 @@ export enum StaticsEnum {
 
 export default function Statics() {
     const { liga } = useLigaName()
-    const [activeStats, setActiveStats] = useState<StaticsEnum>(StaticsEnum.GOALS)
+    const [active, setActiveStats] = useState<StaticsEnum>(StaticsEnum.GOALS)
     const { division } = useLocalSearchParams() as { division: string, liga: string }
     const [players, setPlayers] = useState<{
         playersGoals: { id: string, name: string, team: string, goals: number, star: number }[],
@@ -46,14 +46,14 @@ export default function Statics() {
             />
             {loading ? <Loading /> :
                 <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
-                    <StaticsNav liga={liga} activeStats={activeStats} setActiveStats={setActiveStats} />
-                    {activeStats == StaticsEnum.GOALS &&
+                    <SubNav liga={liga} active={active} setActiveStats={setActiveStats} />
+                    {active == StaticsEnum.GOALS &&
                         <Goals liga={liga} goalsPlayers={players?.playersGoals} />
                     }
-                    {activeStats == StaticsEnum.DEFEATED &&
+                    {active == StaticsEnum.DEFEATED &&
                         <Defeated liga={liga} teams={teams} />
                     }
-                    {activeStats == StaticsEnum.STARS &&
+                    {active == StaticsEnum.STARS &&
                         <Stars liga={liga} playersStars={players?.playersStar} />
                     }
                 </View>
