@@ -15,7 +15,12 @@ export default function Matchs() {
     const { liga } = useLigaName()
     const { id, division }: { id: string, division: string } = useLocalSearchParams()
     const [match, setMatch] = useState<match[]>()
-    const [team1, setTeam1] = useState<{ name: string, team: string }[][]>()
+    const [team1, setTeam1] = useState<{
+        goals: { name: string, team: string }[]
+        yellowCards: { name: string, team: string }[]
+        blueCards: { name: string, team: string }[]
+        redCards: { name: string, team: string }[]
+    }>()
     const [team2, setTeam2] = useState<{ name: string, team: string }[][]>()
     const [loading, setLoading] = useState<boolean>(true)
 

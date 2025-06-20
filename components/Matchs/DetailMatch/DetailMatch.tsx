@@ -7,9 +7,23 @@ import { match } from "../../../firebase/services";
 interface Props {
     match: match[] | undefined
     team1: {
-        name: string;
-        team: string;
-    }[][] | undefined
+        goals: {
+            name: string;
+            team: string;
+        }[];
+        yellowCards: {
+            name: string;
+            team: string;
+        }[];
+        blueCards: {
+            name: string;
+            team: string;
+        }[];
+        redCards: {
+            name: string;
+            team: string;
+        }[];
+    } | undefined
     team2: {
         name: string;
         team: string;
