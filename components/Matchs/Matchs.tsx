@@ -16,7 +16,7 @@ export default function Matchs({ liga, matchs, division, team }: Props) {
             <View
                 style={{ backgroundColor: theme?.[liga].colors.secondary }}
                 className={`rounded-t-lg flex flex-row justify-around p-2`}>
-                <Text style={{ color: theme?.[liga].colors.text }} className='text-base text-center font-bold'>Resultados anteriores</Text>
+                <Text style={{ color: theme?.[liga].colors.text }} className='text-base text-center font-bold'>Historial</Text>
             </View>
             <FlatList
                 data={matchs}
