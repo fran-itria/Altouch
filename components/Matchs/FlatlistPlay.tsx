@@ -1,7 +1,6 @@
 import { Link } from "expo-router";
 import { View, Text, Image } from "react-native";
 import { theme } from "../../tailwind.config";
-import { match } from "../../firebase/services";
 import { Match } from "../../app/[liga]/(tabs)/[division]";
 
 interface Props {

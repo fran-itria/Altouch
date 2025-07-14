@@ -9,6 +9,7 @@ import FlatlistPlay from '../../../components/Matchs/FlatlistPlay';
 import { theme } from "../../../tailwind.config";
 import useLigaName from '../../../hooks/useLigaName';
 import Loading from '../../../components/Loading';
+import { Match } from './[division]';
 
 export default function Fixture() {
     const { liga } = useLigaName()
@@ -50,7 +51,7 @@ export default function Fixture() {
                                     !item.play ?
                                         <FlatlistNotPlay liga={liga} item={item as matchNotPlay} index={index} length={matchs.length - 1} />
                                         :
-                                        <FlatlistPlay liga={liga} division={division} item={item} index={index} length={matchs.length - 1} />
+                                        <FlatlistPlay liga={liga} division={division} item={item as unknown as Match} index={index} length={matchs.length - 1} />
                                 )}
                             />
                         </View>
