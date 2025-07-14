@@ -1,32 +1,15 @@
-import { useEffect, useState } from "react"
-import { getPlayersSuspension } from "../firebase/services"
 import { FlatList, Text, View } from "react-native"
 import { theme } from "../tailwind.config";
 import { Card } from "../Icons";
+import { Player } from "../app/[liga]/(tabs)/[division]";
 
 
 interface Props {
-    liga: string
-    division: string
+    liga: string;
+    playersSuspension?: Player[]
 }
 
-interface Player {
-    id: string
-    name: string
-    team: string
-    suspension: number
-    totalSuspension: number
-}
-
-export default function PlayersSuspension({ division, liga }: Props) {
-    const [playersSuspension, setPlayersSuspension] = useState<Player[]>([])
-    useEffect(() => {
-        (async () => {
-            const players = await getPlayersSuspension(liga, division)
-            setPlayersSuspension(players)
-        })()
-    }, [])
-
+export default function PlayersSuspension({ liga, playersSuspension }: Props) {
     return (
         <View className={`w-full px-2 mt-10 mb-10`}>
             <Text
@@ -50,7 +33,7 @@ export default function PlayersSuspension({ division, liga }: Props) {
                 renderItem={({ item, index }) => (
                     <View
                         style={{ backgroundColor: theme?.[liga]?.colors?.table }}
-                        className={`px-2 ${index < playersSuspension.length - 1 ? 'border-b border-gray-700' : 'border-0'} h-12 flex flex-row justify-between items-center`}>
+                        className={`px-2 ${playersSuspension && index < playersSuspension.length - 1 ? 'border-b border-gray-700' : 'border-0'} h-12 flex flex-row justify-between items-center`}>
                         <View className={`flex flex-row w-32`}>
                             <Card color="red" />
                             <Text style={{ color: theme?.[liga].colors.text }} className={`text-sm ml-2 text-sm font-bold`}>{item.name}</Text>
