@@ -445,18 +445,32 @@ async function getPlayersStats(liga: string, division: string): Promise<{
 
 async function getFairPlayTeam(liga: string, division: string): Promise<
     {
-        id: string,
-        matches: number,
-        name: string,
-        image?: string,
-        yellowCard: number,
-        blueCard: number,
-        redCard: number,
-        absence: number
-        pointsFairPlay: number
-    }[]
+        teamFairPlay: {
+            id: string,
+            matches: number,
+            name: string,
+            image?: string,
+            yellowCard: number,
+            blueCard: number,
+            redCard: number,
+            wolkover: number
+            pointsFairPlay: number
+        }[],
+        cardsPoints: { name: string, value: number }[]
+    }
 > {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
+    const regulationRef = await getDocs(query(collection(db, liga), where(categoria, '==', 'Regulation')))
+    const yellowPoints = regulationRef.docs[0].data().yellowCardPoints;
+    const bluePoints = regulationRef.docs[0].data().blueCardPoints;
+    const redPoints = regulationRef.docs[0].data().redCardPoints;
+    const walkoverPoints = regulationRef.docs[0].data().walkover;
+    const cardsPoints = [
+        { name: 'Tarjeta Amarilla', value: yellowPoints },
+        { name: 'Tarjeta Azul', value: bluePoints },
+        { name: 'Tarjeta Roja', value: redPoints },
+        { name: 'Ausencia', value: walkoverPoints }
+    ];
     const teamsRef = await getDocs(query(collection(ligaRef.docs[0].ref, 'equipos')))
     let teams: {
         id: string,
@@ -466,7 +480,7 @@ async function getFairPlayTeam(liga: string, division: string): Promise<
         yellowCard: number,
         blueCard: number,
         redCard: number,
-        absence: number
+        wolkover: number
         pointsFairPlay: number
     }[] = []
     for (const team of teamsRef.docs) {
@@ -474,12 +488,8 @@ async function getFairPlayTeam(liga: string, division: string): Promise<
         const yellowCard = teamData.yellowCard;
         const blueCard = teamData.blueCard;
         const redCard = teamData.redCard;
-        const absence = teamData.absence;
-        const yellowPoints = teamData.yellowPoints;
-        const bluePoints = teamData.bluePoints;
-        const redPoints = teamData.redPoints;
-        const absencePoints = teamData.absencePoints;
-        const pointsFairPlay = (yellowCard * yellowPoints) + (blueCard * bluePoints) + (redCard * redPoints) + (absence * absencePoints);
+        const wolkover = teamData.absence;
+        const pointsFairPlay = (yellowCard * yellowPoints) + (blueCard * bluePoints) + (redCard * redPoints) + (wolkover * walkoverPoints);
         teams.push({
             id: team.id,
             matches: teamData.matches,
@@ -488,11 +498,15 @@ async function getFairPlayTeam(liga: string, division: string): Promise<
             yellowCard,
             blueCard,
             redCard,
-            absence,
+            wolkover,
             pointsFairPlay
         })
     }
-    return teams.sort((a, b) => a.pointsFairPlay - b.pointsFairPlay)
+    const teamsSortFairPlayPoints = teams.sort((a, b) => a.pointsFairPlay - b.pointsFairPlay)
+    return {
+        teamFairPlay: teamsSortFairPlayPoints,
+        cardsPoints
+    }
 }
 
 // POSTS

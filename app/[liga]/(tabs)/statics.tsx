@@ -13,6 +13,7 @@ import Stars from '../../../components/Statics/Stars';
 import PlayersSuspension from '../../../components/Suspension';
 import { Player } from './[division]';
 import FairPlayTeams from '../../../components/Statics/FairPlayTeams';
+import CardsPoints from '../../../components/Statics/CardsPoints';
 
 export enum StaticsEnum {
     FAIRPLAY = 'Fair Play',
@@ -24,7 +25,7 @@ export enum StaticsEnum {
 
 export default function Statics() {
     const { liga } = useLigaName()
-    const [active, setActiveStats] = useState<StaticsEnum>(StaticsEnum.DISCIPLINE)
+    const [active, setActiveStats] = useState<StaticsEnum>(StaticsEnum.FAIRPLAY)
     const { division } = useLocalSearchParams() as { division: string, liga: string }
     const [fairPlayTeam, setFairPlayTeam] = useState<{
         id: string,
@@ -34,9 +35,10 @@ export default function Statics() {
         yellowCard: number,
         blueCard: number,
         redCard: number,
-        absence: number
+        wolkover: number
         pointsFairPlay: number
     }[]>()
+    const [cardPoints, setCardPoints] = useState<{ name: string, value: number }[]>([])
     const [playersSuspension, setPlayersSuspension] = useState<Player[]>([])
     const [players, setPlayers] = useState<{
         playersGoals: { id: string, name: string, team: string, goals: number, star: number }[],
@@ -54,7 +56,8 @@ export default function Statics() {
             setPlayers(players)
             setTeams(teams)
             setPlayersSuspension(suspension)
-            setFairPlayTeam(fairPlayTeam)
+            setFairPlayTeam(fairPlayTeam.teamFairPlay)
+            setCardPoints(fairPlayTeam.cardsPoints)
             setLoading(false)
         })()
     }, [])
@@ -69,7 +72,10 @@ export default function Statics() {
                 <View className={`${loading ? 'blur-md' : 'blur-none'}`}>
                     <SubNav liga={liga} active={active} setActiveStats={setActiveStats} />
                     {active == StaticsEnum.FAIRPLAY &&
-                        <FairPlayTeams liga={liga} fairPlayTeam={fairPlayTeam ?? []} />
+                        <>
+                            <FairPlayTeams liga={liga} fairPlayTeam={fairPlayTeam ?? []} />
+                            <CardsPoints liga={liga} cardsPoints={cardPoints} />
+                        </>
                     }
                     {active == StaticsEnum.DISCIPLINE &&
                         <PlayersSuspension liga={liga} playersSuspension={playersSuspension} />

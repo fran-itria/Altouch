@@ -9,7 +9,7 @@ interface FairPlayTeam {
     yellowCard: number;
     blueCard: number;
     redCard: number;
-    absence: number;
+    wolkover: number;
     pointsFairPlay: number;
 }
 
@@ -80,8 +80,8 @@ export default function FairPlayTeams({ liga, fairPlayTeam }: Props) {
                             <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.yellowCard}</Text>
                             <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.blueCard}</Text>
                             <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.redCard}</Text>
-                            <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.absence}</Text>
-                            <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.absence}</Text>
+                            <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.wolkover}</Text>
+                            <Text style={{ color: theme?.[liga].colors.text }} className={`w-8 text-center text-sm font-bold`}>{item.pointsFairPlay}</Text>
                         </View>
                     </View>
                 )}
