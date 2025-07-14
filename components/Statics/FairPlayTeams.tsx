@@ -23,7 +23,7 @@ export default function FairPlayTeams({ liga, fairPlayTeam }: Props) {
         <View className={`w-full px-2 mt-10 mb-10`}>
             <View
                 style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                className={`px-2 h-8 w-full flex flex-row justify-between items-center `}
+                className={`rounded-t-lg px-2 h-8 w-full flex flex-row justify-between items-center `}
             >
                 <View>
                     <Text style={{ color: theme?.[liga].colors.text }} className='w-32 text-start font-bold'>Equipo</Text>
