@@ -19,7 +19,11 @@ module.exports = {
         tabBarInactiveColor: "black",
     }
   },
-    extend: {},
+    extend: {
+      screens: {
+        'phone': {'max': '426px'}
+      }
+    },
   },
   plugins: [],
 }

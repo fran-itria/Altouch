@@ -1,61 +1,101 @@
-import { View, Pressable, Text } from "react-native";
+import { View, Pressable, Text, useWindowDimensions } from "react-native";
 import { StaticsEnum } from "../app/[liga]/(tabs)/statics";
 import { theme } from "../tailwind.config";
-import { FairPlayEnum } from "../app/[liga]/(tabs)/fairPlay";
-import { useEffect } from "react";
 
 interface Props {
     liga: string
-    active: StaticsEnum | FairPlayEnum
-    setActiveStats?: React.Dispatch<React.SetStateAction<StaticsEnum>>
-    setActiveFairPlay?: React.Dispatch<React.SetStateAction<FairPlayEnum>>
+    active: StaticsEnum
+    setActiveStats: React.Dispatch<React.SetStateAction<StaticsEnum>>
 }
 
-export default function SubNav({ liga, active, setActiveStats, setActiveFairPlay }: Props) {
+export default function SubNav({ liga, active, setActiveStats }: Props) {
+    const { width } = useWindowDimensions()
     return (
-        <View className='flex flex-row justify-around mt-2'>
+        <View className='phone:grid phone:grid-cols-3 grid-center flex flex-row justify-around mt-2'>
             <Pressable
                 style={{ borderColor: theme?.[liga]?.colors?.secondary }}
-                className={`${(active == StaticsEnum.GOALS || active == FairPlayEnum.FAIRPLAY) ? 'border-b-4 transition-all' : 'border-none'}`}
-                onPress={() => {
-                    if (setActiveStats) setActiveStats(StaticsEnum.GOALS)
-                    else if (setActiveFairPlay) setActiveFairPlay(FairPlayEnum.FAIRPLAY)
-                }}
+                className={`phone:flex phone:justify-center phone:items-center ${active == StaticsEnum.FAIRPLAY ? 'border-b-4 transition-all' : 'border-none'}`}
+                onPress={() => setActiveStats(StaticsEnum.FAIRPLAY)}
             >
                 <Text
                     style={{ color: theme?.[liga]?.colors?.text }}
                     className='text-xl font-bold'>
-                    {setActiveStats ? 'Goleadores' : 'Fair Play'}
+                    Fair Play
                 </Text>
             </Pressable>
             <Pressable
                 style={{ borderColor: theme?.[liga]?.colors?.secondary }}
-                className={`${(active == StaticsEnum.DEFEATED || active == FairPlayEnum.DISCIPLINE) ? 'border-b-4 transition-all' : 'border-none'}`}
-                onPress={() => {
-                    if (setActiveStats) setActiveStats(StaticsEnum.DEFEATED)
-                    else if (setActiveFairPlay) setActiveFairPlay(FairPlayEnum.DISCIPLINE)
-                }}
+                className={`phone:flex phone:justify-center phone:items-center ${active == StaticsEnum.DISCIPLINE ? 'border-b-4 transition-all' : 'border-none'}`}
+                onPress={() => setActiveStats(StaticsEnum.DISCIPLINE)}
             >
                 <Text
                     style={{ color: theme?.[liga]?.colors?.text }}
                     className='text-xl font-bold'>
-                    {setActiveStats ? 'V.M Vencida' : 'Suspendidos'}
+                    Suspendidos
                 </Text>
             </Pressable>
             <Pressable
                 style={{ borderColor: theme?.[liga]?.colors?.secondary }}
-                className={`${(active == StaticsEnum.STARS || active == FairPlayEnum.CARDS) ? 'border-b-4 transition-all' : 'border-none'}`}
-                onPress={() => {
-                    if (setActiveStats) setActiveStats(StaticsEnum.STARS)
-                    else if (setActiveFairPlay) setActiveFairPlay(FairPlayEnum.CARDS)
-                }}
+                className={`phone:flex phone:justify-center phone:items-center ${active == StaticsEnum.GOALS ? 'border-b-4 transition-all' : 'border-none'}`}
+                onPress={() => setActiveStats(StaticsEnum.GOALS)}
             >
                 <Text
                     style={{ color: theme?.[liga]?.colors?.text }}
                     className='text-xl font-bold'>
-                    {setActiveStats ? 'Figuras' : 'Tarjetas'}
+                    Goleadores
                 </Text>
             </Pressable>
+            {width < 426 ?
+                <View className="col-span-3 mt-3 flex flex-row justify-around">
+                    <Pressable
+                        style={{ borderColor: theme?.[liga]?.colors?.secondary }}
+                        className={`${active == StaticsEnum.DEFEATED ? 'border-b-4 transition-all' : 'border-none'}`}
+                        onPress={() => { setActiveStats(StaticsEnum.DEFEATED) }}
+                    >
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className='text-xl font-bold'>
+                            V.M Vencida
+                        </Text>
+                    </Pressable>
+                    <Pressable
+                        style={{ borderColor: theme?.[liga]?.colors?.secondary }}
+                        className={`${active == StaticsEnum.STARS ? 'border-b-4 transition-all' : 'border-none'}`}
+                        onPress={() => setActiveStats(StaticsEnum.STARS)}
+                    >
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className='text-xl font-bold'>
+                            Figuras
+                        </Text>
+                    </Pressable>
+                </View>
+                :
+                <>
+                    <Pressable
+                        style={{ borderColor: theme?.[liga]?.colors?.secondary }}
+                        className={`${active == StaticsEnum.DEFEATED ? 'border-b-4 transition-all' : 'border-none'}`}
+                        onPress={() => { setActiveStats(StaticsEnum.DEFEATED) }}
+                    >
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className='text-xl font-bold'>
+                            V.M Vencida
+                        </Text>
+                    </Pressable>
+                    <Pressable
+                        style={{ borderColor: theme?.[liga]?.colors?.secondary }}
+                        className={`${active == StaticsEnum.STARS ? 'border-b-4 transition-all' : 'border-none'}`}
+                        onPress={() => setActiveStats(StaticsEnum.STARS)}
+                    >
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className='text-xl font-bold'>
+                            Figuras
+                        </Text>
+                    </Pressable>
+                </>
+            }
         </View>
     )
 }
