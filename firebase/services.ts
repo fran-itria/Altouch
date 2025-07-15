@@ -509,6 +509,15 @@ async function getFairPlayTeam(liga: string, division: string): Promise<
     }
 }
 
+async function getRegulationLeague(liga: string): Promise<string> {
+    const regulationRef = await getDocs(query(collection(db, liga), where(categoria, '==', 'Regulation')))
+    if (regulationRef.docs.length > 0) {
+        return regulationRef.docs[0].data().regulation
+    } else {
+        throw new Error('Reglamento no encontrado');
+    }
+}
+
 // POSTS
 async function createMatch(liga: string, division: string, team1: string, team2: string) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
@@ -565,5 +574,6 @@ export {
     getOnePlayer,
     getPlayersSuspension,
     getPlayersStats,
-    getFairPlayTeam
+    getFairPlayTeam,
+    getRegulationLeague
 };

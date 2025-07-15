@@ -39,6 +39,7 @@ export default function TabsLayout() {
                     initialParams={{ liga, division }}
                 />
                 <Tabs.Screen
+                    initialParams={{ liga }}
                     name="regulation"
                 />
             </Tabs>
