@@ -41,7 +41,7 @@ export default function App() {
                     <Image source={{ uri: logo }} style={{ width: 300, height: 300, borderRadius: '100%' }} />
                     <Text className='text-2xl font-bold underline underline-offset-8' style={{ color: theme?.[liga]?.colors?.text }}>Seleccione la categoría</Text>
                     {divisions.map((division, i) => (
-                        <View key={division.id}>
+                        <View key={division.id} className={`${division.categoria == 'Regulation' && 'hidden'}`}>
                             <Link href={`/${liga}/${division.categoria}`} asChild>
                                 <Pressable
                                     style={{
