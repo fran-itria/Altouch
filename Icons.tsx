@@ -1,6 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 export const PositionsIcon = ({ color }: { color: string }) => {
     return <FontAwesome name="list-ol" size={24} color={color} />
@@ -32,4 +33,8 @@ export const StarIcon = () => {
 
 export const LoadingIcon = () => {
     return <AntDesign name="loading1" size={24} color="white" className='animate-spin' />
+}
+
+export const AddIcon = () => {
+    return <FontAwesome6 name="add" size={24} color="white" />
 }

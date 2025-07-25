@@ -1,4 +1,4 @@
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 import { Screen } from '../../components/Screen';
@@ -10,11 +10,14 @@ import { theme } from "../../tailwind.config";
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../firebase/firebaseConfig';
 import useLigaName from '../../hooks/useLigaName';
+import { AddIcon } from '../../Icons';
 
 export default function App() {
     const { liga } = useLigaName();
     const [divisions, setDivisions] = useState<{ id: string, categoria: string; }[]>([]);
     const [logo, setLogo] = useState<string>();
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const location = useLocalSearchParams()
     useEffect(() => {
         (async () => {
             const imageRef = ref(storage, `Futbol/Logos/${liga}.png`)
@@ -22,6 +25,8 @@ export default function App() {
             if (url) setLogo(url);
             const response = await getDivisions(liga);
             setDivisions(response);
+            if (location.adminAccess && location.id)
+                setIsAdmin(!!location.adminAccess);
         })()
     }, [])
 
@@ -58,6 +63,25 @@ export default function App() {
                             </Link>
                         </View>
                     ))}
+                    {isAdmin &&
+                        <Link href={`/${liga}/admin/createCategory`} asChild>
+                            <Pressable
+                                style={{
+                                    backgroundColor: theme?.[liga]?.colors?.secondary,
+                                }}
+                                className={`rounded-full mt-5 pl-5 pr-5 pb-2 pt-2`}>
+                                <View className='flex flex-row items-center justify-between'>
+                                    <AddIcon />
+                                    <Text
+                                        style={{ color: theme?.[liga]?.colors?.text }}
+                                        className='ml-2 font-bold text-xl flex items-center'
+                                    >
+                                        Categoría
+                                    </Text>
+                                </View>
+                            </Pressable>
+                        </Link>
+                    }
                 </View>
                 <StatusBar style="auto" />
             </Screen>

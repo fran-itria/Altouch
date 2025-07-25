@@ -13,6 +13,8 @@ export default function Layout() {
                 <Stack.Screen name="(tabs)" />
                 <Stack.Screen name="/[liga]/team/[id]" />
                 <Stack.Screen name="/[liga]/player/[id]" />
+                <Stack.Screen name="/[liga]/admin" />
+                <Stack.Screen name="/[liga]/admin/createCategory" />
             </Stack>
         </View>
     )
