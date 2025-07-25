@@ -1,6 +1,7 @@
 import { addDoc, collection, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, or, orderBy, query, QuerySnapshot, updateDoc, where } from "firebase/firestore";
 import { db, storage } from "./firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Router } from "expo-router";
 
 const categoria = 'categoria'
 
@@ -518,6 +519,15 @@ async function getRegulationLeague(liga: string): Promise<string> {
     }
 }
 
+async function verifyPassword(liga: string, router: Router, password?: string) {
+    const ligaRef = await getDocs(query(collection(db, liga), where(categoria, "==", "Regulation")));
+    console.log(typeof (Number(password)))
+    console.log(typeof (ligaRef.docs[0].data().password))
+    if (ligaRef.docs[0].data().password && ligaRef.docs[0].data().password == Number(password)) {
+        router.navigate(`${liga}?adminAccess=true&id=${ligaRef.docs[0].id}`);
+    }
+}
+
 // POSTS
 async function createMatch(liga: string, division: string, team1: string, team2: string) {
     const ligaRef = await getDocs(query(collection(db, liga), where(categoria, '==', division)))
@@ -575,5 +585,6 @@ export {
     getPlayersSuspension,
     getPlayersStats,
     getFairPlayTeam,
-    getRegulationLeague
+    getRegulationLeague,
+    verifyPassword
 };
