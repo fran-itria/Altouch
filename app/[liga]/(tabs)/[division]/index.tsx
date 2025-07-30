@@ -2,7 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { Screen } from '../../../../components/Screen';
 import { useEffect, useState } from 'react';
 import { theme } from "../../../../tailwind.config";
-import { getMatchesPlay, getMatchNotPlay, getPlayersSuspension, getTeams, team } from '../../../../firebase/services';
+import { getMatchesPlay, getMatchNotPlay, getPlayersSuspension, getTeams } from '../../../../firebase/services';
 import Matchs from '../../../../components/Matchs/Matchs';
 import MatchsNotPlay, { matchNotPlay } from '../../../../components/Matchs/MatchsNotPlay';
 import Table from '../../../../components/Table';
@@ -10,6 +10,7 @@ import PlayersSuspension from '../../../../components/Suspension';
 import useLigaName from '../../../../hooks/useLigaName';
 import { View } from 'react-native';
 import Loading from '../../../../components/Loading';
+import { team } from '../../../../types/ServicesTypes';
 
 export interface Match {
     id?: string

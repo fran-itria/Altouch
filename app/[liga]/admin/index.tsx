@@ -36,7 +36,6 @@ export default function Admin() {
                     <Image source={{ uri: logo }} style={{ width: 300, height: 300, borderRadius: '100%' }} />
                     <View
                         style={{
-                            // boxShadow: `0px 5px 0px ${theme?.[liga]?.colors?.secondary}`,
                             borderWidth: 2,
                             borderTopStartRadius: 0,
                             borderTopEndRadius: 0,
