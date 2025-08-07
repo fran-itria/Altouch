@@ -21,7 +21,7 @@ export default function Steps({ liga, step }: { liga: string, step: number }) {
     }, [step]);
 
     return (
-        <View className="flex flex-row justify-around items-center">
+        <View className="mt-5 flex flex-row justify-around items-center">
             {anims.map((anim, i) => (
                 <View>
                     <Animated.View

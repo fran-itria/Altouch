@@ -7,12 +7,15 @@ export interface CreateCategoryProps {
         teamsNumber?: number;
         teams?: TeamType[]
     } | undefined>>
-    setSteps: React.Dispatch<React.SetStateAction<number>>
     category: {
         name?: string;
         teamsNumber?: number;
         teams?: TeamType[];
     } | undefined
+    error: {
+        name?: string;
+        teamsNumber?: string;
+    } | null
 }
 
 export interface TeamType {
@@ -44,7 +47,7 @@ export interface PlayerType {
     surname: string
     suspension: number
     totalSuspension: number
-    team: DocumentReference
+    team?: DocumentReference
     matchs: DocumentReference[]
     division: DocumentReference[]
 }
@@ -57,4 +60,17 @@ export interface CreateTeamComponentProps {
         teams?: TeamType[];
     } | undefined>>
     setSteps: React.Dispatch<React.SetStateAction<number>>
+}
+
+export interface ButtonsStepsProps {
+    liga: string,
+    nextStep: () => void
+    steps: number
+    setSteps: React.Dispatch<React.SetStateAction<number>>
+}
+
+export interface CreatePlayerProps {
+    liga: string
+    setPlayers: React.Dispatch<React.SetStateAction<PlayerType[]>>
+    setTotalPlayers: React.Dispatch<React.SetStateAction<number>>
 }
