@@ -38,3 +38,19 @@ export const LoadingIcon = () => {
 export const AddIcon = () => {
     return <FontAwesome6 name="add" size={24} color="white" />
 }
+
+export const PencilIcon = ({ color }: { color: string }) => {
+    return <FontAwesome name="pencil" size={24} color={color} />
+}
+
+export const FileIconUp = ({ color, size = 24 }: { color: string, size?: number }) => {
+    return <FontAwesome6 name="file-arrow-up" size={size} color={color} />
+}
+
+export const TrashIcon = ({ color }: { color: string }) => {
+    return <FontAwesome6 name="trash" size={24} color={color} />
+}
+
+export const AddPlayerIcon = ({ color, size = 24 }: { color: string, size?: number }) => {
+    return <Entypo name="add-user" size={size} color={color} />
+}
