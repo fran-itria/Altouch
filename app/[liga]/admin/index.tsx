@@ -21,53 +21,51 @@ export default function Admin() {
         })()
     }, [])
     return (
-        <View>
-            <Screen background={theme?.[liga]?.colors?.primary}>
-                <Stack.Screen
-                    options={{
-                        headerTitle: 'Admin',
-                        headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
-                        headerShadowVisible: false,
-                        headerTitleAlign: 'center',
-                        headerTintColor: theme?.[liga]?.colors?.text,
+        <Screen background={theme?.[liga]?.colors?.primary}>
+            <Stack.Screen
+                options={{
+                    headerTitle: 'Admin',
+                    headerStyle: { backgroundColor: theme?.[liga]?.colors?.primary },
+                    headerShadowVisible: false,
+                    headerTitleAlign: 'center',
+                    headerTintColor: theme?.[liga]?.colors?.text,
+                }}
+            />
+            <View className="flex h-screen justify-center items-center">
+                <Image source={{ uri: logo }} style={{ width: 300, height: 300, borderRadius: '100%' }} />
+                <View
+                    style={{
+                        borderWidth: 2,
+                        borderTopStartRadius: 0,
+                        borderTopEndRadius: 0,
+                        borderBottomStartRadius: 20,
+                        borderBottomEndRadius: 20,
+                        borderBottomWidth: 4,
+                        borderColor: theme?.[liga]?.colors?.secondary
                     }}
-                />
-                <View className="flex h-screen justify-center items-center">
-                    <Image source={{ uri: logo }} style={{ width: 300, height: 300, borderRadius: '100%' }} />
-                    <View
-                        style={{
-                            borderWidth: 2,
-                            borderTopStartRadius: 0,
-                            borderTopEndRadius: 0,
-                            borderBottomStartRadius: 20,
-                            borderBottomEndRadius: 20,
-                            borderBottomWidth: 4,
-                            borderColor: theme?.[liga]?.colors?.secondary
-                        }}
-                        className="mt-5 p-5"
+                    className="mt-5 p-5"
+                >
+                    <Text style={{ color: theme?.[liga]?.colors?.text }} className="font-bold text-base">Ingresar codigo de acceso</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        className="bg-white mt-2 p-2 focus:border-blue-500 focus:border-2"
+                        onChangeText={(text) => setPassword(text)}
                     >
-                        <Text style={{ color: theme?.[liga]?.colors?.text }} className="font-bold text-base">Ingresar codigo de acceso</Text>
-                        <TextInput
-                            keyboardType="number-pad"
-                            className="bg-white mt-2 p-2 focus:border-blue-500 focus:border-2"
-                            onChangeText={(text) => setPassword(text)}
+                    </TextInput>
+                    <Pressable
+                        style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
+                        className="mt-5 p-2 rounded-full items-center"
+                        onPress={(e) => console.log(verifyPassword(liga, router, password))}
+                    >
+                        <Text
+                            style={{ color: theme?.[liga]?.colors?.text }}
+                            className="font-bold text-base"
                         >
-                        </TextInput>
-                        <Pressable
-                            style={{ backgroundColor: theme?.[liga]?.colors?.secondary }}
-                            className="mt-5 p-2 rounded-full items-center"
-                            onPress={(e) => console.log(verifyPassword(liga, router, password))}
-                        >
-                            <Text
-                                style={{ color: theme?.[liga]?.colors?.text }}
-                                className="font-bold text-base"
-                            >
-                                Ingresar
-                            </Text>
-                        </Pressable>
-                    </View>
+                            Ingresar
+                        </Text>
+                    </Pressable>
                 </View>
-            </Screen>
-        </View>
+            </View>
+        </Screen>
     )
 }
