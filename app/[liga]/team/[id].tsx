@@ -2,13 +2,14 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { Screen } from "../../../components/Screen";
 import { theme } from "../../../tailwind.config";
 import { useEffect, useState } from "react";
-import { getOneTeam, getOneTeamResponse, player } from "../../../firebase/services";
+import { getOneTeam } from "../../../firebase/services";
 import useLigaName from "../../../hooks/useLigaName";
 import Loading from "../../../components/Loading";
 import Players from "../../../components/Team/Players";
 import Matchs from "../../../components/Matchs/Matchs";
 import { Match } from "../(tabs)/[division]";
 import MatchsNotPlay, { matchNotPlay } from "../../../components/Matchs/MatchsNotPlay";
+import { getOneTeamResponse, player } from "../../../types/ServicesTypes";
 
 export default function Team() {
     const { liga } = useLigaName()
