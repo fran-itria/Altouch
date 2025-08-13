@@ -19,26 +19,9 @@ export default function CreateCategory() {
             teams?: TeamType[]
         }>();
     const [steps, setSteps] = useState<number>(0);
-
     const [error, setError] = useState<{ name?: string, teamsNumber?: string } | null>(null);
-    const nextStep = () => {
-        if (!category?.name) {
-            setError((prev) => ({ ...prev, name: "El nombre de la categoría es obligatorio" }));
-        } else {
-            setError((prev) => ({ ...prev, name: undefined }));
-        }
-        if (!category?.teamsNumber) {
-            setError((prev) => ({ ...prev, teamsNumber: "La cantidad de equipos es obligatoria" }));
-        } else {
-            setError((prev) => ({ ...prev, teamsNumber: undefined }));
-        }
-        if (category?.name && category?.teamsNumber) {
-            setError(null);
-            setSteps(1);
-        }
-    }
+    useEffect(() => console.log(category), [category]);
 
-    useEffect(() => console.log(category), [category])
     return (
         <Screen background={theme?.[liga]?.colors?.primary}>
             <Stack.Screen
@@ -69,11 +52,13 @@ export default function CreateCategory() {
                             <Category liga={liga} setCategory={setCategory} category={category} error={error} />
                             :
                             steps == 1 ?
-                                <CreateTeams liga={liga} setCategory={setCategory} setSteps={setSteps} />
+                                [...Array(category?.teamsNumber)].map((_, index) => (
+                                    <CreateTeams category={category} teamNumber={index} liga={liga} setCategory={setCategory} setSteps={setSteps} />
+                                ))
                                 :
                                 null
                         }
-                        <ButtonSteps liga={liga} nextStep={nextStep} steps={steps} setSteps={setSteps} />
+                        <ButtonSteps liga={liga} steps={steps} setSteps={setSteps} category={category} setError={setError} />
                     </View>
                 </View>
             </View>

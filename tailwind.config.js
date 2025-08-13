@@ -17,7 +17,8 @@ module.exports = {
         textFinish: 'black',
         tabBarActiveColor: "white",
         tabBarInactiveColor: "black",
-        back: "#b91c1c"
+        back: "#b91c1c",
+        edit: "#60a5fa"
     }
   },
     extend: {

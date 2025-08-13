@@ -1,5 +1,17 @@
 import { DocumentReference } from "firebase/firestore"
 
+export interface NextStepsProps {
+    category: {
+        name?: string;
+        teamsNumber?: number;
+        teams?: TeamType[];
+    } | undefined,
+    setError: React.Dispatch<React.SetStateAction<{
+        name?: string;
+        teamsNumber?: string;
+    } | null>>,
+    setSteps: React.Dispatch<React.SetStateAction<number>>
+}
 export interface CreateCategoryProps {
     liga: string,
     setCategory: React.Dispatch<React.SetStateAction<{
@@ -53,6 +65,7 @@ export interface PlayerType {
 }
 
 export interface CreateTeamComponentProps {
+    teamNumber: number
     liga: string
     setCategory: React.Dispatch<React.SetStateAction<{
         name?: string;
@@ -60,17 +73,32 @@ export interface CreateTeamComponentProps {
         teams?: TeamType[];
     } | undefined>>
     setSteps: React.Dispatch<React.SetStateAction<number>>
+    category: {
+        name?: string;
+        teamsNumber?: number;
+        teams?: TeamType[];
+    } | undefined
 }
 
 export interface ButtonsStepsProps {
-    liga: string,
-    nextStep: () => void
+    liga: string
     steps: number
     setSteps: React.Dispatch<React.SetStateAction<number>>
+    setError: React.Dispatch<React.SetStateAction<{
+        name?: string;
+        teamsNumber?: string;
+    } | null>>
+    category: {
+        name?: string;
+        teamsNumber?: number;
+        teams?: TeamType[];
+    } | undefined
 }
 
 export interface CreatePlayerProps {
+    index: number
     liga: string
-    setPlayers: React.Dispatch<React.SetStateAction<PlayerType[]>>
+    totalPlayers: number
+    setTeam: React.Dispatch<React.SetStateAction<TeamType>>
     setTotalPlayers: React.Dispatch<React.SetStateAction<number>>
 }
